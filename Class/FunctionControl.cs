@@ -1,5 +1,4 @@
-﻿//10/18 addcf1
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,24 +7,31 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Xml.Linq;
+using System.Drawing.Text;
+//using Microsoft.Office.Interop.Excel;
 
 namespace Kom_System_Common.CommonClass
 {
     public class FunctionControl
     {
+        const int offLeft = 3;          //最初のボタンの左からの位置
+        const int OffTop = 3;           //ファンクションボタンの上からの位置
+        const int offWidL = 5;         //ファンクション間 隙間大
+        const int offWidS = 2;          //ファンクション間 隙間小
         const int wfWidth = 1485;                           //フォームの Width 初期値
-        const int wfHeight = 870;                           //フォームの Height 初期値
-        const int wdtBtn = 98;                              //ボタンの  幅
-        const int htBtn = 38;                               //ボタンの 高さ
-        const int htBtn2 = 51;                               //右の文字高さ
+        const int wfHeight = 830;                           //フォームの Height 初期値
+        const int wdtBtn = 99;         //ファンクションボタンの  幅
+        const int htBtn = 38;           //ファンクションボタンの 高さ
+        const int htBtn2 = 51;          //ログイン等文字の高さ
+        private Font deffont = new Font("メイリオ", 10.5f); 
 
         private Color defIns = Color.GreenYellow;           //追加のバックカラー
         private Color defUpdate = Color.Yellow;            //更新のバックカラー
 
-
-        int[] leftPos = { 1, 90, 179, 268, 377, 466, 555, 644, 753, 842, 931, 1020 };  //2024/10/07　位置微調整 CF
+        //int[] leftPos = { 1, 90, 179, 268, 377, 466, 555, 644, 753, 842, 931, 1020 };  //2024/10/07　位置微調整 CF
 
         private Button[] myFunction;
+
         private Label[] MyLavel;
         private Label[] KousinLavel;
         private Form form;
@@ -116,7 +122,70 @@ namespace Kom_System_Common.CommonClass
             get { return myLoginNo; }     // 
             set { myLoginNo = value; }    //
         }
-
+        ////
+        /// <summary>
+        /// 
+        /// </summary>
+        public float F1_fontSize
+        {
+            get { return myFunction[0].Font.Size; }
+            set { myFunction[0].Font = new Font("メイリオ", value); }
+        }
+        public float F2_fontSize
+        {
+            get { return myFunction[1].Font.Size; }
+            set { myFunction[1].Font = new Font("メイリオ", value); }
+        }
+        public float F3_fontSize
+        {
+            get { return myFunction[2].Font.Size; }
+            set { myFunction[2].Font = new Font("メイリオ", value); }
+        }
+        public float F4_fontSize
+        {
+            get { return myFunction[3].Font.Size; }
+            set { myFunction[3].Font = new Font("メイリオ", value); }
+        }
+        public float F5_fontSize
+        {
+            get { return myFunction[4].Font.Size; }
+            set { myFunction[4].Font = new Font("メイリオ", value); }
+        }
+        public float F6_fontSize
+        {
+            get { return myFunction[5].Font.Size; }
+            set { myFunction[5].Font = new Font("メイリオ", value); }
+        }
+        public float F7_fontSize
+        {
+            get {return myFunction[6].Font.Size;}
+            set{ myFunction[6].Font = new Font("メイリオ", value); }
+        }
+        public float F8_fontSize
+        {
+            get { return myFunction[7].Font.Size; }
+            set { myFunction[7].Font = new Font("メイリオ", value); }
+        }
+        public float F9_fontSize
+        {
+            get { return myFunction[8].Font.Size; }
+            set { myFunction[8].Font = new Font("メイリオ", value); }
+        }
+        public float F10_fontSize
+        {
+            get { return myFunction[9].Font.Size; }
+            set { myFunction[9].Font = new Font("メイリオ", value); }
+        }
+        public float F11_fontSize
+        {
+            get { return myFunction[10].Font.Size; }
+            set { myFunction[10].Font = new Font("メイリオ", value); }
+        }
+        public float F12_fontSize
+        {
+            get { return myFunction[11].Font.Size; }
+            set { myFunction[11].Font = new Font("メイリオ", value); }
+        }
         /// <summary>
         /// Fｘボタンの表示
         /// </summary>
@@ -134,7 +203,7 @@ namespace Kom_System_Common.CommonClass
         {
             get { return FuncText[2]; }     // 
             set { FuncText[2] = value; }    //
-        }
+        }        
         public string F4
         {
             get { return FuncText[3]; }     // 
@@ -160,6 +229,7 @@ namespace Kom_System_Common.CommonClass
             get { return FuncText[7]; }     // 
             set { FuncText[7] = value; }    //
         }
+
         public string F9
         {
             get { return FuncText[8]; }     // 
@@ -170,12 +240,12 @@ namespace Kom_System_Common.CommonClass
             get { return FuncText[9]; }     // 
             set { FuncText[9] = value; }    //
         }
+
         public string F11
         {
             get { return FuncText[10]; }     // 
             set { FuncText[10] = value; }    //
         }
-
 
         public string F12
         {
@@ -200,12 +270,12 @@ namespace Kom_System_Common.CommonClass
 
                 this.myFunction[i].Width = wdtBtn;
                 this.myFunction[i].Height = htBtn;
-                this.myFunction[i].Top = 3;
-                this.myFunction[i].Left = leftPos[i];
+                this.myFunction[i].Top = OffTop;
+                this.myFunction[i].Left = offsetLeft(i+1);
                 this.myFunction[i].TabStop = false;
                 this.myFunction[i].BackColor = Color.LightGray;
                 this.myFunction[i].FlatStyle = FlatStyle.Flat;
-                this.myFunction[i].Font = new System.Drawing.Font("メイリオ", 10.5f);
+                this.myFunction[i].Font = deffont;
 
                 // フォームへの追加
                 this.form.Controls.Add(this.myFunction[i]);
@@ -254,6 +324,8 @@ namespace Kom_System_Common.CommonClass
                 #endregion
                 this.myFunction[i].BringToFront();
             }
+
+          
             //前面へ
             ////////////////////////////////////////////////////////////
             // ラベル追加
@@ -264,13 +336,13 @@ namespace Kom_System_Common.CommonClass
             /////
             this.MyLavel[0] = new Label();
             this.MyLavel[0].Name = "LabelGijyosyo";
-            this.MyLavel[0].Text = "事業所：";          // + myGijyosyo;
+            this.MyLavel[0].Text = "事業所　：";          // + myGijyosyo;
             this.MyLavel[0].Width = wdtBtn * 1;         //横幅
             this.MyLavel[0].Height = htBtn2 / 3;        //縦
-            this.MyLavel[0].Top = 3 + ((htBtn2 / 3) * 0);
-            this.MyLavel[0].Left = leftPos[11] + wdtBtn + 80;//  
-            this.MyLavel[0].Font = new System.Drawing.Font("メイリオ", 10.5f);
-            this.MyLavel[0].TextAlign = System.Drawing.ContentAlignment.MiddleRight;            
+            this.MyLavel[0].Top = OffTop + ((htBtn2 / 3) * 0);
+            this.MyLavel[0].Left = offsetLeft(12) + wdtBtn + 80;//  
+            this.MyLavel[0].Font = deffont;
+            this.MyLavel[0].TextAlign = System.Drawing.ContentAlignment.MiddleLeft;            
             this.form.Controls.Add(this.MyLavel[0]);    // フォームへの追加
             this.MyLavel[0].BringToFront();
 
@@ -280,10 +352,10 @@ namespace Kom_System_Common.CommonClass
             this.MyLavel[1].Text = "ログイン：";// + myLogin
             this.MyLavel[1].Width = wdtBtn * 1;         //横幅
             this.MyLavel[1].Height = htBtn2 / 3;         //縦
-            this.MyLavel[1].Top = 3 + ((htBtn2 / 3) * 1);
-            this.MyLavel[1].Left = leftPos[11] + wdtBtn + 80;//  
-            this.MyLavel[1].Font = new System.Drawing.Font("メイリオ", 10.5f);
-            this.MyLavel[1].TextAlign=System.Drawing.ContentAlignment.MiddleRight;                         
+            this.MyLavel[1].Top = OffTop + ((htBtn2 / 3) * 1);
+            this.MyLavel[1].Left = offsetLeft(12) + wdtBtn + 80;//  
+            this.MyLavel[1].Font = deffont;
+            this.MyLavel[1].TextAlign=System.Drawing.ContentAlignment.MiddleLeft;                         
             this.form.Controls.Add(this.MyLavel[1]);// フォームへの追加
             this.MyLavel[1].BringToFront();
 
@@ -293,10 +365,10 @@ namespace Kom_System_Common.CommonClass
             this.MyLavel[2].Text = DateTime.Today.ToShortDateString();
             this.MyLavel[2].Width = wdtBtn * 2;
             this.MyLavel[2].Height = htBtn2 / 3;
-            this.MyLavel[2].Top = 3 + ((htBtn2 / 3) * 2);
-            this.MyLavel[2].Left = leftPos[11] + wdtBtn + 80;
-            this.MyLavel[2].Font = new System.Drawing.Font("メイリオ", 10.5f);
-            this.MyLavel[2].TextAlign = System.Drawing.ContentAlignment.MiddleRight;            
+            this.MyLavel[2].Top = OffTop + ((htBtn2 / 3) * 2);
+            this.MyLavel[2].Left = offsetLeft(12) + wdtBtn + 80;
+            this.MyLavel[2].Font = deffont;
+            this.MyLavel[2].TextAlign = System.Drawing.ContentAlignment.MiddleLeft;            
             this.form.Controls.Add(this.MyLavel[2]);// フォームへの追加
             this.MyLavel[2].BringToFront();
             /////////////////
@@ -306,10 +378,10 @@ namespace Kom_System_Common.CommonClass
             this.MyLavel[3].Text = myGijyosyoNo;
             this.MyLavel[3].Width = wdtBtn /2;         //横幅
             this.MyLavel[3].Height = htBtn2 / 3;        //縦
-            this.MyLavel[3].Top = 3 + ((htBtn2 / 3) * 0);
-            this.MyLavel[3].Left = leftPos[11] + wdtBtn + 70 + (wdtBtn * 1);//  
-            this.MyLavel[3].Font = new System.Drawing.Font("メイリオ", 10.5f);
-            this.MyLavel[3].TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.MyLavel[3].Top = OffTop + ((htBtn2 / 3) * 0);
+            this.MyLavel[3].Left = offsetLeft(12) + wdtBtn + 60 + (wdtBtn * 1);//  
+            this.MyLavel[3].Font = deffont;
+            this.MyLavel[3].TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.form.Controls.Add(this.MyLavel[3]);    // フォームへの追加
             this.MyLavel[3].BringToFront();
 
@@ -319,10 +391,10 @@ namespace Kom_System_Common.CommonClass
             this.MyLavel[4].Text = myLoginNo;
             this.MyLavel[4].Width = wdtBtn /2;         //横幅
             this.MyLavel[4].Height = htBtn2 / 3;         //縦
-            this.MyLavel[4].Top = 3 + ((htBtn2 / 3) * 1);
-            this.MyLavel[4].Left = leftPos[11] + wdtBtn + 70 + (wdtBtn * 1);//  
-            this.MyLavel[4].Font = new System.Drawing.Font("メイリオ", 10.5f);
-            this.MyLavel[4].TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.MyLavel[4].Top = OffTop + ((htBtn2 / 3) * 1);
+            this.MyLavel[4].Left = offsetLeft(12) + wdtBtn + 60 + (wdtBtn * 1);//  
+            this.MyLavel[4].Font = deffont;
+            this.MyLavel[4].TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.form.Controls.Add(this.MyLavel[4]);// フォームへの追加
             this.MyLavel[4].BringToFront();
             ////
@@ -331,9 +403,9 @@ namespace Kom_System_Common.CommonClass
             this.MyLavel[5].Text = myGijyosyo;
             this.MyLavel[5].Width = wdtBtn / 1;         //横幅
             this.MyLavel[5].Height = htBtn2 / 3;        //縦
-            this.MyLavel[5].Top = 3 + ((htBtn2 / 3) * 0);
-            this.MyLavel[5].Left = leftPos[11] + wdtBtn + 70 + (wdtBtn * 1)+(wdtBtn / 2);//  
-            this.MyLavel[5].Font = new System.Drawing.Font("メイリオ", 10.5f);
+            this.MyLavel[5].Top = OffTop + ((htBtn2 / 3) * 0);
+            this.MyLavel[5].Left = offsetLeft(12) + wdtBtn + 60 + (wdtBtn * 1)+(wdtBtn / 2);//  
+            this.MyLavel[5].Font = deffont;
             this.MyLavel[5].TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.form.Controls.Add(this.MyLavel[5]);    // フォームへの追加
             this.MyLavel[5].BringToFront();
@@ -344,9 +416,9 @@ namespace Kom_System_Common.CommonClass
             this.MyLavel[6].Text = myLogin;
             this.MyLavel[6].Width = wdtBtn / 1;         //横幅
             this.MyLavel[6].Height = htBtn2 / 3;         //縦
-            this.MyLavel[6].Top = 3 + ((htBtn2 / 3) * 1);
-            this.MyLavel[6].Left = leftPos[11] + wdtBtn + 70 + (wdtBtn * 1)+(wdtBtn / 2);//  
-            this.MyLavel[6].Font = new System.Drawing.Font("メイリオ", 10.5f);
+            this.MyLavel[6].Top = OffTop + ((htBtn2 / 3) * 1);
+            this.MyLavel[6].Left = offsetLeft(12) + wdtBtn + 60 + (wdtBtn * 1)+(wdtBtn / 2);//  
+            this.MyLavel[6].Font = deffont;
             this.MyLavel[6].TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.form.Controls.Add(this.MyLavel[6]);// フォームへの追加
             this.MyLavel[6].BringToFront();
@@ -354,6 +426,19 @@ namespace Kom_System_Common.CommonClass
             ///
             lblKousin();
             //
+        }
+        /// <summary>
+        /// x = 1 to 12
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        private int offsetLeft(int x)
+        {
+            int ret = offLeft+ ((x - 1) * wdtBtn) + ((x - 1)*offWidS);
+            if (x >= 5 ) ret += offWidL;
+            if (x >= 9 ) ret += offWidL;
+
+            return ret;
         }
         private void lblKousin()
         {
@@ -367,9 +452,9 @@ namespace Kom_System_Common.CommonClass
 
             this.KousinLavel[0].Width = wdtBtn / 2;            //横幅
             this.KousinLavel[0].Height = htBtn;                //縦
-            this.KousinLavel[0].Top = 3;
-            this.KousinLavel[0].Left = leftPos[11] + wdtBtn + 10;//  
-            this.KousinLavel[0].Font = new System.Drawing.Font("メイリオ", 10.5f);
+            this.KousinLavel[0].Top = OffTop;
+            this.KousinLavel[0].Left = offsetLeft(12) + wdtBtn + 10;//  
+            this.KousinLavel[0].Font = deffont;
             this.KousinLavel[0].BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.KousinLavel[0].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.KousinLavel[0].Visible = false;
@@ -380,6 +465,31 @@ namespace Kom_System_Common.CommonClass
 
 
         }
+        /// <summary>
+        /// フォームに配置されているコントロールを名前で探す
+        /// （フォームクラスのフィールドをフィールド名で探す）
+        /// </summary>
+        /// <param name="frm">コントロールを探すフォーム</param>
+        /// <param name="name">コントロール（フィールド）の名前</param>
+        /// <returns>見つかった時は、コントロールのオブジェクト。
+        /// 見つからなかった時は、null(VB.NETではNothing)。</returns>
+        public static object FindControlByFieldName(Form frm, string name)
+        {
+            System.Type t = frm.GetType();
+
+            System.Reflection.FieldInfo fi = t.GetField(
+                name,
+                System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.DeclaredOnly);
+
+            if (fi == null)
+                return null;
+
+            return fi.GetValue(frm);
+        }
+
         #region "イベント"
         private void Function1_Click(object sender, EventArgs e)
         {
