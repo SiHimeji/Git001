@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F84CA7B1-4E29-454A-A3F7-A90EE9C664E2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Kom_System_Common</RootNamespace>
+    <AssemblyName>Kom_System_Common</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.3.4\lib\net46\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonClass\CalcDay.cs" />
+    <Compile Include="CommonClass\ClassLibSi.cs" />
+    <Compile Include="CommonClass\ComboBoxItem.cs" />
+    <Compile Include="CommonClass\DateUtil.cs" />
+    <Compile Include="CommonClass\DayTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CommonClass\FormClearer.cs" />
+    <Compile Include="CommonClass\FormRedrawSuspension.cs" />
+    <Compile Include="CommonClass\FunctionControl.cs" />
+    <Compile Include="CommonClass\GridSetControl.cs" />
+    <Compile Include="CommonClass\LoggerService.cs" />
+    <Compile Include="CommonClass\MessageManager.cs" />
+    <Compile Include="CommonClass\MonTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CommonClass\SearchButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CommonClass\SearchButton.Designer.cs">
+      <DependentUpon>SearchButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonClass\Services\MeishoMasterService.cs" />
+    <Compile Include="CommonClass\Services\TorihikisakiMasterService.cs" />
+    <Compile Include="CommonClass\Services\SeihinMasterService.cs" />
+    <Compile Include="CommonClass\Services\ShizaiMasterService.cs" />
+    <Compile Include="CommonClass\SqlEscapeUtil.cs" />
+    <Compile Include="CommonClass\SqlSeverControl.cs" />
+    <Compile Include="CommonClass\TitleLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CommonClass\TitleLabel.Designer.cs">
+      <DependentUpon>TitleLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonClass\Validation\NumericRangeValidator.cs" />
+    <Compile Include="CommonClass\Validation\RequiredValidator.cs" />
+    <Compile Include="CommonClass\Validation\NumericValidator.cs" />
+    <Compile Include="CommonClass\Validation\DateValidator.cs" />
+    <Compile Include="CommonClass\Validation\HalfCharValidator.cs" />
+    <Compile Include="CommonClass\Validation\CharLengthValidator.cs" />
+    <Compile Include="CommonClass\Validation\ValidationUtil.cs" />
+    <Compile Include="CommonClass\Validation\ValidatorBase.cs" />
+    <Compile Include="Form\MTQ01GA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\MTQ01GA.Designer.cs">
+      <DependentUpon>MTQ01GA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\MTQ02GA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\MTQ02GA.Designer.cs">
+      <DependentUpon>MTQ02GA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\MTQ06GA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\MTQ06GA.Designer.cs">
+      <DependentUpon>MTQ06GA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\MTQ05GA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\MTQ05GA.Designer.cs">
+      <DependentUpon>MTQ05GA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\MTQ03GA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\MTQ03GA.Designer.cs">
+      <DependentUpon>MTQ03GA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\MTQ04GA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\MTQ04GA.Designer.cs">
+      <DependentUpon>MTQ04GA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form\MTQ01GA.resx">
+      <DependentUpon>MTQ01GA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\MTQ02GA.resx">
+      <DependentUpon>MTQ02GA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\MTQ06GA.resx">
+      <DependentUpon>MTQ06GA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\MTQ05GA.resx">
+      <DependentUpon>MTQ05GA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\MTQ03GA.resx">
+      <DependentUpon>MTQ03GA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\MTQ04GA.resx">
+      <DependentUpon>MTQ04GA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
