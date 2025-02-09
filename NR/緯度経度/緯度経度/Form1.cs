@@ -37,6 +37,9 @@ namespace 緯度経度
                     ClassEXCEL.Excel(filename,textBoxKyori);
 
 
+
+
+
                 }
             }
         }
