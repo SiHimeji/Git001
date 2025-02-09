@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>ftp://scimco01.noritz.co.jp/CoReports/|\\Si-server2\web\CoReports\|ftp://192.168.1.55/CoReportsC/|\\Si-server2\web\co\</PublishUrlHistory>
+    <InstallUrlHistory>http://scimco01.noritz.co.jp/CoReports/|\\Si-server2\web\CoReports\|http://si-server2/CoReportsC/|http://si-server2/co/|\\Si-server2\web\co\</InstallUrlHistory>
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>ja-JP</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
+  </PropertyGroup>
+</Project>
