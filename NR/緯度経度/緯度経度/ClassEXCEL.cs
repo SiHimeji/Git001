@@ -47,6 +47,8 @@ namespace 緯度経度
                     buf = sheet.Cells[y, 12].value;
                     if (buf.Trim() != "" || buf != null)
                     {
+
+
                         ido = double.Parse(sheet.Cells[y, 6].value);
                         keido = double.Parse(sheet.Cells[y, 7].value);
 
@@ -56,7 +58,7 @@ namespace 緯度経度
 
                         if (shop_ido != 0)
                         {
-                            km = ClassDistance.cal_distance4( shop_keido, shop_ido, keido, ido);
+                            km = ClassDistance.cal_distance4(shop_ido, shop_keido, ido, keido);
                             sheet.Cells[y, 14].value = km.ToString();
                         }
                     }
