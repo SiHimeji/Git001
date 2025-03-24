@@ -1,11 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
-using System.Linq;
-using System.Configuration;
-using System.Windows.Forms;
-using Microsoft.Office.Interop.Excel;
 using System.Data.SqlClient;
 
 namespace Kom_System_Common.CommonClass
@@ -13,46 +9,43 @@ namespace Kom_System_Common.CommonClass
     static public class SqlSeverControl
     {
         static string connectionString = "";
+        static string DbBackup_Query = "";
 
         #region　領域定義
-        static public OleDbConnection oCon = null;              // コネクション のインスタンス化
+        static public SqlConnection sCon = null;             // コネクション のインスタンス化
         #endregion
 
         static SqlSeverControl()
         {
 #if DEBUG
-
-            string sqlUser = "si";
-            string sqlPass = "0251";
-            string SqlService = "Kom";
-            string SqlServer = "SQLOLEDB";
-            string SqlTns = "192.168.1.55";
-/*
-            string sqlUser = "sa";
-            string sqlPass = "123456";
-            string SqlService = "Kom";
-            string SqlServer = "SQLOLEDB";
-            string SqlTns = "localhost";
-*/
-/*
+            /*
             string sqlUser = "sa";
             string sqlPass = "sa";
-            string SqlService = "BBX61;";
-            string SqlServer = "SQLOLEDB";
-            string SqlTns = "ISV03006\\SQLEXPRESS01";
-*/
+            string SqlService = "BBX61";
+            string SqlTns = Environment.MachineName + "\\SQLEXPRESS";
+            string SqlTimeout = "30";
+            */
+            string sqlUser = "si";
+            string sqlPass = "0251";
+            string SqlService = "kcon";
+            //string SqlServer = "SQLOLEDB";
+            //string SqlTns = "192.168.1.236";
+            string SqlTns = "192.168.1.217";
+            //string SqlTns = "localhost";
+            string SqlTimeout = "10";
 
 
 
+            connectionString = $"Server ={SqlTns};Database={SqlService};User Id={sqlUser};Password={sqlPass};Connect Timeout={SqlTimeout};";
 #else
-                string sqlUser = "sa";
-                string sqlPass = "sa";
-                string SqlService = "BBX61;";
-                string SqlServer = "SQLOLEDB";
-                string SqlTns = "ISV03006\\SQLEXPRESS01";
+            connectionString = ConfigurationManager.ConnectionStrings["KomSystem"].ConnectionString;
 #endif
-            //connectionString = ConfigurationManager.ConnectionStrings["KomSystem"].ConnectionString;
-            connectionString = $"Provider={SqlServer};Data Source={SqlTns};Initial Catalog={SqlService};User ID={sqlUser};Password={sqlPass};Connection Timeout=4000";
+
+            DbBackup_Query = @"BACKUP DATABASE KCON
+                                    TO DISK = @BackupPath
+                                    WITH NOFORMAT, NOINIT,
+                                    NAME = @BackupName,
+                                    SKIP, NOREWIND, NOUNLOAD, STATS = 10;";
         }
 
         #region　SQLSever接続に関するメソッド
@@ -60,19 +53,19 @@ namespace Kom_System_Common.CommonClass
         /// SQLSever接続
         /// </summary>
         /// <returns></returns>
-        public static bool DbConnect()
+        static public bool DbConnect()
         {
-            if (oCon != null)
+            if (sCon != null)
             {
-                if (oCon.State == System.Data.ConnectionState.Open)
+                if (sCon.State == System.Data.ConnectionState.Open)
                 {
                     return true;
                 }
             }
             try
             {
-                oCon = new OleDbConnection(connectionString);
-                oCon.Open();
+                sCon = new SqlConnection(connectionString);
+                sCon.Open();
                 return true;
             }
             catch (Exception)
@@ -87,8 +80,8 @@ namespace Kom_System_Common.CommonClass
         {
             try
             {
-                if (oCon.ConnectionString != null)
-                { oCon.Close(); oCon.Dispose(); }
+                if (sCon.ConnectionString != null)
+                { sCon.Close(); sCon.Dispose(); }
                 return true;
             }
             catch (Exception)
@@ -96,263 +89,173 @@ namespace Kom_System_Common.CommonClass
                 return false;
             }
         }
-
         #endregion
 
-        #region　データ取得に関するメソッド
+        #region SQL実行部関数
+
         /// <summary>
-        /// データの取得
+        /// 更新関連処理実行部
         /// </summary>
-        /// <returns>取得したデータテーブル</returns>
-        public static System.Data.DataTable Read(string query, OleDbTransaction transaction)
-        {
-            System.Data.DataTable dataTable = new System.Data.DataTable();
-
-            using (OleDbCommand oCmd = new OleDbCommand(query, transaction.Connection, transaction))
-            using (OleDbDataAdapter adapter = new OleDbDataAdapter(oCmd))
-            {
-                try
-                {
-                    dataTable.Clear();
-                    adapter.Fill(dataTable);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error reading data: {ex.Message}");
-                }
-            }
-
-            return dataTable;
-        }
-
-        #endregion
-
-        #region　データ登録・更新に関するメソッド
-        /// <summary>
-        /// 新規作成処理
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
-        /// <param name="transaction"></param>
+        /// <param name="query">SQL（パラメータ名称入り）</param>
+        /// <param name="parameters">Dictionary<string, (object Value, SqlDbType Type)>　なければ省略可能</param>
+        /// <param name="transaction">トランザクション</param>
         /// <returns></returns>
-        public static int Insert(string tableName, (string columnName, object Value)[] columns, OleDbTransaction transaction)
-        {
-            if (columns.Length == 0)
-            {
-                return 0;
-            }
-
-            var columnNames = string.Join(", ", columns.Select(c => c.columnName));
-            var parameters = string.Join(", ", columns.Select(_ => "?"));
-            var query = $"INSERT INTO {tableName} ({columnNames}) VALUES ({parameters})";
-
-            int rowsAffected = 0;
-
-            using (OleDbCommand oCmd = new OleDbCommand(query, transaction.Connection, transaction))
-            {
-                try
-                {
-                    foreach (var column in columns)
-                    {
-                        oCmd.Parameters.AddWithValue("?", column.Value ?? DBNull.Value);
-                    }
-#if DEBUG
-                    string executedQuery = GenerateExecutableQuery(query, oCmd);
-                    Console.WriteLine(executedQuery);
-#endif
-                    rowsAffected = oCmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error executing query: {ex.Message}");
-                    rowsAffected = 0;
-                }
-            }
-
-            return rowsAffected;
-        }
-
-        /// <summary>
-        /// データ更新処理
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
-        /// <param name="whereClause"></param>
-        /// <param name="transaction"></param>
-        /// <returns></returns>
-        public static int Update(string tableName, (string columnName, object Value)[] columns, string whereClause, OleDbTransaction transaction)
-        {
-            if (columns.Length == 0 || string.IsNullOrEmpty(whereClause))
-            {
-                return 0;
-            }
-
-            // SET句の作成
-            var setClause = string.Join(", ", columns.Select((c, i) => $"{c.columnName} = @param{i}"));
-            var query = $"UPDATE {tableName} SET {setClause} WHERE {whereClause}";
-
-            int rowsAffected = 0;
-
-            using (OleDbCommand oCmd = new OleDbCommand(query, transaction.Connection, transaction))
-            {
-                try
-                {
-                    // パラメータの追加
-                    for (int i = 0; i < columns.Length; i++)
-                    {
-                        var parameter = new OleDbParameter($"@param{i}", columns[i].Value ?? DBNull.Value);
-                        oCmd.Parameters.Add(parameter);
-                    }
-#if DEBUG
-                    string executedQuery = GenerateExecutableQuery(query, oCmd);
-                    Console.WriteLine(executedQuery);
-#endif
-                    // クエリの実行
-                    rowsAffected = oCmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error executing query: {ex.Message}");
-                    rowsAffected = 0;
-                }
-            }
-
-            return rowsAffected;
-        }
-
-        /// <summary>
-        /// データ削除処理
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="whereClause"></param>
-        /// <param name="transaction"></param>
-        /// <returns></returns>
-        public static int Delete(string tableName, string whereClause, OleDbTransaction transaction)
-        {
-            if (string.IsNullOrEmpty(whereClause))
-            {
-                return 0;
-            }
-
-            var query = $"DELETE FROM {tableName} WHERE {whereClause}";
-
-            int rowsAffected = 0;
-
-            using (OleDbCommand oCmd = new OleDbCommand(query, transaction.Connection, transaction))
-            {
-                try
-                {
-
-#if DEBUG
-                    string executedQuery = GenerateExecutableQuery(query, oCmd);
-                    Console.WriteLine(executedQuery);
-#endif
-                    rowsAffected = oCmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error executing query: {ex.Message}");
-                    rowsAffected = 0;
-                }
-            }
-
-            return rowsAffected;
-        }
-
-        #endregion
-
-        // パラメータを実際の値に置き換えたSQL文を生成するヘルパーメソッド
-        private static string GenerateExecutableQuery(string query, OleDbCommand cmd)
-        {
-            var parameterIndex = 0;
-
-            foreach (OleDbParameter param in cmd.Parameters)
-            {
-                // プレースホルダーを ? で置換
-                var valueStr = param.Value is string || param.Value is DateTime
-                    ? $"'{param.Value}'"
-                    : param.Value.ToString();
-
-                // ? プレースホルダーの位置を取得して置換
-                var placeholder = new string('?', 1); // プレースホルダーのサイズは 1 文字
-                var placeholderIndex = query.IndexOf(placeholder);
-
-                if (placeholderIndex != -1)
-                {
-                    query = query.Remove(placeholderIndex, 1);
-                    query = query.Insert(placeholderIndex, valueStr);
-                }
-
-                parameterIndex++;
-            }
-
-            return query;
-        }
-
-        #region データ取得処理
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="datatable">検索結果データテーブル</param>
-        /// <param name="strSQL">実行SQL</param>
-        /// <param name="Trncmd">SQLコマンド（Tran有の場合のみ）Trn内ではない場合はnull指定</param>
-        /// <returns>true：正常　false：異常</returns>
-        static public bool GetDataTable(ref System.Data.DataTable datatable, string strSQL, OleDbCommand Trncmd = null)
+        public static bool ExecuteSqlQuery(string query, Dictionary<string, (object Value, SqlDbType Type)> parameters = null, SqlTransaction transaction = null)
         {
             try
             {
-                OleDbCommand cmd = new OleDbCommand();
-
-                if (Trncmd != null)
+                using (SqlCommand cmd = new SqlCommand(query, sCon))
                 {
-                    cmd = Trncmd;
-                }
+                    if (transaction != null)
+                    {
+                        cmd.Transaction = transaction;
+                    }
 
-                cmd.Connection = oCon;
-                cmd.CommandText = strSQL;
+                    if (parameters != null)
+                    {
+                        foreach (var param in parameters)
+                        {
+                            var sqlParameter = new SqlParameter(param.Key, param.Value.Type)
+                            {
+                                Value = param.Value.Value ?? DBNull.Value
+                            };
+                            cmd.Parameters.Add(sqlParameter);
+                        }
+                    }
 
-                OleDbDataAdapter daAdapter = new OleDbDataAdapter(cmd);
-                daAdapter.Fill(datatable);
-
-                if (Trncmd == null)
-                {
-                    if (cmd != null) { cmd.Dispose(); cmd = null; }
+                    cmd.ExecuteNonQuery();
                 }
                 return true;
             }
-            catch (Exception)
+            catch(Exception ex)
             {
+                LoggerService Log = new LoggerService();
+                Log.LogWarning(query+ex.ToString());
                 return false;
             }
         }
+
+        /// <summary>
+        /// データ取得処理実行部
+        /// </summary>
+        /// <param name="query">SQL（パラメータ名称入り）</param>
+        /// <param name="dt">リターン用データテーブル（参照渡し）</param>
+        /// <param name="parameters"> Dictionary<string, (object Value, SqlDbType Type)>　なければ省略可能</param>
+        /// <param name="transaction">トランザクション　なければ省略可能</param>
+        /// <returns>true:成功　false:失敗</returns>
+        public static bool ExecuteSqlSelectQuery(string query, ref DataTable dt, Dictionary<string, (object Value, SqlDbType Type)> parameters = null, SqlTransaction transaction = null)
+        {
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(query, sCon))
+                {
+                    if (transaction != null)
+                    {
+                        cmd.Transaction = transaction;
+                    }
+
+                    if (parameters != null)
+                    {
+                        foreach (var param in parameters)
+                        {
+                            var sqlParameter = new SqlParameter(param.Key, param.Value.Type)
+                            {
+                                Value = param.Value.Value ?? DBNull.Value
+                            };
+                            cmd.Parameters.Add(sqlParameter);
+                        }
+                    }
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        dt.Clear();
+                        adapter.Fill(dt);
+                    }
+                }
+
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                LoggerService Log = new LoggerService();
+                Log.LogWarning(query+ex.ToString());
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// grid用データ取得処理(STS項目付)
+        /// </summary>
+        /// <param name="query">SQL（パラメータ名称入り）</param>
+        /// <param name="dt">リターン用データテーブル（参照渡し）</param>
+        /// <param name="parameters"> Dictionary<string, (object Value, SqlDbType Type)>　なければ省略可能</param>
+        /// <param name="transaction">トランザクション　なければ省略可能</param>
+        /// <returns>true:成功　false:失敗</returns>
+        public static bool GridData_ExecuteSqlSelectQuery(string query, ref DataTable dt, Dictionary<string, (object Value, SqlDbType Type)> parameters = null, SqlTransaction transaction = null)
+        {
+            try
+            {
+                ExecuteSqlSelectQuery(query, ref dt, parameters, transaction);
+                if (!dt.Columns.Contains("STSKBN"))
+                {
+                    // DataColumnの作成と設定
+                    DataColumn column = new DataColumn();
+                    column.ColumnName = "STSKBN";
+                    column.DataType = typeof(string);
+                    column.DefaultValue = Kom_System_Common.CommonClass.GridSetControl.STSKBN_NONE;
+                    dt.Columns.Add(column);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
         #endregion
 
         #region DBバックアップ処理
+
+
         public static bool MakeBackupFile(string BackupFilePath)
         {
-            // BACKUP DATABASE コマンド
-            string backupQuery = $@"BACKUP DATABASE [データベース名] TO DISK = '{BackupFilePath}' WITH INIT;";
-
-            try
+            if (!DbConnect())
             {
-                // SQL コマンドを実行
-                using (OleDbCommand cmd = new OleDbCommand())
-                {
-                    cmd.Connection = oCon;
-                    cmd.CommandText = backupQuery;
-                    cmd.ExecuteNonQuery();
-                    Console.WriteLine("データベースのバックアップが正常に完了しました。");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"エラーが発生しました: {ex.Message}");
                 return false;
             }
 
-            return true;   
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                try
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(DbBackup_Query, connection);
+                    //string backupName = $"BBX61 Full Backup - {DateTime.Now:yyyy_MM_dd_HH_mm_ss}";
+                    string backupName = $"KCON Full Backup - {DateTime.Now:yyyy_MM_dd_HH_mm_ss}";
+                    command.Parameters.Add("@BackupPath", System.Data.SqlDbType.NVarChar).Value = BackupFilePath;
+                    command.Parameters.Add("@BackupName", System.Data.SqlDbType.NVarChar).Value = backupName;
+                    command.CommandTimeout = 300;
+                    command.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    LoggerService Log = new LoggerService();
+                    Log.LogWarning(ex.ToString());
+                    return false;
+
+                }
+                finally
+                {
+                    DbDisConnect();
+                }
+            }
         }
         #endregion
-
     }
 }
