@@ -18,13 +18,13 @@ namespace Kom_System_Common.CommonClass
         static SqlSeverControl()
         {
 #if DEBUG
-            /*
-            string sqlUser = "sa";
-            string sqlPass = "sa";
-            string SqlService = "BBX61";
-            string SqlTns = Environment.MachineName + "\\SQLEXPRESS";
+            //string sqlUser = "sa";
+            //string sqlPass = "sa";
+            //string SqlService = "BBX61";
+            //string SqlTns = Environment.MachineName + "\\SQLEXPRESS";
             string SqlTimeout = "30";
-            */
+
+
             string sqlUser = "si";
             string sqlPass = "0251";
             string SqlService = "kcon";
@@ -32,8 +32,6 @@ namespace Kom_System_Common.CommonClass
             //string SqlTns = "192.168.1.236";
             string SqlTns = "192.168.1.217";
             //string SqlTns = "localhost";
-            string SqlTimeout = "10";
-
 
 
             connectionString = $"Server ={SqlTns};Database={SqlService};User Id={sqlUser};Password={sqlPass};Connect Timeout={SqlTimeout};";
@@ -41,7 +39,7 @@ namespace Kom_System_Common.CommonClass
             connectionString = ConfigurationManager.ConnectionStrings["KomSystem"].ConnectionString;
 #endif
 
-            DbBackup_Query = @"BACKUP DATABASE KCON
+            DbBackup_Query = @"BACKUP DATABASE BBX61
                                     TO DISK = @BackupPath
                                     WITH NOFORMAT, NOINIT,
                                     NAME = @BackupName,
@@ -130,7 +128,7 @@ namespace Kom_System_Common.CommonClass
             catch(Exception ex)
             {
                 LoggerService Log = new LoggerService();
-                Log.LogWarning(query+ex.ToString());
+                Log.LogWarning(ex.ToString());
                 return false;
             }
         }
@@ -179,7 +177,7 @@ namespace Kom_System_Common.CommonClass
             catch(Exception ex)
             {
                 LoggerService Log = new LoggerService();
-                Log.LogWarning(query+ex.ToString());
+                Log.LogWarning(ex.ToString());
                 return false;
             }
         }
@@ -192,7 +190,7 @@ namespace Kom_System_Common.CommonClass
         /// <param name="parameters"> Dictionary<string, (object Value, SqlDbType Type)>　なければ省略可能</param>
         /// <param name="transaction">トランザクション　なければ省略可能</param>
         /// <returns>true:成功　false:失敗</returns>
-        public static bool GridData_ExecuteSqlSelectQuery(string query, ref DataTable dt, Dictionary<string, (object Value, SqlDbType Type)> parameters = null, SqlTransaction transaction = null)
+        public static bool GridData_ExecuteSqlSelectQuery(string query, ref DataTable dt, Dictionary<string, (object Value, SqlDbType Type)> parameters = null, SqlTransaction transaction = null, string sourceColumn = null)
         {
             try
             {
@@ -205,6 +203,22 @@ namespace Kom_System_Common.CommonClass
                     column.DataType = typeof(string);
                     column.DefaultValue = Kom_System_Common.CommonClass.GridSetControl.STSKBN_NONE;
                     dt.Columns.Add(column);
+                    
+                    if (sourceColumn != null)
+                    {
+                        string destinationColumn = Kom_System_Common.CommonClass.GridSetControl.EDITINDEX;
+                        // 新しいカラムを追加
+                        if (!dt.Columns.Contains(destinationColumn))
+                        {
+                            dt.Columns.Add(destinationColumn, dt.Columns[sourceColumn].DataType);
+                        }
+
+                        // データをコピー
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            row[destinationColumn] = row[sourceColumn];
+                        }
+                    }
                 }
                 return true;
             }
@@ -218,11 +232,9 @@ namespace Kom_System_Common.CommonClass
         #endregion
 
         #region DBバックアップ処理
-
-
         public static bool MakeBackupFile(string BackupFilePath)
         {
-            if (!DbConnect())
+            if(!DbConnect())
             {
                 return false;
             }
@@ -234,8 +246,7 @@ namespace Kom_System_Common.CommonClass
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(DbBackup_Query, connection);
-                    //string backupName = $"BBX61 Full Backup - {DateTime.Now:yyyy_MM_dd_HH_mm_ss}";
-                    string backupName = $"KCON Full Backup - {DateTime.Now:yyyy_MM_dd_HH_mm_ss}";
+                    string backupName = $"BBX61 Full Backup - {DateTime.Now:yyyy_MM_dd_HH_mm_ss}";
                     command.Parameters.Add("@BackupPath", System.Data.SqlDbType.NVarChar).Value = BackupFilePath;
                     command.Parameters.Add("@BackupName", System.Data.SqlDbType.NVarChar).Value = backupName;
                     command.CommandTimeout = 300;

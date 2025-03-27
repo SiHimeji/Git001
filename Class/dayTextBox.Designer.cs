@@ -1,7 +1,9 @@
 ﻿namespace Kom_System_Common.CommonClass
 {
-    partial class dayTextBox
+    partial class DayTextBox
     {
+        //2025/01/27 V2
+        //2025/02/03 V2
         /// <summary>
         /// 必要なデザイナー変数です。
         /// </summary>

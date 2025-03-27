@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Xml.Linq;
 using System.Drawing.Text;
+using Kom_System_Common.CommonClass.Services;
 //using Microsoft.Office.Interop.Excel;
 
 namespace Kom_System_Common.CommonClass
@@ -30,7 +31,8 @@ namespace Kom_System_Common.CommonClass
 
         private Color defIns = Color.GreenYellow;          //追加のバックカラー
         private Color defUpdate = Color.Yellow;            //更新のバックカラー
-    
+        private Color defRef = Color.DodgerBlue;            //更新のバックカラー
+
         private Font deffont = new Font("メイリオ", 10.5f);//ファンクションボタンの初期フォント
 
         //int[] leftPos = { 1, 90, 179, 268, 377, 466, 555, 644, 753, 842, 931, 1020 };  //2024/10/07　位置微調整 - 削除CF
@@ -53,6 +55,7 @@ namespace Kom_System_Common.CommonClass
         #region "プロパティ"
         /// <summary>
         /// 更新・追加　TEXTの内容を表示　　　追加 2024/10/01 CF
+        /// 参照　                            追加 2025/01/30 CF
         ///  空白の場合は Visible = false;
         /// </summary>
         /// 
@@ -76,6 +79,11 @@ namespace Kom_System_Common.CommonClass
                         this.KousinLavel[0].Text = "変更";
                         this.KousinLavel[0].Visible = true;
                         this.KousinLavel[0].BackColor = defUpdate;
+                        break;
+                    case "3":       //追加 2025/01/30
+                        this.KousinLavel[0].Text = "参照";
+                        this.KousinLavel[0].Visible = true;
+                        this.KousinLavel[0].BackColor = defRef;
                         break;
                 }
 
@@ -127,6 +135,11 @@ namespace Kom_System_Common.CommonClass
             get { return myLoginNo; }     // 
             set { myLoginNo = value; }    //
         }
+
+        /// <summary>
+        /// ログインユーザーコード
+        /// </summary>
+        public string LoginUserCode { get; set; }
         #endregion
         #region "ファンクションのプロパティ"
         /// <summary>
@@ -382,6 +395,133 @@ namespace Kom_System_Common.CommonClass
             get { return FuncText[11]; }     // 
             set { FuncText[11] = value; }    //
         }
+        ////
+        // バックカラーの変更
+        ///
+        public Color F1_BackColor
+        {
+            get { return this.myFunction[0].BackColor; }
+            set { this.myFunction[0].BackColor = value; }  //
+        }
+        public Color F2_BackColor
+        {
+            get { return this.myFunction[1].BackColor; }
+            set { this.myFunction[1].BackColor = value; }  //
+        }
+        public Color F3_BackColor
+        {
+            get { return this.myFunction[2].BackColor; }
+            set { this.myFunction[2].BackColor = value; }  //
+        }
+        public Color F4_BackColor
+        {
+            get { return this.myFunction[3].BackColor; }
+            set { this.myFunction[3].BackColor = value; }  //
+        }
+        public Color F5_BackColor
+        {
+            get { return this.myFunction[4].BackColor; }
+            set { this.myFunction[4].BackColor = value; }  //
+        }
+        public Color F6_BackColor
+        {
+            get { return this.myFunction[5].BackColor; }
+            set { this.myFunction[5].BackColor = value; }  //
+        }
+
+        public Color F7_BackColor
+        {
+            get { return this.myFunction[6].BackColor; }
+            set { this.myFunction[6].BackColor = value; }  //
+        }
+        public Color F8_BackColor
+        {
+            get { return this.myFunction[7].BackColor; }
+            set { this.myFunction[7].BackColor = value; }  //
+        }
+        public Color F9_BackColor
+        {
+            get { return this.myFunction[8].BackColor; }
+            set { this.myFunction[8].BackColor = value; }  //
+        }
+        public Color F10_BackColor
+        {
+            get { return this.myFunction[9].BackColor; }
+            set { this.myFunction[9].BackColor = value; }  //
+        }
+        public Color F11_BackColor
+        {
+            get { return this.myFunction[10].BackColor; }
+            set { this.myFunction[10].BackColor = value; }  //
+        }
+        public Color F12_BackColor
+        {
+            get { return this.myFunction[11].BackColor; }
+            set { this.myFunction[11].BackColor = value; }  //
+        }
+        ////
+        // ForeColorの変更
+        ///
+        public Color F1_ForeColor
+        {
+            get { return this.myFunction[0].ForeColor; }
+            set { this.myFunction[0].ForeColor = value; }  //
+        }
+        public Color F2_ForeColor
+        {
+            get { return this.myFunction[1].ForeColor; }
+            set { this.myFunction[1].ForeColor = value; }  //
+        }
+        public Color F3_ForeColor
+        {
+            get { return this.myFunction[2].ForeColor; }
+            set { this.myFunction[2].ForeColor = value; }  //
+        }
+        public Color F4_ForeColor
+        {
+            get { return this.myFunction[3].ForeColor; }
+            set { this.myFunction[3].ForeColor = value; }  //
+        }
+        public Color F5_ForeColor
+        {
+            get { return this.myFunction[4].ForeColor; }
+            set { this.myFunction[4].ForeColor = value; }  //
+        }
+        public Color F6_ForeColor
+        {
+            get { return this.myFunction[5].ForeColor; }
+            set { this.myFunction[5].ForeColor = value; }  //
+        }
+        public Color F7_ForeColor
+        {
+            get { return this.myFunction[6].ForeColor; }
+            set { this.myFunction[6].ForeColor = value; }  //
+        }
+        public Color F8_ForeColor
+        {
+            get { return this.myFunction[7].ForeColor; }
+            set { this.myFunction[7].ForeColor = value; }  //
+        }
+        public Color F9_ForeColor
+        {
+            get { return this.myFunction[8].ForeColor; }
+            set { this.myFunction[8].ForeColor = value; }  //
+        }
+        public Color F10_ForeColor
+        {
+            get { return this.myFunction[9].ForeColor; }
+            set { this.myFunction[9].ForeColor = value; }  //
+        }
+        public Color F11_ForeColor
+        {
+            get { return this.myFunction[10].ForeColor; }
+            set { this.myFunction[10].ForeColor = value; }  //
+        }
+        public Color F12_ForeColor
+        {
+            get { return this.myFunction[11].ForeColor; }
+            set { this.myFunction[11].ForeColor = value; }  //
+        }
         #endregion
 
         #region "ファンクション表示"
@@ -392,6 +532,34 @@ namespace Kom_System_Common.CommonClass
         public void FunctionControlDisp()
         {
             /////////////////////////////////////////////////////////////////
+            #region ログイン情報の取得
+            if (!string.IsNullOrEmpty(this.LoginUserCode))
+            {
+                // ログインユーザーコードが指定されている場合
+                // 名称マスタから事業所、ユーザー名を取得する
+                decimal jigyoshoCd = -1;
+                if (this.LoginUserCode.Length >= 2)
+                {
+                    if (decimal.TryParse(this.LoginUserCode.Substring(0,2), out jigyoshoCd))
+                    {
+                        this.myGijyosyoNo = jigyoshoCd.ToString("00");
+                    }
+                }
+                var jigyoshoData = MeishoMasterService.GetMeishoMaster(MeishoMasterService.NMKBN.JIGYOSHO, jigyoshoCd.ToString(), MeishoMasterService.BRCD.MEISHO);
+                if (jigyoshoData != null && jigyoshoData.Rows.Count > 0)
+                {
+                    this.myGijyosyo = jigyoshoData.Rows[0]["NM"].ToString();
+                }
+
+                var userData = MeishoMasterService.GetMeishoMaster(MeishoMasterService.NMKBN.TANTOSHA, this.LoginUserCode, MeishoMasterService.BRCD.MEISHO);
+                this.LoginNo = this.LoginUserCode;
+                if (userData != null && userData.Rows.Count > 0)
+                {
+                    this.myLogin = userData.Rows[0]["NM"].ToString();
+                }
+            }
+            #endregion
+
             this.myFunction = new Button[12];
             for (int i = 0; i < this.myFunction.Length; i++)
             {
