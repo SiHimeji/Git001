@@ -1,9 +1,8 @@
 import glob
 import os
-import subprocess
 user_name = 'siadmin'
-password  = '0251'
-net_drive_path = r'\\HIMEJI-BACKUP\landisk\IMF\03_仕様\運賃管理'
+password = '0251'
+net_drive_path = r'\\HIMEJI-BACKUP\landisk'
 
 #接続
 def mount_network_drive():
@@ -32,14 +31,16 @@ def unmount_network_drive():
 #
 def filedel(file_name):
     try:
-        with open(file_name, 'rb') as bin_file:
+        print("del /a:h \""+ file_name+"\"") 
     except Exception as e:
         print(f'ERROR')
- 
-#Main
+    
+
 # ネットワークドライブのマウント
 mount_network_drive()
+
 # 必要な操作を行う
+# 例: ファイルリストを表示
 for root, dirs, files in os.walk(net_drive_path):
     for file in files:
         if(file=='Thumbs.db'):
@@ -49,4 +50,3 @@ for root, dirs, files in os.walk(net_drive_path):
 # ネットワークドライブのアンマウント
 unmount_network_drive()
 print(f'END')
-val = input()

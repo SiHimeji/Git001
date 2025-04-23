@@ -2,7 +2,7 @@ from pathlib import Path
 import PyPDF2
 import os
 
-path ="E:\PDF\\OUT\\"
+path ="E:\\PDF\\OUT\\"
 pdf_dir = Path(path)
 pdf_files = sorted(pdf_dir.glob("*.pdf"))
 pdf_wrier = PyPDF2.PdfFileWriter()
