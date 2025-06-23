@@ -435,7 +435,7 @@
                                 strSQL &= ",v_tenken_kekka.点検項目名＿法１８,v_tenken_kekka.点検結果＿法１８,  v_tenken_kekka.安全装置５有無 ,"
                             Case Else
                                 strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & ", "
-                                strSQL &= ",v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ","
+                                strSQL &= "v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ","
 
 
 
