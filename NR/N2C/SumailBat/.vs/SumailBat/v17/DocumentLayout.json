@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\01_Work\\04_NR\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_N2C\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\SumailBat\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2DC368BB-4FD9-4E65-BE23-C4AE7A185621}|SumailBat\\SumailBat.vbproj|d:\\01_work\\04_nr\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_n2c\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\sumailbat\\sumailbat\\module2.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{2DC368BB-4FD9-4E65-BE23-C4AE7A185621}|SumailBat\\SumailBat.vbproj|solutionrelative:sumailbat\\module2.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DC368BB-4FD9-4E65-BE23-C4AE7A185621}|SumailBat\\SumailBat.vbproj|D:\\01_Work\\04_NR\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_N2C\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\SumailBat\\sumailbat\\module1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{2DC368BB-4FD9-4E65-BE23-C4AE7A185621}|SumailBat\\SumailBat.vbproj|solutionrelative:sumailbat\\module1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DC368BB-4FD9-4E65-BE23-C4AE7A185621}|SumailBat\\SumailBat.vbproj|D:\\01_Work\\04_NR\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_N2C\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\SumailBat\\sumailbat\\loggerservice.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{2DC368BB-4FD9-4E65-BE23-C4AE7A185621}|SumailBat\\SumailBat.vbproj|solutionrelative:sumailbat\\loggerservice.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Module2.vb",
+              "DocumentMoniker": "D:\\01_Work\\04_NR\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_N2C\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\SumailBat\\SumailBat\\Module2.vb",
+              "RelativeDocumentMoniker": "SumailBat\\Module2.vb",
+              "ToolTip": "D:\\01_Work\\04_NR\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_N2C\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\SumailBat\\SumailBat\\Module2.vb",
+              "RelativeToolTip": "SumailBat\\Module2.vb",
+              "ViewState": "AgIAAAsAAAAAAAAAAADwv0wAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-21T00:46:08.679Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Module1.vb",
+              "DocumentMoniker": "D:\\01_Work\\04_NR\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_N2C\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\SumailBat\\SumailBat\\Module1.vb",
+              "RelativeDocumentMoniker": "SumailBat\\Module1.vb",
+              "ToolTip": "D:\\01_Work\\04_NR\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_N2C\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\SumailBat\\SumailBat\\Module1.vb",
+              "RelativeToolTip": "SumailBat\\Module1.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-21T00:46:06.112Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LoggerService.vb",
+              "DocumentMoniker": "D:\\01_Work\\04_NR\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_N2C\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\SumailBat\\SumailBat\\LoggerService.vb",
+              "RelativeDocumentMoniker": "SumailBat\\LoggerService.vb",
+              "ToolTip": "D:\\01_Work\\04_NR\\06_\u70B9\u691C\u30BB\u30F3\u30BF\u30FC\\70_N2C\u5BFE\u5FDC\\\u30BD\u30FC\u30B9\\SumailBat\\SumailBat\\LoggerService.vb*",
+              "RelativeToolTip": "SumailBat\\LoggerService.vb*",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-04-24T06:01:12.817Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
