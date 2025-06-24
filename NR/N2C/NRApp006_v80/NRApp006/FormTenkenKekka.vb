@@ -428,14 +428,17 @@
                     Case "ガス機器"
                         Select Case Me.ListBox点検項目名.SelectedItem.ToString
                             Case "法１２"
-                                strSQL &= ",v_tenken_kekka.点検項目名＿法１２,v_tenken_kekka.点検結果＿法１２, v_tenken_kekka.一酸化炭素濃度未測定理由  ,"
+                                strSQL &= ",v_tenken_kekka.点検項目名＿法１２,v_tenken_kekka.点検結果＿法１２, v_tenken_kekka.一酸化炭素濃度未測定理由  "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿法１２,'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント"
                             Case "法１７"
-                                strSQL &= ",v_tenken_kekka.点検項目名＿法１７,v_tenken_kekka.点検結果＿法１７, v_tenken_kekka.安全装置５有無 , v_tenken_kekka.安全装置６有無 ,"
+                                strSQL &= ",v_tenken_kekka.点検項目名＿法１７,v_tenken_kekka.点検結果＿法１７, v_tenken_kekka.安全装置５有無 , v_tenken_kekka.安全装置６有無 "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿法１７,'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
                             Case "法１８"
-                                strSQL &= ",v_tenken_kekka.点検項目名＿法１８,v_tenken_kekka.点検結果＿法１８,  v_tenken_kekka.安全装置５有無 ,"
+                                strSQL &= ",v_tenken_kekka.点検項目名＿法１８,v_tenken_kekka.点検結果＿法１８,  v_tenken_kekka.安全装置５有無 "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿法１８,'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント"
                             Case Else
-                                strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & ", "
-                                strSQL &= "v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ","
+                                strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & " "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ",'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
 
 
 
@@ -443,36 +446,40 @@
                     Case "石油機器"
                         Select Case Me.ListBox点検項目名.SelectedItem.ToString
                             Case "法１７"
-                                strSQL &= ",v_tenken_kekka.点検項目名＿法１７,v_tenken_kekka.点検結果＿法１７, v_tenken_kekka.安全装置９有無 ,"
-                                strSQL &= ",v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ","
+                                strSQL &= ",v_tenken_kekka.点検項目名＿法１７,v_tenken_kekka.点検結果＿法１７, v_tenken_kekka.安全装置９有無 "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿法１７'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント"
                             Case "法１８"
-                                strSQL &= ",v_tenken_kekka.点検項目名＿法１８,v_tenken_kekka.点検結果＿法１８, v_tenken_kekka.安全装置１０有無 ,"
+                                strSQL &= ",v_tenken_kekka.点検項目名＿法１８,v_tenken_kekka.点検結果＿法１８, v_tenken_kekka.安全装置１０有無 "
                                 'Case "自１", "自２", "自３", "自４", "自５", "自６", "自７"
                                 '   strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & ", "
-                                strSQL &= ",v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ","
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿法１８'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
                             Case "自８"
-                                strSQL &= ",v_tenken_kekka.点検項目名＿自８,v_tenken_kekka.点検結果＿自８, v_tenken_kekka.安全装置１有無 ,"
+                                strSQL &= ",v_tenken_kekka.点検項目名＿自８,v_tenken_kekka.点検結果＿自８, v_tenken_kekka.安全装置１有無 "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿自８'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
+
                             Case Else
-                                strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & ", "
-                                strSQL &= ",v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ","
+                                strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & " "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ",'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
                         End Select
 
                     Case "ビルトイン式食器洗機"
                         strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & ", "
+                        strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ",'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
 
                     Case "ハイブリッド機器"
                         Select Case Me.ListBox点検項目名.SelectedItem.ToString
                             Case "法１２"
-                                strSQL &= ",v_tenken_kekka.点検項目名＿法１２,v_tenken_kekka.点検結果＿法１２, v_tenken_kekka.一酸化炭素濃度未測定理由  ,"
-                                strSQL &= ",v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ","
+                                strSQL &= ",v_tenken_kekka.点検項目名＿法１２,v_tenken_kekka.点検結果＿法１２, v_tenken_kekka.一酸化炭素濃度未測定理由  "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿法１２,'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント"
                             Case "法１７"
-                                strSQL &= ",v_tenken_kekka.点検項目名＿法１７,v_tenken_kekka.点検結果＿法１７, v_tenken_kekka.安全装置５有無 , v_tenken_kekka.安全装置６有無 ,"
-                                strSQL &= ",v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ","
+                                strSQL &= ",v_tenken_kekka.点検項目名＿法１７,v_tenken_kekka.点検結果＿法１７, v_tenken_kekka.安全装置５有無 , v_tenken_kekka.安全装置６有無 "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿１７,'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
                             Case "法１８"
-                                strSQL &= ",v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ","
-                                strSQL &= ",v_tenken_kekka.点検項目名＿法１８,v_tenken_kekka.点検結果＿法１８,  v_tenken_kekka.安全装置５有無 ,"
+                                strSQL &= ",v_tenken_kekka.点検項目名＿法１８,v_tenken_kekka.点検結果＿法１８,  v_tenken_kekka.安全装置５有無 "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿法１８,'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
                             Case Else
-                                strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & ", "
+                                strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & " "
+                                strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ",'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
 
 
                         End Select
@@ -481,7 +488,7 @@
             End If
 
             'strSQL &= "v_tenken_kekka.注意事項コメント  ,t_tenken_fubi.不備内容 ,t_tenken_fubi.再訪問指示内容 ,to_char(t_tenken_fubi.再訪問指示日,'yyyy/mm/dd') 再訪問指示日"
-            strSQL &= " t_tenken_fubi.不備内容 ,t_tenken_fubi.再訪問指示内容 ,to_char(t_tenken_fubi.再訪問指示日,'yyyy/mm/dd') 再訪問指示日"
+            strSQL &= " ,t_tenken_fubi.不備内容 ,t_tenken_fubi.再訪問指示内容 ,to_char(t_tenken_fubi.再訪問指示日,'yyyy/mm/dd') 再訪問指示日"
 
             strSQL &= ", COALESCE(t_tenken_fubi.反映フラグ,' ')  反映フラグ"
 
@@ -561,8 +568,8 @@
                 'strSQL &= " and  COALESCE(v_tenken_kekka.endflag ,'0') <> '1'"
                 strSQL &= " and  v_tenken_kekka.endflag  = '0'"
             End If
-
-            strSQL &= " And 機器分類名 = '" & Me.ListBox機器分類名.SelectedItem.ToString & "'"
+            '2025/06/23
+            strSQL &= " And 機器分類名  like'%" & Me.ListBox機器分類名.SelectedItem.ToString & "'"
 
             If Me.ListBox点検製品区分詳細名.SelectedIndex <> -1 Then
                 strSQL &= " And 点検製品区分詳細名 = '" & Me.ListBox点検製品区分詳細名.SelectedItem.ToString & "'"
