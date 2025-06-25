@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\packages\SQLite.3.13.0\build\net45\SQLite.props" Condition="Exists('..\packages\SQLite.3.13.0\build\net45\SQLite.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DF97357D-0A54-44D1-956C-D014D6D63D41}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>SIAP002.My.MyApplication</StartupObject>
+    <RootNamespace>SIAP002</RootNamespace>
+    <AssemblyName>SIAP002</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>SIAP002.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>SIAP002.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>himemaru2.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.118.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.118.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClassExcel.vb" />
+    <Compile Include="ClassLIB.vb" />
+    <Compile Include="ClassNayose.vb" />
+    <Compile Include="ClassOldDataDelete.vb" />
+    <Compile Include="ClassRuiseki.vb" />
+    <Compile Include="ClassSQLite.vb" />
+    <Compile Include="ClassWord.vb" />
+    <Compile Include="FormBackUp.Designer.vb">
+      <DependentUpon>FormBackUp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormBackUp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCSV.Designer.vb">
+      <DependentUpon>FormCSV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormCSV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormKey.Designer.vb">
+      <DependentUpon>FormKey.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormKey.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormKifuKensaku.designer.vb">
+      <DependentUpon>FormKifuKensaku.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormKifuKensaku.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLog.Designer.vb">
+      <DependentUpon>FormLog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormLog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.vb">
+      <DependentUpon>FormLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMeisai.Designer.vb">
+      <DependentUpon>FormMeisai.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMeisai.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMeisaiMain.Designer.vb">
+      <DependentUpon>FormMeisaiMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMeisaiMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMenu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMenu.Designer.vb">
+      <DependentUpon>FormMenu.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMSTcsv.Designer.vb">
+      <DependentUpon>FormMSTcsv.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMSTcsv.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMSTkinen.Designer.vb">
+      <DependentUpon>FormMSTkinen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMSTkinen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMSTnayose.Designer.vb">
+      <DependentUpon>FormMSTnayose.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMSTnayose.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMSTpoint.Designer.vb">
+      <DependentUpon>FormMSTpoint.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMSTpoint.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMSTrank.Designer.vb">
+      <DependentUpon>FormMSTrank.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMSTrank.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMSTsystem.Designer.vb">
+      <DependentUpon>FormMSTsystem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMSTsystem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMSTuser.Designer.vb">
+      <DependentUpon>FormMSTuser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMSTuser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPassWord.Designer.vb">
+      <DependentUpon>FormPassWord.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPassWord.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRiseki.Designer.vb">
+      <DependentUpon>FormRiseki.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormRiseki.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modulelib.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormBackUp.resx">
+      <DependentUpon>FormBackUp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCSV.resx">
+      <DependentUpon>FormCSV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormKey.resx">
+      <DependentUpon>FormKey.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormKifuKensaku.resx">
+      <DependentUpon>FormKifuKensaku.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLog.resx">
+      <DependentUpon>FormLog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMeisai.resx">
+      <DependentUpon>FormMeisai.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMeisaiMain.resx">
+      <DependentUpon>FormMeisaiMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMenu.resx">
+      <DependentUpon>FormMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMSTcsv.resx">
+      <DependentUpon>FormMSTcsv.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMSTkinen.resx">
+      <DependentUpon>FormMSTkinen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMSTnayose.resx">
+      <DependentUpon>FormMSTnayose.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMSTpoint.resx">
+      <DependentUpon>FormMSTpoint.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMSTrank.resx">
+      <DependentUpon>FormMSTrank.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMSTsystem.resx">
+      <DependentUpon>FormMSTsystem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMSTuser.resx">
+      <DependentUpon>FormMSTuser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPassWord.resx">
+      <DependentUpon>FormPassWord.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRiseki.resx">
+      <DependentUpon>FormRiseki.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\姫路城.JPG" />
+    <Content Include="himemaru2.ico" />
+    <Content Include="Resources\姫路城2.JPG" />
+    <None Include="Resources\姫路城21.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SQLite.3.13.0\build\net45\SQLite.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLite.3.13.0\build\net45\SQLite.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
+</Project>
