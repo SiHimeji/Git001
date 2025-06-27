@@ -254,7 +254,7 @@
             Me.DataGridView1.Columns(ro).Width = 60
             ro = ro + 1
 
-            ro = settextColumn(Me.DataGridView1, ro, "受付ＮＯ", "受付ＮＯ", 60, True)
+            ro = settextColumn(Me.DataGridView1, ro, "受付ＮＯ", "受付ＮＯ", 80, True)
             ro = settextColumn(Me.DataGridView1, ro, "製品名", "製品名", 120, True)
             seihinmeicol = ro - 1
 
