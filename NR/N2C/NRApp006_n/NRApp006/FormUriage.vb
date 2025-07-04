@@ -182,7 +182,7 @@
         '--------------------------------------------------------------------------
         strSQL = ""
         strSQL &= "select"
-        strSQL &= " LEFT(t.entry_date,7) 年月"
+        strSQL &= " LEFT(t.nextb,7) 年月"
         strSQL &= ",t.cst_cd 品コード"
         strSQL &= ",CASE t.cst_cd WHEN '901000'  THEN '別途請求' "
         strSQL &= "               WHEN '010574'  THEN '直収' "
@@ -193,10 +193,10 @@
         strSQL &= ",sum( CAST(COALESCE(t.upri ,'0')AS INTEGER) ) 金額"
         strSQL &= ",count(*) 件数"
         strSQL &= " FROM " & schema & "t_002 t"
-        strSQL &= " where t.entry_date  between '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/01/01'and '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/12/31'"
-        strSQL &= " and   t.nextb  is not null "
-        strSQL &= " group by LEFT(t.entry_date,7) , t.cst_cd "
-        strSQL &= " order by LEFT(t.entry_date,7) , t.cst_cd "
+        strSQL &= " where t.nextb  between '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/01/01'and '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/12/31'"
+        'strSQL &= " and   t.nextb  is not null "
+        strSQL &= " group by LEFT(t.nextb,7) , t.cst_cd "
+        strSQL &= " order by LEFT(t.nextb,7) , t.cst_cd "
 
 
         dt0 = ClassPostgeDB.SetTable(strSQL)
@@ -212,8 +212,6 @@
     Private Function SQL4() As String
 
         Return "(v.技術料  + v.出張料 + v.その他料金 +cast(( case when v.サポート料 is null then '0' when v.サポート料 = '' then '0' else v.サポート料 end ) as  numeric) -cast(( case when v.値引き is null then '0'  when v.値引き = '' then '0' else v.値引き end )  as  numeric)) "
-
-
 
     End Function
 
@@ -274,16 +272,11 @@
             'FormUriageSub.Maker = Me.ComboBoxメーカー.Text
             'FormUriageSub.ShowDialog()
 
-
             FormUriage002.UserID = UserID
             FormUriage002.Kengen = Kengen
             FormUriage002.UserName = UserName
-
-
-
-
-
-
+            FormUriage002.Nentuki = Me.DataGridView1.Rows(ro).Cells(0).Value.ToString
+            FormUriage002.SinaCd = Me.DataGridView1.Rows(ro).Cells(1).Value.ToString
             FormUriage002.ShowDialog()
 
         End If
