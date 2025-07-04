@@ -1018,6 +1018,13 @@
         strSQL &= " or    t.請求先電話='0789224902'"
         strSQL &= " )"
 
+
+        If CheckBoxCIM.Checked Then
+
+        Else
+            strSQL &= " and t.newflg  ='1' "
+        End If
+
         dt = ClassPostgeDB.SetTable(strSQL)
 
         Me.DataGridView1.AutoGenerateColumns = False
@@ -1226,6 +1233,7 @@
                 strSQL &= ",t." & Me.ComboBox期間.Text
             End If
         End If
+
         'strSQL &= ",t.点検受付番号"
         'strSQL &= ",t. 点検完了日 "
         'strSQL &= ",t.回収区分"
@@ -1247,6 +1255,7 @@
 
         End If
 
+
         strSQL &= " where t.ステータス名 in (" & strSQL1 & ")"
         strSQL &= " and   t.回収区分 in(" & strSQL2 & ")"
         strSQL &= " and   t.点検状態区分名称 in(" & strSQL4 & ")"
@@ -1259,6 +1268,13 @@
         End If
 
         strSQL &= " and ( t.ｄｍ番号 not like 'A%'  )"
+        If CheckBoxCIM.Checked Then
+
+        Else
+            strSQL &= " and t.newflg  ='1'"
+
+        End If
+
         strSQL &= " order by t1.ステータス asc ,t.更新日 desc"
 
 
@@ -1756,6 +1772,13 @@
             strSQL &= " and t.点検受付番号 not in (select  tt.点検受付番号 from " & schema & "t_teisei tt where tt.ステータス  in ( Select naiyou from " & schema & "m_system  where kbn ='20'and naiyou2 ='1' ) )"
         End If
 
+        If CheckBoxCIM.Checked Then
+
+        Else
+            strSQL &= " and t.newflg  ='1' "
+        End If
+
+
 
         strSQL &= " order by t.更新日 asc"
 
@@ -1944,6 +1967,17 @@
         strSQL &= " and t1.点検状態区分名称 in(" & strSQL4 & ")"
         strSQL &= " and t1.修理状況 Not in ('訪問キャンセル')"
         strSQL &= strSQL32
+
+
+        If CheckBoxCIM.Checked Then
+
+        Else
+            strSQL &= " "
+
+        End If
+
+
+
         strSQL &= " order by "
         strSQL &= " t1.担当サービスマン"
         strSQL &= ",t1.都道府県名 "
@@ -1954,6 +1988,7 @@
         strSQL &= ",t1.修理完了日"
         strSQL &= ",t1.出張料"
         strSQL &= ",t1.無償出張料"
+
 
 
         dt = ClassPostgeDB.SetTable(strSQL)
@@ -2378,6 +2413,12 @@
         strSQL &= " and t1.点検状態区分名称 in(" & strSQL4 & ")"
         strSQL &= " and t1.修理状況 Not in ('訪問キャンセル')"
         strSQL &= strSQL32
+        If CheckBoxCIM.Checked Then
+
+        Else
+            strSQL &= " and t.newflg  ='1'"
+
+        End If
 
 
         strSQL &= " group by t1.点検受付番号"

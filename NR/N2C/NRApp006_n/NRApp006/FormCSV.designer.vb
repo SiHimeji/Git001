@@ -86,6 +86,7 @@ Partial Class FormCSV
         Me.CheckBoxSS後日請求 = New System.Windows.Forms.CheckBox()
         Me.CheckBoxSS現金徴収 = New System.Windows.Forms.CheckBox()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.CheckBoxCIM = New System.Windows.Forms.CheckBox()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -203,6 +204,7 @@ Partial Class FormCSV
         '
         'SplitContainer1.Panel1
         '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.CheckBoxCIM)
         Me.SplitContainer1.Panel1.Controls.Add(Me.ButtonDM番号CLEAR)
         Me.SplitContainer1.Panel1.Controls.Add(Me.Button点検受付番号CLEAR)
         Me.SplitContainer1.Panel1.Controls.Add(Me.Button集約)
@@ -728,6 +730,16 @@ Partial Class FormCSV
         Me.DataGridView1.Size = New System.Drawing.Size(1125, 337)
         Me.DataGridView1.TabIndex = 0
         '
+        'CheckBoxCIM
+        '
+        Me.CheckBoxCIM.AutoSize = True
+        Me.CheckBoxCIM.Location = New System.Drawing.Point(509, 159)
+        Me.CheckBoxCIM.Name = "CheckBoxCIM"
+        Me.CheckBoxCIM.Size = New System.Drawing.Size(114, 16)
+        Me.CheckBoxCIM.TabIndex = 25
+        Me.CheckBoxCIM.Text = "旧システムも含める"
+        Me.CheckBoxCIM.UseVisualStyleBackColor = True
+        '
         'FormCSV
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -828,4 +840,5 @@ Partial Class FormCSV
     Friend WithEvents Button請求先電話CLEAR As Button
     Friend WithEvents Button点検受付番号CLEAR As Button
     Friend WithEvents ButtonDM番号CLEAR As Button
+    Friend WithEvents CheckBoxCIM As CheckBox
 End Class

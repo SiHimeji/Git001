@@ -110,6 +110,13 @@
             strSQL &= strSQL5 'As String　'請求先
 
         End If
+        If CheckBoxCIM.Checked Then
+
+
+        Else
+            strSQL &= " and t.newflg  ='1'"
+        End If
+
 
         strSQL &= " order by t1.ステータス asc ,t.更新日 desc"
 

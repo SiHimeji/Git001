@@ -91,6 +91,7 @@ Partial Class FormCheck
         Me.ComboBox項目 = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.CheckBoxCIM = New System.Windows.Forms.CheckBox()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -109,7 +110,7 @@ Partial Class FormCheck
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.終了ToolStripMenuItem, Me.実行ToolStripMenuItem, Me.出力ToolStripMenuItem, Me.チェックToolStripMenuItem, Me.条件初期ToolStripMenuItem, Me.チェックToolStripMenuItem1, Me.更新ToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1134, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1145, 24)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -197,9 +198,9 @@ Partial Class FormCheck
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel件数, Me.ToolStripProgressBar1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 566)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 572)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1134, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1145, 22)
         Me.StatusStrip1.TabIndex = 1
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -230,6 +231,7 @@ Partial Class FormCheck
         '
         'SplitContainer1.Panel1
         '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.CheckBoxCIM)
         Me.SplitContainer1.Panel1.Controls.Add(Me.CheckBoxZero)
         Me.SplitContainer1.Panel1.Controls.Add(Me.CheckBox物件重複を外す)
         Me.SplitContainer1.Panel1.Controls.Add(Me.CheckBox回収対象外)
@@ -251,7 +253,7 @@ Partial Class FormCheck
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.DataGridView1)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1134, 542)
+        Me.SplitContainer1.Size = New System.Drawing.Size(1145, 548)
         Me.SplitContainer1.SplitterDistance = 167
         Me.SplitContainer1.TabIndex = 2
         '
@@ -466,9 +468,9 @@ Partial Class FormCheck
         Me.GroupBox3.Controls.Add(Me.CheckBox受付キャンセル)
         Me.GroupBox3.Controls.Add(Me.CheckBox受付保留)
         Me.GroupBox3.Controls.Add(Me.CheckBox受付完了)
-        Me.GroupBox3.Location = New System.Drawing.Point(15, 80)
+        Me.GroupBox3.Location = New System.Drawing.Point(15, 78)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(497, 77)
+        Me.GroupBox3.Size = New System.Drawing.Size(497, 65)
         Me.GroupBox3.TabIndex = 9
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "点検状態区分"
@@ -765,14 +767,24 @@ Partial Class FormCheck
         Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowTemplate.Height = 21
-        Me.DataGridView1.Size = New System.Drawing.Size(1134, 371)
+        Me.DataGridView1.Size = New System.Drawing.Size(1145, 377)
         Me.DataGridView1.TabIndex = 0
+        '
+        'CheckBoxCIM
+        '
+        Me.CheckBoxCIM.AutoSize = True
+        Me.CheckBoxCIM.Location = New System.Drawing.Point(15, 146)
+        Me.CheckBoxCIM.Name = "CheckBoxCIM"
+        Me.CheckBoxCIM.Size = New System.Drawing.Size(114, 16)
+        Me.CheckBoxCIM.TabIndex = 18
+        Me.CheckBoxCIM.Text = "旧システムを含める"
+        Me.CheckBoxCIM.UseVisualStyleBackColor = True
         '
         'FormCheck
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1134, 588)
+        Me.ClientSize = New System.Drawing.Size(1145, 594)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -871,4 +883,5 @@ Partial Class FormCheck
     Friend WithEvents 全OFFToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 反転ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 更新ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CheckBoxCIM As CheckBox
 End Class

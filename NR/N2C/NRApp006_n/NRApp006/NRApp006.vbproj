@@ -372,6 +372,12 @@
     <Compile Include="FormUriage.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormUriage002.Designer.vb">
+      <DependentUpon>FormUriage002.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormUriage002.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormUriageSub.designer.vb">
       <DependentUpon>FormUriageSub.vb</DependentUpon>
     </Compile>
@@ -524,6 +530,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormUriage.resx">
       <DependentUpon>FormUriage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUriage002.resx">
+      <DependentUpon>FormUriage002.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormUriageSub.resx">
       <DependentUpon>FormUriageSub.vb</DependentUpon>

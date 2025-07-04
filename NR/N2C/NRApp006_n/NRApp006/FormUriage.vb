@@ -71,113 +71,132 @@
         Dim tuki As String = Me.DateTimePicker期間1.Value.ToString.Substring(0, 7)
 
 
-        If ComboBoxメーカー.Text = "得意先別" Then
+        'If ComboBoxメーカー.Text = "得意先別" Then
 
 
-            strSQL = "select t.itm_cd 得意先"
-            strSQL &= ",sum(cast(t.qty as numeric) * cast( t.upri as numeric)) 　売上"
-            strSQL &= " from " & schema & "t_002 t "
-            strSQL &= " where left(t.nextb,7) = '" & tuki & "'"
-            strSQL &= " group by t.itm_cd"
-            strSQL &= " order by t.itm_cd"
+        '    strSQL = "select t.itm_cd 得意先"
+        '    strSQL &= ",sum(cast(t.qty as numeric) * cast( t.upri as numeric)) 　売上"
+        '    strSQL &= " from " & schema & "t_002 t "
+        '    strSQL &= " where left(t.nextb,7) = '" & tuki & "'"
+        '    strSQL &= " group by t.itm_cd"
+        '    strSQL &= " order by t.itm_cd"
 
-        Else
+        'Else
 
-            strSQL = ""
-            strSQL &= "select '" & tuki & "' 売上年月,'請求済' 結果表,'直集' 分類,sum(cast(COALESCE( t.upri, '0' ) as numeric )) 売上金額,count(*) 台数"
-            strSQL &= " from " & schema & "t_002 t , " & schema & "v_yuryo_tenken_syuyaku v"
-            strSQL &= " where t.uketukeno  = v.点検受付番号 "
-            strSQL &= " and left(t.nextb,7) = '" & tuki & "'"
-            strSQL &= " and t.out_flg ='1'"
-            strSQL &= " and v.回収完了日 is not null"
-            'strSQL &= " and v.回収区分 in ('SS後日請求','SS現金徴収')"
-            strSQL &= " and t.cst_cd  in (" & GetCstCD("直集") & ")"
-            If Me.ComboBoxメーカー.Text = "全部" Then
+        '    strSQL = ""
+        '    strSQL &= "select '" & tuki & "' 売上年月,'請求済' 結果表,'直集' 分類,sum(cast(COALESCE( t.upri, '0' ) as numeric )) 売上金額,count(*) 台数"
+        '    strSQL &= " from " & schema & "t_002 t , " & schema & "v_yuryo_tenken_syuyaku v"
+        '    strSQL &= " where t.uketukeno  = v.点検受付番号 "
+        '    strSQL &= " and left(t.nextb,7) = '" & tuki & "'"
+        '    strSQL &= " and t.out_flg ='1'"
+        '    strSQL &= " and v.回収完了日 is not null"
+        '    'strSQL &= " and v.回収区分 in ('SS後日請求','SS現金徴収')"
+        '    strSQL &= " and t.cst_cd  in (" & GetCstCD("直集") & ")"
+        '    If Me.ComboBoxメーカー.Text = "全部" Then
 
-            Else
-                strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
-            End If
-
-
-            strSQL &= " union "
-            strSQL &= " select '" & tuki & "' 売上年月,'請求済' 結果表,'別途' 分類,sum(cast(COALESCE( t.upri, '0' ) as numeric )) 売上金額,count(*) 台数"
-            strSQL &= " from " & schema & "t_002 t , " & schema & "v_yuryo_tenken_syuyaku v"
-            strSQL &= " where t.uketukeno  = v.点検受付番号 "
-            strSQL &= " and left(t.nextb,7) = '" & tuki & "'"
-            strSQL &= " and t.out_flg ='1'"
-            strSQL &= " and v.回収完了日 is not null"
-            'strSQL &= " and v.回収区分 not in ('SS後日請求','SS現金徴収')"
-            strSQL &= " and t.cst_cd  in (" & GetCstCD("別途") & ")"
-            If Me.ComboBoxメーカー.Text = "全部" Then
-
-            Else
-                strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
-            End If
-
-            strSQL &= " union "
-            strSQL &= " select '' 売上年月,'点検完了未請求' 結果表,'直集' 分類,sum(" & SQL4() & " ) 売上金額,count(*) 台数"
-            strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku v"
-            'strSQL &= " where v.点検受付番号 not in (select uketukeno from " & schema & "t_002 where out_flg='1')"
-            strSQL &= " where v.ステータス名  = '点検完了'"
-            strSQL &= " and ( v.回収完了日  is  null  or v.回収完了日 ='')"
-            'strSQL &= " and v.回収完了日  is not null"
-            strSQL &= " and v.回収区分 in ('SS後日請求','SS現金徴収')"
-            '---
-            strSQL &= " And left(v.点検完了日,7)='" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 7) & "' "
-
-            If Me.ComboBoxメーカー.Text = "全部" Then
-
-            Else
-                strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
-            End If
+        '    Else
+        '        strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
+        '    End If
 
 
-            strSQL &= " union"
-            strSQL &= " select '' 売上年月,'点検完了未請求' 結果表,'別途' 分類,sum(" & SQL4() & ") 売上金額,count(*) 台数"
-            strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku v"
-            'strSQL &= " where v.点検受付番号 not in (select uketukeno from " & schema & "t_002 where out_flg='1')"
-            strSQL &= " where v.ステータス名  = '点検完了'"
-            strSQL &= " and ( v.回収完了日  is  null  or v.回収完了日 ='')"
-            'strSQL &= " and v.回収区分 not in ('SS後日請求','SS現金徴収')"
-            strSQL &= " and v.回収区分 in ('NR後日請求')"
-            '---
-            strSQL &= " And left(v.点検完了日,7)='" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 7) & "' "
+        '    strSQL &= " union "
+        '    strSQL &= " select '" & tuki & "' 売上年月,'請求済' 結果表,'別途' 分類,sum(cast(COALESCE( t.upri, '0' ) as numeric )) 売上金額,count(*) 台数"
+        '    strSQL &= " from " & schema & "t_002 t , " & schema & "v_yuryo_tenken_syuyaku v"
+        '    strSQL &= " where t.uketukeno  = v.点検受付番号 "
+        '    strSQL &= " and left(t.nextb,7) = '" & tuki & "'"
+        '    strSQL &= " and t.out_flg ='1'"
+        '    strSQL &= " and v.回収完了日 is not null"
+        '    'strSQL &= " and v.回収区分 not in ('SS後日請求','SS現金徴収')"
+        '    strSQL &= " and t.cst_cd  in (" & GetCstCD("別途") & ")"
+        '    If Me.ComboBoxメーカー.Text = "全部" Then
 
-            If Me.ComboBoxメーカー.Text = "全部" Then
+        '    Else
+        '        strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
+        '    End If
 
-            Else
-                strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
-            End If
+        '    strSQL &= " union "
+        '    strSQL &= " select '' 売上年月,'点検完了未請求' 結果表,'直集' 分類,sum(" & SQL4() & " ) 売上金額,count(*) 台数"
+        '    strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku v"
+        '    'strSQL &= " where v.点検受付番号 not in (select uketukeno from " & schema & "t_002 where out_flg='1')"
+        '    strSQL &= " where v.ステータス名  = '点検完了'"
+        '    strSQL &= " and ( v.回収完了日  is  null  or v.回収完了日 ='')"
+        '    'strSQL &= " and v.回収完了日  is not null"
+        '    strSQL &= " and v.回収区分 in ('SS後日請求','SS現金徴収')"
+        '    '---
+        '    strSQL &= " And left(v.点検完了日,7)='" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 7) & "' "
+
+        '    If Me.ComboBoxメーカー.Text = "全部" Then
+
+        '    Else
+        '        strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
+        '    End If
 
 
-            strSQL &= " union "
-            strSQL &= " select '' 売上年月,'受付中' 結果表,'直集' 分類,sum(" & SQL4() & ") 売上金額,count(*) 台数"
-            strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku v"
-            'strSQL &= " where v.点検受付番号 not in (select uketukeno from " & schema & "t_002 where out_flg='1')"
-            strSQL &= " where v.ステータス名  = '点検受付'"
-            strSQL &= " and v.回収完了日  is not null"
-            strSQL &= " and v.回収区分 in ('SS後日請求','SS現金徴収')"
-            If Me.ComboBoxメーカー.Text = "全部" Then
+        '    strSQL &= " union"
+        '    strSQL &= " select '' 売上年月,'点検完了未請求' 結果表,'別途' 分類,sum(" & SQL4() & ") 売上金額,count(*) 台数"
+        '    strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku v"
+        '    'strSQL &= " where v.点検受付番号 not in (select uketukeno from " & schema & "t_002 where out_flg='1')"
+        '    strSQL &= " where v.ステータス名  = '点検完了'"
+        '    strSQL &= " and ( v.回収完了日  is  null  or v.回収完了日 ='')"
+        '    'strSQL &= " and v.回収区分 not in ('SS後日請求','SS現金徴収')"
+        '    strSQL &= " and v.回収区分 in ('NR後日請求')"
+        '    '---
+        '    strSQL &= " And left(v.点検完了日,7)='" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 7) & "' "
 
-            Else
-                strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
-            End If
+        '    If Me.ComboBoxメーカー.Text = "全部" Then
 
-            strSQL &= " union "
-            strSQL &= " select '' 売上年月,'受付中' 結果表,'別途' 分類,sum( " & SQL4() & ") 売上金額,count(*) 台数"
-            strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku v"
-            'strSQL &= " where v.点検受付番号 not in (select uketukeno from " & schema & "t_002 where out_flg='1')"
-            strSQL &= " where v.ステータス名  = '点検受付'"
-            strSQL &= " and v.回収完了日  is not null"
-            strSQL &= " and v.回収区分 not in ('SS後日請求','SS現金徴収')"
-            If Me.ComboBoxメーカー.Text = "全部" Then
+        '    Else
+        '        strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
+        '    End If
 
-            Else
-                strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
-            End If
 
-            strSQL &= " order by 1 desc,2,3 "
-        End If
+        '    strSQL &= " union "
+        '    strSQL &= " select '' 売上年月,'受付中' 結果表,'直集' 分類,sum(" & SQL4() & ") 売上金額,count(*) 台数"
+        '    strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku v"
+        '    'strSQL &= " where v.点検受付番号 not in (select uketukeno from " & schema & "t_002 where out_flg='1')"
+        '    strSQL &= " where v.ステータス名  = '点検受付'"
+        '    strSQL &= " and v.回収完了日  is not null"
+        '    strSQL &= " and v.回収区分 in ('SS後日請求','SS現金徴収')"
+        '    If Me.ComboBoxメーカー.Text = "全部" Then
+
+        '    Else
+        '        strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
+        '    End If
+
+        '    strSQL &= " union "
+        '    strSQL &= " select '' 売上年月,'受付中' 結果表,'別途' 分類,sum( " & SQL4() & ") 売上金額,count(*) 台数"
+        '    strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku v"
+        '    'strSQL &= " where v.点検受付番号 not in (select uketukeno from " & schema & "t_002 where out_flg='1')"
+        '    strSQL &= " where v.ステータス名  = '点検受付'"
+        '    strSQL &= " and v.回収完了日  is not null"
+        '    strSQL &= " and v.回収区分 not in ('SS後日請求','SS現金徴収')"
+        '    If Me.ComboBoxメーカー.Text = "全部" Then
+
+        '    Else
+        '        strSQL &= " and v.メーカー ='" & Me.ComboBoxメーカー.Text & "'"
+        '    End If
+
+        '    strSQL &= " order by 1 desc,2,3 "
+        'End If
+
+        '--------------------------------------------------------------------------
+        strSQL = ""
+        strSQL &= "select"
+        strSQL &= " LEFT(t.entry_date,7) 年月"
+        strSQL &= ",t.cst_cd 品コード"
+        strSQL &= ",CASE t.cst_cd WHEN '901000'  THEN '別途請求' "
+        strSQL &= "               WHEN '010574'  THEN '直収' "
+        strSQL &= "               WHEN '902000'  THEN '安心Ｐ点検付' "
+        strSQL &= "               WHEN '903000'  THEN 'ＨＮ直収' "
+        strSQL &= "               WHEN '904000'  THEN 'ＨＮ別途' "
+        strSQL &= "               END 点検売上"
+        strSQL &= ",sum( CAST(COALESCE(t.upri ,'0')AS INTEGER) ) 金額"
+        strSQL &= ",count(*) 件数"
+        strSQL &= " FROM " & schema & "t_002 t"
+        strSQL &= " where t.entry_date  between '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/01/01'and '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/12/31'"
+        strSQL &= " and   t.nextb  is not null "
+        strSQL &= " group by LEFT(t.entry_date,7) , t.cst_cd "
+        strSQL &= " order by LEFT(t.entry_date,7) , t.cst_cd "
 
 
         dt0 = ClassPostgeDB.SetTable(strSQL)
@@ -243,18 +262,29 @@
         ro = e.RowIndex
         If ro >= 0 And e.Button = MouseButtons.Left Then
 
-            FormUriageSub.UserID = UserID
-            FormUriageSub.Kengen = Kengen
-            FormUriageSub.UserName = UserName
+            'FormUriageSub.UserID = UserID
+            'FormUriageSub.Kengen = Kengen
+            'FormUriageSub.UserName = UserName
 
-            FormUriageSub.Nentuki = Me.DataGridView1.Rows(ro).Cells(0).Value.ToString
-            FormUriageSub.Kekka = Me.DataGridView1.Rows(ro).Cells(1).Value.ToString
-            FormUriageSub.Bunrui = Me.DataGridView1.Rows(ro).Cells(2).Value.ToString
-            FormUriageSub.KanryouTuki = DateTimePicker期間1.Value.ToShortDateString.Substring(0, 7)
+            'FormUriageSub.Nentuki = Me.DataGridView1.Rows(ro).Cells(0).Value.ToString
+            'FormUriageSub.Kekka = Me.DataGridView1.Rows(ro).Cells(1).Value.ToString
+            'FormUriageSub.Bunrui = Me.DataGridView1.Rows(ro).Cells(2).Value.ToString
+            'FormUriageSub.KanryouTuki = DateTimePicker期間1.Value.ToShortDateString.Substring(0, 7)
 
-            FormUriageSub.Maker = Me.ComboBoxメーカー.Text
+            'FormUriageSub.Maker = Me.ComboBoxメーカー.Text
+            'FormUriageSub.ShowDialog()
 
-            FormUriageSub.ShowDialog()
+
+            FormUriage002.UserID = UserID
+            FormUriage002.Kengen = Kengen
+            FormUriage002.UserName = UserName
+
+
+
+
+
+
+            FormUriage002.ShowDialog()
 
         End If
 
@@ -269,11 +299,4 @@
 
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
-
-    End Sub
-
-    Private Sub MenuStrip1_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles MenuStrip1.ItemClicked
-
-    End Sub
 End Class

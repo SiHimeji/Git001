@@ -130,11 +130,11 @@ Partial Class FormUriage
         'DateTimePicker期間1
         '
         Me.DateTimePicker期間1.AllowDrop = True
-        Me.DateTimePicker期間1.CustomFormat = "yyyy年MM月"
+        Me.DateTimePicker期間1.CustomFormat = "yyyy年"
         Me.DateTimePicker期間1.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.DateTimePicker期間1.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.DateTimePicker期間1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DateTimePicker期間1.Location = New System.Drawing.Point(205, 16)
+        Me.DateTimePicker期間1.Location = New System.Drawing.Point(23, 16)
         Me.DateTimePicker期間1.Name = "DateTimePicker期間1"
         Me.DateTimePicker期間1.ShowUpDown = True
         Me.DateTimePicker期間1.Size = New System.Drawing.Size(110, 22)
@@ -145,7 +145,7 @@ Partial Class FormUriage
         Me.ComboBoxメーカー.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBoxメーカー.FormattingEnabled = True
         Me.ComboBoxメーカー.Items.AddRange(New Object() {"ノーリツ", "ハーマン"})
-        Me.ComboBoxメーカー.Location = New System.Drawing.Point(77, 16)
+        Me.ComboBoxメーカー.Location = New System.Drawing.Point(432, 16)
         Me.ComboBoxメーカー.Name = "ComboBoxメーカー"
         Me.ComboBoxメーカー.Size = New System.Drawing.Size(121, 20)
         Me.ComboBoxメーカー.TabIndex = 1
@@ -153,7 +153,7 @@ Partial Class FormUriage
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(29, 19)
+        Me.Label1.Location = New System.Drawing.Point(384, 24)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(42, 12)
         Me.Label1.TabIndex = 0

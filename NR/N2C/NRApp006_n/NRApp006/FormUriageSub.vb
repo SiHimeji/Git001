@@ -226,4 +226,8 @@
         Me.Cursor = System.Windows.Forms.Cursors.Default
 
     End Sub
+
+    Private Sub CSVToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CSVToolStripMenuItem.Click
+
+    End Sub
 End Class
