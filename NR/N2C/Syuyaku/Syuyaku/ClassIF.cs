@@ -164,14 +164,26 @@ namespace Syuyaku
             try
             {
                 int ukeno = GetHairetu("点検受付番号");
-                //int cimno = GetHairetu("cim番号");
+
+
+                int cimno1 = GetHairetu("点検開始年月");
+                int cimno2 = GetHairetu("点検終了年月");
+                int cimno3 = GetHairetu("点検受付日");
+                int cimno4 = GetHairetu("点検完了日");
+                int cimno5 = GetHairetu("フロント承認日");
+                int cimno6 = GetHairetu("表示解除方法通知日");
+                int cimno7 = GetHairetu("集計基準日");
+                int cimno8 = GetHairetu("点検完了受付日");
+                int cimno9 = GetHairetu("更新日");
+                int cimno10 = GetHairetu("修理完了日");
+                int cimno11 = GetHairetu("無償承認日");
+
 
                 ClassNpgsql.DbOpen(1);
 
                 var parser = new TextFieldParser(FileName, System.Text.Encoding.GetEncoding("UTF-8"));
                 using (parser)
                 {
-
 
                     //  区切りの指定
                     parser.TextFieldType = FieldType.Delimited;
@@ -181,7 +193,7 @@ namespace Syuyaku
                     // フィールドの空白トリム設定
                     parser.TrimWhiteSpace = false;
 
-                    GetHairetu("点検受付番号");
+                    //GetHairetu("点検受付番号");
                     // ファイルの終端までループ
                     var lists = parser.ReadFields();
                     while (!parser.EndOfData)
@@ -190,14 +202,18 @@ namespace Syuyaku
                         var line = new List<string>();
                         lists = parser.ReadFields();
 
-                        /*
-                        if (lists[cimno] != "")
-                        {
-                            ukno = lists[cimno];
-                            lists[cimno] = lists[ukeno];
-                            lists[ukeno] = lists[cimno];
-                        }
-                        */
+                        lists[cimno1] = lists[cimno1].Replace("-", "/");
+                        lists[cimno2] = lists[cimno2].Replace("-", "/");
+                        lists[cimno3] = lists[cimno3].Replace("-", "/");
+                        lists[cimno4] = lists[cimno4].Replace("-", "/");
+                        lists[cimno5] = lists[cimno5].Replace("-", "/");
+                        lists[cimno6] = lists[cimno6].Replace("-", "/");
+                        lists[cimno7] = lists[cimno7].Replace("-", "/");
+                        lists[cimno8] = lists[cimno8].Replace("-", "/");
+                        lists[cimno9] = lists[cimno9].Replace("-", "/");
+                        lists[cimno10] = lists[cimno10].Replace("-", "/");
+                        lists[cimno11] = lists[cimno11].Replace("-", "/");
+
                         cnt = 0;
                         sql1 = $@"insert into {TableName} (";
                         sql2 = $@")values( ";
@@ -214,7 +230,6 @@ namespace Syuyaku
                                 {
                                     sql1 += "," + retumei[cnt];
                                     sql2 += ",'" + value.Trim().Replace("　", "").Replace(" ", "") + "'";
-
                                 }
                             }
                             cnt++;
