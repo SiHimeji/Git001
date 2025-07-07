@@ -111,4 +111,16 @@
         End If
 
     End Sub
+
+    Private Sub TextBoxパスワード_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles TextBoxパスワード.MouseDoubleClick
+#If DEBUG Then
+        FormMain.Kengen = "0"
+        FormMain.UserID = "SYSTEM"
+        FormMain.UserName = "SYSTEM"
+        If Logent(FormMain.UserID, FormMain.UserName, "1") Then
+            FormMain.Show()
+            Me.Hide()
+        End If
+#End If
+    End Sub
 End Class

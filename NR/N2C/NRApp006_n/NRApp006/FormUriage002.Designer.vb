@@ -23,7 +23,6 @@ Partial Class FormUriage002
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.終了ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -38,18 +37,12 @@ Partial Class FormUriage002
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripProgressBar1})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripProgressBar1})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 495)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(852, 22)
         Me.StatusStrip1.TabIndex = 2
         Me.StatusStrip1.Text = "StatusStrip1"
-        '
-        'ToolStripStatusLabel1
-        '
-        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(119, 17)
-        Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
         'ToolStripProgressBar1
         '
@@ -81,13 +74,13 @@ Partial Class FormUriage002
         'EXCELToolStripMenuItem
         '
         Me.EXCELToolStripMenuItem.Name = "EXCELToolStripMenuItem"
-        Me.EXCELToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
+        Me.EXCELToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.EXCELToolStripMenuItem.Text = "EXCEL"
         '
         'CSVToolStripMenuItem
         '
         Me.CSVToolStripMenuItem.Name = "CSVToolStripMenuItem"
-        Me.CSVToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
+        Me.CSVToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.CSVToolStripMenuItem.Text = "CSV"
         '
         'DataGridView1
@@ -121,7 +114,6 @@ Partial Class FormUriage002
     End Sub
 
     Friend WithEvents StatusStrip1 As StatusStrip
-    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents ToolStripProgressBar1 As ToolStripProgressBar
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents 終了ToolStripMenuItem As ToolStripMenuItem

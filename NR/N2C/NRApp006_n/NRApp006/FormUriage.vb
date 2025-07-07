@@ -50,6 +50,11 @@
         'GetSystemtoCombo("10", Me.ComboBox期間)
         'Me.ComboBox期間.SelectedIndex = 1
 
+        Me.ToolStripComboBox1.Items.Clear()
+        Me.ToolStripComboBox1.Items.Add("")
+        Me.ToolStripComboBox1.Items.Add("未売上")
+        Me.ToolStripComboBox1.SelectedIndex = 0
+
         Me.DateTimePicker期間1.Value = Now.ToString("yyyy/MM") & "/01"
 
         CmbSetメーカー()
@@ -180,23 +185,39 @@
         'End If
 
         '--------------------------------------------------------------------------
-        strSQL = ""
-        strSQL &= "select"
-        strSQL &= " LEFT(t.nextb,7) 年月"
-        strSQL &= ",t.cst_cd 品コード"
-        strSQL &= ",CASE t.cst_cd WHEN '901000'  THEN '別途請求' "
-        strSQL &= "               WHEN '010574'  THEN '直収' "
-        strSQL &= "               WHEN '902000'  THEN '安心Ｐ点検付' "
-        strSQL &= "               WHEN '903000'  THEN 'ＨＮ直収' "
-        strSQL &= "               WHEN '904000'  THEN 'ＨＮ別途' "
-        strSQL &= "               END 点検売上"
-        strSQL &= ",sum( CAST(COALESCE(t.upri ,'0')AS INTEGER) ) 金額"
-        strSQL &= ",count(*) 件数"
-        strSQL &= " FROM " & schema & "t_002 t"
-        strSQL &= " where t.nextb  between '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/01/01'and '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/12/31'"
-        'strSQL &= " and   t.nextb  is not null "
-        strSQL &= " group by LEFT(t.nextb,7) , t.cst_cd "
-        strSQL &= " order by LEFT(t.nextb,7) , t.cst_cd "
+        If Me.ToolStripComboBox1.Text = "未売上" Then
+
+            strSQL = ""
+            strSQL &= "select "
+            strSQL &= " v_yuryo_tenken_syuyaku.点検完了受付日"
+            strSQL &= " ,v_yuryo_tenken_syuyaku.点検受付番号"
+            strSQL &= " ,v_yuryo_tenken_syuyaku.回収区分 "
+            strSQL &= " ,v_yuryo_tenken_syuyaku.修理完了日"
+            strSQL &= " ,t_002.nextb 売上日"
+            strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku "
+            strSQL &= " left outer join " & schema & "t_002 on uketukeno = v_yuryo_tenken_syuyaku.点検受付番号 "
+            strSQL &= " where t_002.nextb is null"
+            strSQL &= " And  LEFT(v_yuryo_tenken_syuyaku.点検完了受付日,4)='" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "'"
+            strSQL &= " order by v_yuryo_tenken_syuyaku"
+        Else
+            strSQL = ""
+            strSQL &= "select"
+            strSQL &= " LEFT(t.nextb,7) 年月"
+            strSQL &= ",t.cst_cd 品コード"
+            strSQL &= ",CASE t.cst_cd WHEN '901000'  THEN '別途請求' "
+            strSQL &= "               WHEN '010574'  THEN '直収' "
+            strSQL &= "               WHEN '902000'  THEN '安心Ｐ点検付' "
+            strSQL &= "               WHEN '903000'  THEN 'ＨＮ直収' "
+            strSQL &= "               WHEN '904000'  THEN 'ＨＮ別途' "
+            strSQL &= "               END 点検売上"
+            strSQL &= ",sum( CAST(COALESCE(t.upri ,'0')AS INTEGER) ) 金額"
+            strSQL &= ",count(*) 件数"
+            strSQL &= " FROM " & schema & "t_002 t"
+            strSQL &= " where t.nextb  between '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/01/01'and '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/12/31'"
+            'strSQL &= " and   t.nextb  is not null "
+            strSQL &= " group by LEFT(t.nextb,7) , t.cst_cd "
+            strSQL &= " order by LEFT(t.nextb,7) , t.cst_cd "
+        End If
 
 
         dt0 = ClassPostgeDB.SetTable(strSQL)
