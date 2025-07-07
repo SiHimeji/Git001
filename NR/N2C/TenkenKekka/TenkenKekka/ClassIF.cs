@@ -115,8 +115,9 @@ namespace Syuyaku
             string sql1 = "";
             string sql2 = "";
             string sql3 = "";
-            string ukno = "";
+            //string ukno = "";
             int cnt;
+            int sousinsuu = 0;
             try
             {
                 ClassLog.LogDelete();
@@ -191,20 +192,22 @@ namespace Syuyaku
 
                         ClassNpgsql._EXEC(sql1 + sql2 + sql3);
                         //
+                        sousinsuu++;
 
                     }
                 }
-
                 ClassNpgsql.trans.Commit();
                 ClassNpgsql.DbClose();
+                ClassLog.LogWriteTB("v_tenken_kekka", sousinsuu);
+
             }
             catch (Exception ex)
             {
                 ClassLog.LogWrite(ex.Message);
                 ClassNpgsql.trans.Rollback();
                 ClassNpgsql.DbClose();
+                ClassLog.logwriteErrTB("v_tenken_kekka");
             }
-
         }
         //
         static private int GetHairetu(string nm)

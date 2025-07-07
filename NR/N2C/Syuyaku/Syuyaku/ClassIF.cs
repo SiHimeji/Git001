@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 using static System.Windows.Forms.LinkLabel;
+using System.Security.AccessControl;
+using TenkenKekka;
 namespace Syuyaku
 {
     static public class ClassIF
@@ -157,10 +159,13 @@ namespace Syuyaku
 
         static public void csvINsert()
         {
+
+            ////
             string sql0 = "";
             string sql1 = "";
             string sql2 = "";
             int cnt;
+            int sousinsu=0;
             try
             {
                 int ukeno = GetHairetu("点検受付番号");
@@ -198,21 +203,20 @@ namespace Syuyaku
                     var lists = parser.ReadFields();
                     while (!parser.EndOfData)
                     {
-
                         var line = new List<string>();
                         lists = parser.ReadFields();
 
-                        lists[cimno1] = lists[cimno1].Replace("-", "/");
-                        lists[cimno2] = lists[cimno2].Replace("-", "/");
-                        lists[cimno3] = lists[cimno3].Replace("-", "/");
-                        lists[cimno4] = lists[cimno4].Replace("-", "/");
-                        lists[cimno5] = lists[cimno5].Replace("-", "/");
-                        lists[cimno6] = lists[cimno6].Replace("-", "/");
-                        lists[cimno7] = lists[cimno7].Replace("-", "/");
-                        lists[cimno8] = lists[cimno8].Replace("-", "/");
-                        lists[cimno9] = lists[cimno9].Replace("-", "/");
-                        lists[cimno10] = lists[cimno10].Replace("-", "/");
-                        lists[cimno11] = lists[cimno11].Replace("-", "/");
+                        lists[cimno1] = HiHenkan(lists[cimno1]);
+                        lists[cimno2] = HiHenkan(lists[cimno2]);
+                        lists[cimno3] = HiHenkan(lists[cimno3]);
+                        lists[cimno4] = HiHenkan(lists[cimno4]);
+                        lists[cimno5] = HiHenkan(lists[cimno5]);
+                        lists[cimno6] = HiHenkan(lists[cimno6]);
+                        lists[cimno7] = HiHenkan(lists[cimno7]);
+                        lists[cimno8] = HiHenkan(lists[cimno8]);
+                        lists[cimno9] = HiHenkan(lists[cimno9]);
+                        lists[cimno10] = HiHenkan(lists[cimno10]);
+                        lists[cimno11] = HiHenkan(lists[cimno11]);
 
                         cnt = 0;
                         sql1 = $@"insert into {TableName} (";
@@ -260,24 +264,27 @@ namespace Syuyaku
                                 cnt++;
                             }
                         }
-                        sql0 += ", newflg = '1';";
+                    sql0 += ", newflg = '1';";
                     ClassLog.LogWrite(sql0);
                     Console.WriteLine(lists[ukeno].ToString());
                     System.Windows.Forms.Application.DoEvents();
 
                     ClassNpgsql._EXEC(sql0);
+                    sousinsu++;
                     //
                     }
                 }
 
                 ClassNpgsql.trans.Commit();
                 ClassNpgsql.DbClose();
+                ClassLog.LogWriteTB("v_yuryo_tenken_syuyaku", sousinsu);
             }
             catch (Exception ex)
             {
                 ClassLog.LogWrite(ex.Message);
                 ClassNpgsql.trans.Rollback();
                 ClassNpgsql.DbClose();
+                ClassLog.logwriteErrTB("v_yuryo_tenken_syuyaku");
             }
         }
         /// <summary>
@@ -292,6 +299,28 @@ namespace Syuyaku
             int num = lists.IndexOf(nm);
             return num;
 
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buf"></param>
+        /// <returns></returns>
+        static private string HiHenkan(string buf)
+        {
+            DateTime dy;
+            switch (buf.Length)
+            {
+                case 18:
+                    buf = buf.Substring(0, 10) + " " + buf.Substring(10, 8);
+                    dy = DateTime.Parse(buf);
+                    return dy.ToString("yyyy/MM/dd HH:mm:ss");
+
+                case 10:
+                    buf = buf.Substring(0, 10);
+                    dy = DateTime.Parse(buf);
+                    return dy.ToString("yyyy/MM/dd");
+            }
+            return "";
         }
 
     }

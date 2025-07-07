@@ -57,6 +57,7 @@ namespace Syuyaku
             string sql1 = "";
             string ukno = "";
             //string sql1 = "";
+            int sousinsuu = 0;
             try
             {
 
@@ -117,22 +118,23 @@ namespace Syuyaku
 
                         ClassNpgsql._EXEC(sql0);
                         //
-                   
+                        sousinsuu++;
 
                     }
                 }
 
                 ClassNpgsql.trans.Commit();
                 ClassNpgsql.DbClose();
+
+                ClassLog.LogWriteTB("請求",sousinsuu);
             }
             catch (Exception ex)
             {
                 ClassLog.LogWrite(ex.Message);
                 ClassNpgsql.trans.Rollback();
                 ClassNpgsql.DbClose();
+                ClassLog.logwriteErrTB("請求");
             }
-
-
         }
         static private int GetHairetu(string nm)
         {

@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
+using Syuyaku;
+
 
 namespace Syuyaku
 {
     static public class ClassLog
     {
+        const string LogTableName = "tenken.t_log";
+
         static public void LogWrite(string log)
         {
             DateTime today = DateTime.Today;
@@ -19,6 +23,9 @@ namespace Syuyaku
             sw.WriteLine(log);
             sw.Close();
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static public void LogDelete()
         {
             DateTime today = DateTime.Today;
@@ -28,5 +35,19 @@ namespace Syuyaku
 
 
         }
+        /// <summary>
+        /// LOGWITE
+        /// </summary>
+        static public void LogWriteTB(string tbl, int sousinsu)
+        {
+            string strSqL = $@"INSERT INTO {LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', {tbl}', '{sousinsu.ToString()}件', now())";
+            ClassNpgsql.EXECSQL(strSqL);
+        }
+        static public void logwriteErrTB(string tbl)
+        {
+            string strSqL = $@"INSERT INTO {LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', '{tbl}', 'ERROR', now())";
+            ClassNpgsql.EXECSQL(strSqL);
+        }
+
     }
 }
