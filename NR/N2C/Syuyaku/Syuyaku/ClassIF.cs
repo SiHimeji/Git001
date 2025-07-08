@@ -17,6 +17,13 @@ namespace Syuyaku
         //テーブル指定
         const string TableName = "tenken.v_yuryo_tenken_syuyaku";
         //const string TableName = "n2c.v_yuryo_tenken_syuyaku";
+
+        //取り込みCSV指定
+        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\ソース\\N2OK002T.csv";
+        //const string FileName = "C:\\work\\06_点検センター\\70_N2C対応\\ソース\\N2OK002T.csv";
+        //
+
+
         //テーブルの列指定
         static string[] retumei = {
  "所有者登録意思区分"
@@ -149,12 +156,6 @@ namespace Syuyaku
 ,"受付店Id"
 ,"受付者Id"
                                   };
-        //取り込みCSV指定
-        //const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\ソース\\YURYO_TENKEN_SYUYAKU.csv";
-        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\ソース\\N2OK002T.csv";
-        //const string FileName = "C:\\work\\06_点検センター\\70_N2C対応\\ソース\\N2OK002T.csv";
-        //
-        //ClassNpgsql cNpgsql =new ClassNpgsql();
         static string csvFileName = string.Empty;
 
         static public void csvINsert()
@@ -170,7 +171,6 @@ namespace Syuyaku
             {
                 int ukeno = GetHairetu("点検受付番号");
 
-
                 int cimno1 = GetHairetu("点検開始年月");
                 int cimno2 = GetHairetu("点検終了年月");
                 int cimno3 = GetHairetu("点検受付日");
@@ -182,7 +182,8 @@ namespace Syuyaku
                 int cimno9 = GetHairetu("更新日");
                 int cimno10 = GetHairetu("修理完了日");
                 int cimno11 = GetHairetu("無償承認日");
-
+                int cimno12 = GetHairetu("請求書印刷日");
+                int cimno13 = GetHairetu("訪問予定日１");
 
                 ClassNpgsql.DbOpen(1);
 
@@ -217,6 +218,8 @@ namespace Syuyaku
                         lists[cimno9] = HiHenkan(lists[cimno9]);
                         lists[cimno10] = HiHenkan(lists[cimno10]);
                         lists[cimno11] = HiHenkan(lists[cimno11]);
+                        lists[cimno12] = HiHenkan(lists[cimno12]);
+                        lists[cimno13] = HiHenkan(lists[cimno13]);
 
                         cnt = 0;
                         sql1 = $@"insert into {TableName} (";
@@ -277,14 +280,14 @@ namespace Syuyaku
 
                 ClassNpgsql.trans.Commit();
                 ClassNpgsql.DbClose();
-                ClassLog.LogWriteTB("v_yuryo_tenken_syuyaku", sousinsu);
+                ClassLog.LogWriteTB("集約データ", sousinsu);
             }
             catch (Exception ex)
             {
                 ClassLog.LogWrite(ex.Message);
                 ClassNpgsql.trans.Rollback();
                 ClassNpgsql.DbClose();
-                ClassLog.logwriteErrTB("v_yuryo_tenken_syuyaku");
+                ClassLog.logwriteErrTB("集約データ");
             }
         }
         /// <summary>
@@ -308,20 +311,25 @@ namespace Syuyaku
         static private string HiHenkan(string buf)
         {
             DateTime dy;
-            switch (buf.Length)
+            try
             {
-                case 18:
-                    buf = buf.Substring(0, 10) + " " + buf.Substring(10, 8);
-                    dy = DateTime.Parse(buf);
-                    return dy.ToString("yyyy/MM/dd HH:mm:ss");
+                switch (buf.Length)
+                {
+                    case 18:
+                        buf = buf.Substring(0, 10) + " " + buf.Substring(10, 8);
+                        dy = DateTime.Parse(buf);
+                        return dy.ToString("yyyy/MM/dd HH:mm:ss");
 
-                case 10:
-                    buf = buf.Substring(0, 10);
-                    dy = DateTime.Parse(buf);
-                    return dy.ToString("yyyy/MM/dd");
+                    case 10:
+                        buf = buf.Substring(0, 10);
+                        dy = DateTime.Parse(buf);
+                        return dy.ToString("yyyy/MM/dd");
+                }
+                return buf;
             }
-            return "";
+            catch (Exception ex) {
+                return buf;
+            }
         }
-
     }
 }

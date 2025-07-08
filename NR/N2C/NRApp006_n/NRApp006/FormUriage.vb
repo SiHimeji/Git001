@@ -55,10 +55,16 @@
         Me.ToolStripComboBox1.Items.Add("未売上")
         Me.ToolStripComboBox1.SelectedIndex = 0
 
-        Me.DateTimePicker期間1.Value = Now.ToString("yyyy/MM") & "/01"
 
-        CmbSetメーカー()
+        Dim dy As DateTime = Date.Today
+        Dim x As Integer
 
+        Me.ToolStripComboBox年.Items.Clear()
+        For x = 0 To 5
+            Me.ToolStripComboBox年.Items.Add(dy.ToString("yyyy"))
+            dy = dy.AddYears(-1)
+        Next
+        Me.ToolStripComboBox年.SelectedIndex = 0
     End Sub
 
     Private Sub 終了ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 終了ToolStripMenuItem.Click
@@ -73,7 +79,8 @@
         Me.DataGridView1.DataSource = Nothing
         System.Windows.Forms.Application.DoEvents()
 
-        Dim tuki As String = Me.DateTimePicker期間1.Value.ToString.Substring(0, 7)
+        Dim tuki As String = Me.ToolStripComboBox年.Text
+
 
 
         'If ComboBoxメーカー.Text = "得意先別" Then
@@ -194,10 +201,21 @@
             strSQL &= " ,v_yuryo_tenken_syuyaku.回収区分 "
             strSQL &= " ,v_yuryo_tenken_syuyaku.修理完了日"
             strSQL &= " ,t_002.nextb 売上日"
+            strSQL &= " ,to_char( t_kaisyu.入金日,'yyyy/MM/dd') 入金日"
             strSQL &= " from " & schema & "v_yuryo_tenken_syuyaku "
             strSQL &= " left outer join " & schema & "t_002 on uketukeno = v_yuryo_tenken_syuyaku.点検受付番号 "
+            strSQL &= "  left outer join tenken.t_kaisyu on t_kaisyu.uketukeno = v_yuryo_tenken_syuyaku.点検受付番号 "
             strSQL &= " where t_002.nextb is null"
-            strSQL &= " And  LEFT(v_yuryo_tenken_syuyaku.点検完了受付日,4)='" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "'"
+            strSQL &= " And  LEFT(v_yuryo_tenken_syuyaku.点検完了受付日,4)='" & ToolStripComboBox年.Text & "'"
+            strSQL &= "group by "
+            strSQL &= "v_yuryo_tenken_syuyaku.点検完了受付日"
+            strSQL &= ",v_yuryo_tenken_syuyaku.点検受付番号"
+            strSQL &= ",v_yuryo_tenken_syuyaku.回収区分 "
+            strSQL &= ",v_yuryo_tenken_syuyaku.ステータス名"
+            strSQL &= ",v_yuryo_tenken_syuyaku.修理完了日"
+            strSQL &= ",v_yuryo_tenken_syuyaku.請求合計金額"
+            strSQL &= ",t_002.nextb"
+            strSQL &= ",to_char( t_kaisyu.入金日,'yyyy/MM/dd') "
             strSQL &= " order by v_yuryo_tenken_syuyaku"
         Else
             strSQL = ""
@@ -213,7 +231,7 @@
             strSQL &= ",sum( CAST(COALESCE(t.upri ,'0')AS INTEGER) ) 金額"
             strSQL &= ",count(*) 件数"
             strSQL &= " FROM " & schema & "t_002 t"
-            strSQL &= " where t.nextb  between '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/01/01'and '" & DateTimePicker期間1.Value.ToShortDateString.Substring(0, 4) & "/12/31'"
+            strSQL &= " where t.nextb  between '" & ToolStripComboBox年.Text & "/01/01'and '" & ToolStripComboBox年.Text & "/12/31'"
             'strSQL &= " and   t.nextb  is not null "
             strSQL &= " group by LEFT(t.nextb,7) , t.cst_cd "
             strSQL &= " order by LEFT(t.nextb,7) , t.cst_cd "
@@ -237,31 +255,31 @@
     End Function
 
 
-    Private Sub CmbSetメーカー()
-        Dim strSQL As String
+    'Private Sub CmbSetメーカー()
+    '    Dim strSQL As String
 
-        Dim tuki As String = Me.DateTimePicker期間1.Value.ToString.Substring(0, 7)
+    '    Dim tuki As String = Me.DateTimePicker期間1.Value.ToString.Substring(0, 7)
 
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+    '    Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        strSQL = "select v.メーカー "
-        strSQL &= " from " & schema & "t_002 t , " & schema & "v_yuryo_tenken_syuyaku v"
-        strSQL &= " where t.uketukeno  = v.点検受付番号 "
-        strSQL &= " and left(t.nextb,7)  =  '" & tuki & "'"
-        strSQL &= " group by v.メーカー"
+    '    strSQL = "select v.メーカー "
+    '    strSQL &= " from " & schema & "t_002 t , " & schema & "v_yuryo_tenken_syuyaku v"
+    '    strSQL &= " where t.uketukeno  = v.点検受付番号 "
+    '    strSQL &= " and left(t.nextb,7)  =  '" & tuki & "'"
+    '    strSQL &= " group by v.メーカー"
 
-        ClassPostgeDB.SetComboBox(Me.ComboBoxメーカー, strSQL, "")
-        Me.ComboBoxメーカー.Items.Add("得意先別")
-        Me.ComboBoxメーカー.Items.Add("全部")
-        Me.ComboBoxメーカー.SelectedIndex = Me.ComboBoxメーカー.Items.Count - 1
+    '    ClassPostgeDB.SetComboBox(Me.ComboBoxメーカー, strSQL, "")
+    '    Me.ComboBoxメーカー.Items.Add("得意先別")
+    '    Me.ComboBoxメーカー.Items.Add("全部")
+    '    Me.ComboBoxメーカー.SelectedIndex = Me.ComboBoxメーカー.Items.Count - 1
 
-        Me.Cursor = System.Windows.Forms.Cursors.Default
+    '    Me.Cursor = System.Windows.Forms.Cursors.Default
 
 
-    End Sub
+    'End Sub
 
-    Private Sub DateTimePicker期間1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker期間1.ValueChanged
-        CmbSetメーカー()
+    Private Sub DateTimePicker期間1_ValueChanged(sender As Object, e As EventArgs)
+        'CmbSetメーカー()
     End Sub
 
     Private Sub EXCELToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EXCELToolStripMenuItem.Click
@@ -271,7 +289,7 @@
         End If
 
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        excelOutDataGred2U(Me.DataGridView1, True, Me.ToolStripProgressBar1, "売上【" & Me.ComboBoxメーカー.Text & "】")
+        excelOutDataGred2U(Me.DataGridView1, True, Me.ToolStripProgressBar1, "売上【" & Me.ToolStripComboBox年.Text & "】")
         Me.Cursor = System.Windows.Forms.Cursors.Default
 
     End Sub

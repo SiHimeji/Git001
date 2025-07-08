@@ -22,6 +22,7 @@ Partial Class FormUriage002
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormUriage002))
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
@@ -74,13 +75,13 @@ Partial Class FormUriage002
         'EXCELToolStripMenuItem
         '
         Me.EXCELToolStripMenuItem.Name = "EXCELToolStripMenuItem"
-        Me.EXCELToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EXCELToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
         Me.EXCELToolStripMenuItem.Text = "EXCEL"
         '
         'CSVToolStripMenuItem
         '
         Me.CSVToolStripMenuItem.Name = "CSVToolStripMenuItem"
-        Me.CSVToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.CSVToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
         Me.CSVToolStripMenuItem.Text = "CSV"
         '
         'DataGridView1
@@ -101,6 +102,7 @@ Partial Class FormUriage002
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.StatusStrip1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormUriage002"
         Me.Text = "FormUriage002"
         Me.StatusStrip1.ResumeLayout(False)

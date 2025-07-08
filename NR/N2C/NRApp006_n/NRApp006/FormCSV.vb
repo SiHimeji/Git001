@@ -60,8 +60,11 @@
 
         Me.Button集約.Visible = False
 
-
-
+        If ChkNewOld() Then
+            Me.CheckBoxCIM.Checked = True
+        Else
+            Me.CheckBoxCIM.Checked = False
+        End If
     End Sub
 
     Private Sub CSV選択ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CSV選択ToolStripMenuItem.Click
@@ -634,6 +637,48 @@
         strSQL &= ", t.マイページid"
         strSQL &= ", t.出庫伝票データ出力フラグ"
         strSQL &= ", t.代表受付番号"
+
+        '-----
+        strSQL &= ",依頼元コード"
+        strSQL &= ",受付業務区分名称"
+        strSQL &= ",訪問先会社名"
+        strSQL &= ",訪問先部署"
+        strSQL &= ",訪問先氏名担当者"
+        strSQL &= ",訪問先氏名担当者カナ"
+        strSQL &= ",訪問先電話番号"
+        strSQL &= ",製造番号不明理由"
+        strSQL &= ",訪問予定日１"
+        strSQL &= ",依頼元fax番号"
+        strSQL &= ",無償承認日"
+        strSQL &= ",業務区分"
+        strSQL &= ",cim番号"
+        strSQL &= ",契約_安心プラン"
+        strSQL &= ",契約番号"
+        strSQL &= ",第１業務区分"
+        strSQL &= ",第１業務区分内容"
+        strSQL &= ",第２業務区分"
+        strSQL &= ",第２業務区分内容"
+        strSQL &= ",帳票発行者id"
+        strSQL &= ",諸経費"
+        strSQL &= ",所有者票ブランド名称"
+        strSQL &= ",受付区分名称"
+        strSQL &= ",新ステータス名称"
+        strSQL &= ",製造番号不明理由内容"
+        strSQL &= ",newflg"
+        strSQL &= ",承認flg"
+        strSQL &= ",点検結果伝票番号"
+        strSQL &= ",機器分類"
+        strSQL &= ",ｄｍ番号id"
+        strSQL &= ",tc店略称id"
+        strSQL &= ",受付店id"
+        strSQL &= ",受付者id"
+        strSQL &= ",請求回収区分変更理由"
+        strSQL &= ",修理状況名称"
+        strSQL &= ",帳票発行日"
+        strSQL &= ",請求書再印刷日"
+        strSQL &= ",帳票発行者姓"
+        strSQL &= ",帳票発行者名"
+
 
 
         Return strSQL

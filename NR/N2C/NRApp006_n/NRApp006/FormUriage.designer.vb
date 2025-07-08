@@ -28,20 +28,17 @@ Partial Class FormUriage
         Me.検索ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.出力ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EXCELToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.DateTimePicker期間1 = New System.Windows.Forms.DateTimePicker()
-        Me.ComboBoxメーカー = New System.Windows.Forms.ComboBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox()
+        Me.ToolStripComboBox年 = New System.Windows.Forms.ToolStripComboBox()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -49,7 +46,7 @@ Partial Class FormUriage
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.終了ToolStripMenuItem, Me.検索ToolStripMenuItem, Me.出力ToolStripMenuItem, Me.ToolStripComboBox1})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.終了ToolStripMenuItem, Me.ToolStripComboBox年, Me.検索ToolStripMenuItem, Me.出力ToolStripMenuItem, Me.ToolStripComboBox1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(1030, 27)
@@ -78,8 +75,14 @@ Partial Class FormUriage
         'EXCELToolStripMenuItem
         '
         Me.EXCELToolStripMenuItem.Name = "EXCELToolStripMenuItem"
-        Me.EXCELToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
+        Me.EXCELToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.EXCELToolStripMenuItem.Text = "EXCEL"
+        '
+        'ToolStripComboBox1
+        '
+        Me.ToolStripComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ToolStripComboBox1.Name = "ToolStripComboBox1"
+        Me.ToolStripComboBox1.Size = New System.Drawing.Size(121, 23)
         '
         'StatusStrip1
         '
@@ -115,52 +118,12 @@ Partial Class FormUriage
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
-        'SplitContainer1.Panel1
-        '
-        Me.SplitContainer1.Panel1.Controls.Add(Me.DateTimePicker期間1)
-        Me.SplitContainer1.Panel1.Controls.Add(Me.ComboBoxメーカー)
-        Me.SplitContainer1.Panel1.Controls.Add(Me.Label1)
-        '
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.DataGridView1)
         Me.SplitContainer1.Size = New System.Drawing.Size(1030, 490)
-        Me.SplitContainer1.SplitterDistance = 53
+        Me.SplitContainer1.SplitterDistance = 25
         Me.SplitContainer1.TabIndex = 2
-        '
-        'DateTimePicker期間1
-        '
-        Me.DateTimePicker期間1.AllowDrop = True
-        Me.DateTimePicker期間1.CustomFormat = "yyyy年"
-        Me.DateTimePicker期間1.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.DateTimePicker期間1.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.DateTimePicker期間1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.DateTimePicker期間1.Location = New System.Drawing.Point(23, 16)
-        Me.DateTimePicker期間1.Name = "DateTimePicker期間1"
-        Me.DateTimePicker期間1.ShowUpDown = True
-        Me.DateTimePicker期間1.Size = New System.Drawing.Size(110, 22)
-        Me.DateTimePicker期間1.TabIndex = 2
-        '
-        'ComboBoxメーカー
-        '
-        Me.ComboBoxメーカー.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBoxメーカー.FormattingEnabled = True
-        Me.ComboBoxメーカー.Items.AddRange(New Object() {"ノーリツ", "ハーマン"})
-        Me.ComboBoxメーカー.Location = New System.Drawing.Point(432, 16)
-        Me.ComboBoxメーカー.Name = "ComboBoxメーカー"
-        Me.ComboBoxメーカー.Size = New System.Drawing.Size(121, 20)
-        Me.ComboBoxメーカー.TabIndex = 1
-        Me.ComboBoxメーカー.Visible = False
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(384, 24)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(42, 12)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "メーカー"
-        Me.Label1.Visible = False
         '
         'DataGridView1
         '
@@ -169,14 +132,14 @@ Partial Class FormUriage
         Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowTemplate.Height = 21
-        Me.DataGridView1.Size = New System.Drawing.Size(1030, 433)
+        Me.DataGridView1.Size = New System.Drawing.Size(1030, 461)
         Me.DataGridView1.TabIndex = 0
         '
-        'ToolStripComboBox1
+        'ToolStripComboBox年
         '
-        Me.ToolStripComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ToolStripComboBox1.Name = "ToolStripComboBox1"
-        Me.ToolStripComboBox1.Size = New System.Drawing.Size(121, 23)
+        Me.ToolStripComboBox年.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ToolStripComboBox年.Name = "ToolStripComboBox年"
+        Me.ToolStripComboBox年.Size = New System.Drawing.Size(121, 23)
         '
         'FormUriage
         '
@@ -194,8 +157,6 @@ Partial Class FormUriage
         Me.MenuStrip1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
-        Me.SplitContainer1.Panel1.ResumeLayout(False)
-        Me.SplitContainer1.Panel1.PerformLayout()
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
@@ -212,12 +173,10 @@ Partial Class FormUriage
     Friend WithEvents 出力ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EXCELToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SplitContainer1 As SplitContainer
-    Friend WithEvents ComboBoxメーカー As ComboBox
-    Friend WithEvents Label1 As Label
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
     Friend WithEvents ToolStripProgressBar1 As ToolStripProgressBar
     Friend WithEvents 検索ToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DateTimePicker期間1 As DateTimePicker
     Friend WithEvents ToolStripComboBox1 As ToolStripComboBox
+    Friend WithEvents ToolStripComboBox年 As ToolStripComboBox
 End Class

@@ -15,6 +15,11 @@ namespace Syuyaku
         //テーブル指定
         //const string TableName = "n2c.v_yuryo_tenken_syuyaku";
         const string TableName = "tenken.v_yuryo_tenken_syuyaku";
+
+        //取り込みCSV指定
+        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\ソース\\N2OK003T.csv";
+        //const string FileName = "C:\\work\\06_点検センター\\70_N2C対応\\ソース\\N2OK003T.csv";
+
         //テーブルの列指定
         static string[] retumei = {
                         "帳票発行日"
@@ -39,11 +44,6 @@ namespace Syuyaku
                         ,"帳票発行者姓"
                         ,"帳票発行者名"
                                   };
-        //取り込みCSV指定
-        //const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\ソース\\YURYO_SEIKYU_HAKKO.csv";
-        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\ソース\\N2OK003T.csv";
-        //const string FileName = "C:\\work\\06_点検センター\\70_N2C対応\\ソース\\N2OK003T.csv";
-        //ClassNpgsql cNpgsql =new ClassNpgsql();
         static string csvFileName = string.Empty;
 
         static int GetField(string mei)
@@ -55,7 +55,7 @@ namespace Syuyaku
         {
             string sql0 = "";
             string sql1 = "";
-            string ukno = "";
+            //string ukno = "";
             //string sql1 = "";
             int sousinsuu = 0;
             try
@@ -126,14 +126,14 @@ namespace Syuyaku
                 ClassNpgsql.trans.Commit();
                 ClassNpgsql.DbClose();
 
-                ClassLog.LogWriteTB("請求",sousinsuu);
+                ClassLog.LogWriteTB("請求データ",sousinsuu);
             }
             catch (Exception ex)
             {
                 ClassLog.LogWrite(ex.Message);
                 ClassNpgsql.trans.Rollback();
                 ClassNpgsql.DbClose();
-                ClassLog.logwriteErrTB("請求");
+                ClassLog.logwriteErrTB("請求データ");
             }
         }
         static private int GetHairetu(string nm)

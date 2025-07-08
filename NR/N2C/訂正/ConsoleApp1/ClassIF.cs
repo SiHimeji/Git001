@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
-using Npgsql.NameTranslation;
+//using Npgsql.NameTranslation;
 using static System.Net.Mime.MediaTypeNames;
 using System.Data;
 
@@ -163,15 +163,15 @@ namespace ConsoleApp1
                 }
                 ClassNpgsql.trans.Commit();
                 ClassNpgsql.DbClose();
+                ClassLog.LogWriteTB("出庫訂正", 0);
             }
             catch (Exception ex)
             {
                 ClassLog.LogWrite(ex.Message);
                 ClassNpgsql.trans.Rollback();
                 ClassNpgsql.DbClose();
+                ClassLog.logwriteErrTB("出庫訂正");
             }
-
-
         }
         static private int GetHairetu(string nm)
         {

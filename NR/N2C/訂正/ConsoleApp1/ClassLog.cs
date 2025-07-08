@@ -10,6 +10,8 @@ namespace ConsoleApp1
 {
     static public class ClassLog
     {
+        const string LogTableName = "tenken.t_log";
+
         static public void LogWrite(string log)
         {
             DateTime today = DateTime.Today;
@@ -25,8 +27,20 @@ namespace ConsoleApp1
             System.Reflection.Assembly executionAsm = System.Reflection.Assembly.GetExecutingAssembly();
             string path = System.IO.Path.GetDirectoryName(new Uri(executionAsm.CodeBase).LocalPath) + "\\log\\log_" + today.DayOfWeek.ToString() + ".log";
             System.IO.File.Delete(path);
-
-
         }
+        static public void LogWriteTB(string tbl, int sousinsu)
+        {
+            string strSqL = $@"INSERT INTO {LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', '{tbl}', '{sousinsu.ToString()}件', now())";
+            ClassNpgsql.EXEC(strSqL);
+        }
+        static public void logwriteErrTB(string tbl)
+        {
+            string strSqL = $@"INSERT INTO {LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', '{tbl}', 'ERROR', now())";
+            ClassNpgsql.EXEC(strSqL);
+        }
+
+
+
+
     }
 }

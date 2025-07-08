@@ -9,7 +9,7 @@ using Npgsql;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Syuyaku
+namespace ConsoleApp1
 {
     public static  class ClassNpgsql
     {

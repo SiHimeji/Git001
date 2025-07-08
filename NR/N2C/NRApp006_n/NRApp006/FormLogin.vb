@@ -24,7 +24,7 @@
             ChkVerUp.ShowDialog()
         End If
 
-
+        ErrorLogDisp()
     End Sub
 
 
@@ -122,5 +122,42 @@
             Me.Hide()
         End If
 #End If
+    End Sub
+    Private Sub ErrorLogDisp()
+        Dim strSQL As String = String.Empty
+        Dim dt As New DataTable
+        Dim ro As Integer
+
+        strSQL &= "select nm, mn, entry_day "
+        strSQL &= " from " & schema & "t_log where id ='SYSTEM'"
+        'strSQL &= " and  nm = 'ERROR' "
+        strSQL &= " and entry_day >  CURRENT_DATE - (select  cast(  naiyou  as  int ) from " & schema & "m_system  where kbn ='99' and seq ='1')"
+        strSQL &= " order by entry_day desc"
+
+        dt = ClassPostgeDB.SetTable(strSQL)
+
+        Me.DataGridView1.DataSource = Nothing
+
+        Me.DataGridView1.Rows.Clear()
+        Me.DataGridView1.Columns.Clear()
+
+        If dt.Rows.Count > 0 Then
+            Me.DataGridView1.RowHeadersVisible = False
+            Me.DataGridView1.AutoGenerateColumns = False
+            Me.DataGridView1.DataSource = dt
+
+            ro = 0
+            ro = settextColumn(Me.DataGridView1, ro, "nm", "伝送名", 120, True)
+            ro = settextColumn(Me.DataGridView1, ro, "mn", "ステータス", 80, True)
+            ro = settextColumn(Me.DataGridView1, ro, "entry_day", "日", 110, True)
+
+            Me.DataGridView1.AllowUserToAddRows = False
+
+            For ro = 0 To Me.DataGridView1.Rows.Count - 1
+                If Me.DataGridView1.Rows(ro).Cells(1).Value = "ERROR" Then
+                    Me.DataGridView1.Rows(ro).DefaultCellStyle.BackColor = Color.Red
+                End If
+            Next
+        End If
     End Sub
 End Class

@@ -28,6 +28,8 @@ Module Module2
 
         KakogetuSyukei(Now().ToShortDateString())
 
+        'LOG削除
+        LogDelete()
     End Sub
     '
     '
@@ -35,52 +37,59 @@ Module Module2
 
         Dim strSQL As String = GetSQL()
         Dim dt As DataTable
-        TdayS = New DateTime(Tday.Year, Tday.Month, 1)          '    の１日
-        TdayE = TdayS.AddMonths(1).AddDays(0)                  '    の末日
+        Try
 
-        strSQL &= "And e_sagyo_hokoku.shonin_date between '" & TdayS.ToShortDateString & "' and '" & TdayE.ToShortDateString & "'"
+            TdayS = New DateTime(Tday.Year, Tday.Month, 1)          '    の１日
+            TdayE = TdayS.AddMonths(1).AddDays(0)                  '    の末日
 
-        'sw1.WriteLine(strSQL)
+            strSQL &= "And e_sagyo_hokoku.shonin_date between '" & TdayS.ToShortDateString & "' and '" & TdayE.ToShortDateString & "'"
 
-        dt = cPs.SetTable(strSQL)
+            'sw1.WriteLine(strSQL)
 
-        For Each dtrow In dt.Rows
+            dt = cPs.SetTable(strSQL)
 
-
-            strSQL = "INSERT INTO " & schema & ".t_smile_meisai(受付番号, 集計基準日, 請求番号, ＤＭ番号, 受付日, 点検完了, 承認日, 請求日, 結果１, 結果2)VALUES("
-            strSQL &= "'" & dtrow(0) & "'"
-            strSQL &= "," & ChkDate(dtrow(1).ToString) & ""
-            strSQL &= ",'" & dtrow(2) & "'"
-            strSQL &= ",'" & dtrow(3) & "'"
-
-            strSQL &= "," & ChkDate(dtrow(4).ToString) & ""
-            strSQL &= "," & ChkDate(dtrow(5).ToString) & ""
-            strSQL &= "," & ChkDate(dtrow(6).ToString) & ""
-            strSQL &= "," & ChkDate(dtrow(7).ToString) & ""
-
-            strSQL &= ",'" & dtrow(8) & "'"
-            strSQL &= ",'" & dtrow(9) & "'"
-            strSQL &= ")"
-            strSQL &= " ON CONFLICT (受付番号)  "
-            strSQL &= " DO UPDATE SET"
-            strSQL &= "  集計基準日 = '" & ChkDate(dtrow(1).ToString) & ""
-            strSQL &= " ,請求番号 = '" & dtrow(2) & "'"
-            strSQL &= " ,ＤＭ番号 = '" & dtrow(3) & "'"
-            strSQL &= " ,受付日 = " & ChkDate(dtrow(4).ToString) & ""
-            strSQL &= " ,点検完了 = " & ChkDate(dtrow(5).ToString) & ""
-            strSQL &= " ,承認日 = " & ChkDate(dtrow(6).ToString) & ""
-            strSQL &= " ,請求日 = " & ChkDate(dtrow(7).ToString) & ""
-            strSQL &= " ,結果１ = '" & dtrow(8) & "'"
-            strSQL &= " ,結果１ = '" & dtrow(9) & "'"
-            strSQL &= ";"
+            For Each dtrow In dt.Rows
 
 
-            cPs.EXEC(strSQL)
+                strSQL = "INSERT INTO " & schema & ".t_smile_meisai(受付番号, 集計基準日, 請求番号, ＤＭ番号, 受付日, 点検完了, 承認日, 請求日, 結果１, 結果2)VALUES("
+                strSQL &= "'" & dtrow(0) & "'"
+                strSQL &= "," & ChkDate(dtrow(1).ToString) & ""
+                strSQL &= ",'" & dtrow(2) & "'"
+                strSQL &= ",'" & dtrow(3) & "'"
 
-            Console.WriteLine("受付番号:" & dtrow(0) & "    承認日： " & dtrow(6))
-            'sw1.WriteLine("受付番号:" & dtrow(0) & "    承認日： " & dtrow(6))
+                strSQL &= "," & ChkDate(dtrow(4).ToString) & ""
+                strSQL &= "," & ChkDate(dtrow(5).ToString) & ""
+                strSQL &= "," & ChkDate(dtrow(6).ToString) & ""
+                strSQL &= "," & ChkDate(dtrow(7).ToString) & ""
 
-        Next
+                strSQL &= ",'" & dtrow(8) & "'"
+                strSQL &= ",'" & dtrow(9) & "'"
+                strSQL &= ")"
+                strSQL &= " ON CONFLICT (受付番号)  "
+                strSQL &= " DO UPDATE SET"
+                strSQL &= "  集計基準日 = '" & ChkDate(dtrow(1).ToString) & ""
+                strSQL &= " ,請求番号 = '" & dtrow(2) & "'"
+                strSQL &= " ,ＤＭ番号 = '" & dtrow(3) & "'"
+                strSQL &= " ,受付日 = " & ChkDate(dtrow(4).ToString) & ""
+                strSQL &= " ,点検完了 = " & ChkDate(dtrow(5).ToString) & ""
+                strSQL &= " ,承認日 = " & ChkDate(dtrow(6).ToString) & ""
+                strSQL &= " ,請求日 = " & ChkDate(dtrow(7).ToString) & ""
+                strSQL &= " ,結果１ = '" & dtrow(8) & "'"
+                strSQL &= " ,結果１ = '" & dtrow(9) & "'"
+                strSQL &= ";"
+
+
+                cPs.EXEC(strSQL)
+
+                Console.WriteLine("受付番号:" & dtrow(0) & "    承認日： " & dtrow(6))
+                'sw1.WriteLine("受付番号:" & dtrow(0) & "    承認日： " & dtrow(6))
+
+            Next
+            LogWrite("ｽﾏｲﾙ明細", "")
+
+        Catch ex As Exception
+            LogWrite("ｽﾏｲﾙ明細", "ERROR")
+        End Try
 
     End Sub
 
@@ -108,93 +117,103 @@ Module Module2
         Dim v_平均修請 As String = "0"
         Dim v_前回差 As String = "0"
 
+        Try
 
-        strSQL = "select "
-        strSQL &= "to_char(t.承認日,'yyyy/MM')"
-        strSQL &= ", sum( case when COALESCE(m.待ちフラグ,'9')='9' then 1 else  0 end )　未発行"
-        strSQL &= ", sum( case when COALESCE(m.待ちフラグ,'')='0'  then 1 else  0 end )　物件待ち"
-        strSQL &= ", sum( case when COALESCE(m.待ちフラグ,'')='1'  then 1 else  0 end )　不備待ち"
-        strSQL &= "	from  " & schema & ".v_yuryo_tenken_syuyaku v"
-        strSQL &= "	inner join      " & schema & ".t_smile_meisai t on t.受付番号   = v.点検受付番号  and t.請求日 is null"
-        strSQL &= "	left outer join " & schema & ".t_smile_machi m  on m.点検受付番号 = v.点検受付番号 and m.待ちフラグ in ('0','1')"
-        strSQL &= "	where v.請求日 =''"
-        strSQL &= "	and  to_char(t.承認日,'yyyy/MM')='" & v_無償承認月 & "'"
-        strSQL &= "	group by to_char(t.承認日,'yyyy/MM')"
-
-
-        dt = cPs.SetTable(strSQL)
-        For Each dtrow In dt.Rows
-            v_未請求数 = dtrow(0).ToString
-            v_物件待ち数 = dtrow(1).ToString
-            v_不備待ち数 = dtrow(2).ToString
-        Next
+            strSQL = "select "
+            strSQL &= "to_char(t.承認日,'yyyy/MM')"
+            strSQL &= ", sum( case when COALESCE(m.待ちフラグ,'9')='9' then 1 else  0 end )　未発行"
+            strSQL &= ", sum( case when COALESCE(m.待ちフラグ,'')='0'  then 1 else  0 end )　物件待ち"
+            strSQL &= ", sum( case when COALESCE(m.待ちフラグ,'')='1'  then 1 else  0 end )　不備待ち"
+            strSQL &= "	from  " & schema & ".v_yuryo_tenken_syuyaku v"
+            strSQL &= "	inner join      " & schema & ".t_smile_meisai t on t.受付番号   = v.点検受付番号  and t.請求日 is null"
+            strSQL &= "	left outer join " & schema & ".t_smile_machi m  on m.点検受付番号 = v.点検受付番号 and m.待ちフラグ in ('0','1')"
+            strSQL &= "	where v.請求日 =''"
+            strSQL &= "	and  to_char(t.承認日,'yyyy/MM')='" & v_無償承認月 & "'"
+            strSQL &= "	group by to_char(t.承認日,'yyyy/MM')"
 
 
-        strSQL = "select  count(*),  round(AVG(t_smile_meisai.結果１),1) ,round(AVG(t_smile_meisai.結果2),1)"
-        strSQL &= " from " & schema & ".t_smile_meisai "
-        strSQL &= " left outer join " & schema & ".t_smile_machi  on t_smile_meisai.受付番号 =t_smile_machi.点検受付番号  and t_smile_machi.待ちフラグ <>'0'"
-        strSQL &= " where t_smile_meisai.承認日 between '" & st & "' and '" & et & "'"
-        strSQL &= " And t_smile_meisai.請求日  Is Not null"
+            dt = cPs.SetTable(strSQL)
+            For Each dtrow In dt.Rows
+                v_未請求数 = dtrow(0).ToString
+                v_物件待ち数 = dtrow(1).ToString
+                v_不備待ち数 = dtrow(2).ToString
+            Next
 
 
-        dt = cPs.SetTable(strSQL)
-        For Each dtrow In dt.Rows
-            v_請求数 = dtrow(0).ToString
-            v_平均無請 = dtrow(1).ToString
-            v_平均修請 = dtrow(2).ToString
-        Next
+            strSQL = "select  count(*),  round(AVG(t_smile_meisai.結果１),1) ,round(AVG(t_smile_meisai.結果2),1)"
+            strSQL &= " from " & schema & ".t_smile_meisai "
+            strSQL &= " left outer join " & schema & ".t_smile_machi  on t_smile_meisai.受付番号 =t_smile_machi.点検受付番号  and t_smile_machi.待ちフラグ <>'0'"
+            strSQL &= " where t_smile_meisai.承認日 between '" & st & "' and '" & et & "'"
+            strSQL &= " And t_smile_meisai.請求日  Is Not null"
 
 
-        strSQL = "select t.請求数 "
-        strSQL &= " from " & schema & ".t_smile_kanri  t "
-        strSQL &= " where t.無償承認月  = '" & v_無償承認月 & "' "
-        strSQL &= " order by t.集計日 asc"
-        dt = cPs.SetTable(strSQL)
-
-        For Each dtrow In dt.Rows
-            v_前回差 = dtrow(0).ToString
-        Next
-
-        If v_前回差 > 0 Then
-            v_前回差 = Integer.Parse(v_請求数) - Integer.Parse(v_前回差)
-
-        End If
-
-        strSQL = "INSERT INTO " & schema & ".t_smile_kanri(集計日, 無償承認月, 請求数, 未請求数, 不備待ち数, 物件待ち数, 平均無請, 平均修請, 前回差, 更新日, 更新者"
-        strSQL &= ")VALUES("
-        strSQL &= "'" & v_集計日 & "'"
-        strSQL &= ", '" & v_無償承認月 & "'"
-        strSQL &= ", " & v_請求数 & ""
-
-        strSQL &= ", " & v_未請求数 & ""
-
-        strSQL &= ", " & v_不備待ち数 & ""
-        strSQL &= ", " & v_物件待ち数 & ""
-        strSQL &= ", " & v_平均無請 & ""
-        strSQL &= ", " & v_平均修請 & ""
-
-        strSQL &= ", " & v_前回差 & ""
-        strSQL &= ", now()"
-        strSQL &= ", 'SYSTEM'"
-        strSQL &= ")"
-        strSQL &= " ON CONFLICT (集計日, 無償承認月)  "
-        strSQL &= " DO UPDATE SET"
-        strSQL &= "  請求数 = " & v_請求数 & ""
-        strSQL &= ", 未請求数 =" & v_未請求数 & ""
-
-        strSQL &= ", 不備待ち数 =" & v_不備待ち数 & ""
-        strSQL &= ", 物件待ち数 =" & v_物件待ち数 & ""
-        strSQL &= ", 平均無請   =" & v_平均無請 & ""
-        strSQL &= ", 平均修請  = " & v_平均修請 & ""
-
-        strSQL &= ", 前回差   =" & v_前回差 & ""
-        strSQL &= ", 更新日 = now()"
-        strSQL &= ", 更新者 = 'SYSTEM';"
+            dt = cPs.SetTable(strSQL)
+            For Each dtrow In dt.Rows
+                v_請求数 = dtrow(0).ToString
+                v_平均無請 = dtrow(1).ToString
+                v_平均修請 = dtrow(2).ToString
+            Next
 
 
-        sw1.WriteLine(strSQL)
+            strSQL = "select t.請求数 "
+            strSQL &= " from " & schema & ".t_smile_kanri  t "
+            strSQL &= " where t.無償承認月  = '" & v_無償承認月 & "' "
+            strSQL &= " order by t.集計日 asc"
+            dt = cPs.SetTable(strSQL)
 
-        cPs.EXEC(strSQL)
+            For Each dtrow In dt.Rows
+                v_前回差 = dtrow(0).ToString
+            Next
+
+            If v_前回差 > 0 Then
+                v_前回差 = Integer.Parse(v_請求数) - Integer.Parse(v_前回差)
+
+            End If
+
+            strSQL = "INSERT INTO " & schema & ".t_smile_kanri(集計日, 無償承認月, 請求数, 未請求数, 不備待ち数, 物件待ち数, 平均無請, 平均修請, 前回差, 更新日, 更新者"
+            strSQL &= ")VALUES("
+            strSQL &= "'" & v_集計日 & "'"
+            strSQL &= ", '" & v_無償承認月 & "'"
+            strSQL &= ", " & v_請求数 & ""
+
+            strSQL &= ", " & v_未請求数 & ""
+
+            strSQL &= ", " & v_不備待ち数 & ""
+            strSQL &= ", " & v_物件待ち数 & ""
+            strSQL &= ", " & v_平均無請 & ""
+            strSQL &= ", " & v_平均修請 & ""
+
+            strSQL &= ", " & v_前回差 & ""
+            strSQL &= ", now()"
+            strSQL &= ", 'SYSTEM'"
+            strSQL &= ")"
+            strSQL &= " ON CONFLICT (集計日, 無償承認月)  "
+            strSQL &= " DO UPDATE SET"
+            strSQL &= "  請求数 = " & v_請求数 & ""
+            strSQL &= ", 未請求数 =" & v_未請求数 & ""
+
+            strSQL &= ", 不備待ち数 =" & v_不備待ち数 & ""
+            strSQL &= ", 物件待ち数 =" & v_物件待ち数 & ""
+            strSQL &= ", 平均無請   =" & v_平均無請 & ""
+            strSQL &= ", 平均修請  = " & v_平均修請 & ""
+
+            strSQL &= ", 前回差   =" & v_前回差 & ""
+            strSQL &= ", 更新日 = now()"
+            strSQL &= ", 更新者 = 'SYSTEM';"
+
+
+            sw1.WriteLine(strSQL)
+
+            cPs.EXEC(strSQL)
+
+            LogWrite("ｽﾏｲﾙ前月", "OK")
+
+        Catch ex As Exception
+            LogWrite("ｽﾏｲﾙ前月", "ERROR")
+
+        End Try
+
+
 
     End Sub
 
@@ -215,88 +234,93 @@ Module Module2
         Dim v_平均無請 As String = "0"
         Dim v_平均修請 As String = "0"
         Dim v_前回差 As String = "0"
+        Try
 
-        strSQL = "SELECT 集計日, 無償承認月, 請求数, 未請求数, 不備待ち数, 物件待ち数, 平均無請, 平均修請, 前回差"
-        strSQL &= " FROM " & schema & ".t_smile_kanri "
-        strSQL &= "  where (集計日 ,無償承認月)in ("
-        strSQL &= " select max(t.集計日) ,t.無償承認月  from  " & schema & ".t_smile_kanri t"
-        strSQL &= " where t.未請求数  > 0 or t.不備待ち数 > 0 or 物件待ち数 >0"
-        strSQL &= " group by t.無償承認月"
-        strSQL &= ")"
-        strSQL &= " and  無償承認月<> '" & dy.Substring(0, 7) & "'"
-        strSQL &= " order by 無償承認月 asc"
-
-        dt0 = cPs.SetTable(strSQL)
-
-        For Each dtrow0 In dt0.Rows
-
-            v_集計日 = Now.ToShortDateString
-            v_無償承認月 = dtrow0(1).ToString
-
-            strSQL = " select to_char(now(),'yyyy/MM/dd') "
-            strSQL &= " ,to_char(t.承認日,'yyyy/MM')	"
-            strSQL &= " , COALESCE(sum( case when COALESCE(m.待ちフラグ,'9')='9' then 1 else  0 end ),0)"
-            strSQL &= " , COALESCE(sum( case when COALESCE(m.待ちフラグ,'')='0'  then 1 else  0 end ),0)"
-            strSQL &= " , COALESCE(sum ( case when COALESCE(m.待ちフラグ,'') ='1'then 1 else  0 end ),0)"
-            strSQL &= " from  " & schema & ".v_yuryo_tenken_syuyaku v	"
-            strSQL &= " inner join      " & schema & ".t_smile_meisai t on t.受付番号   = v.点検受付番号  and t.請求日 is null   "
-            strSQL &= " 	and  to_char(t.承認日,'yyyy/MM') = '" & dtrow0(1).ToString & "'	"
-            strSQL &= " 	left outer join " & schema & ".t_smile_machi m  on m.点検受付番号 = v.点検受付番号 and m.待ちフラグ in ('0','1')	where v.請求日 =''	group by to_char(t.承認日,'yyyy/MM')"
-
-
-            dt = cPs.SetTable(strSQL)
-
-            If dt.Rows.Count = 0 Then
-
-
-                v_未請求数 = 0
-                v_不備待ち数 = 0
-                v_物件待ち数 = 0
-
-
-                v_平均無請 = dtrow0(6).ToString
-                v_平均修請 = dtrow0(7).ToString
-                v_前回差 = dtrow0(8).ToString
-            Else
-                For Each dtrow In dt.Rows
-
-                    v_未請求数 = dtrow(2).ToString
-                    v_不備待ち数 = dtrow(3).ToString
-                    v_物件待ち数 = dtrow(4).ToString
-
-
-                Next
-            End If
-
-            strSQL = "INSERT INTO " & schema & ".t_smile_kanri(集計日, 無償承認月, 請求数, 未請求数, 不備待ち数, 物件待ち数, 平均無請, 平均修請, 前回差, 更新日, 更新者)VALUES("
-            strSQL &= "'" & v_集計日 & "'"
-            strSQL &= ",'" & v_無償承認月 & "'"
-            strSQL &= ",'" & v_請求数 & "'"
-            strSQL &= ",'" & v_未請求数 & "'"
-            strSQL &= ",'" & v_不備待ち数 & "'"
-            strSQL &= ",'" & v_物件待ち数 & "'"
-            strSQL &= ",'" & v_平均無請 & "'"
-            strSQL &= ",'" & v_平均修請 & "'"
-            strSQL &= ",'" & v_前回差 & "'"
-            strSQL &= ", now()"
-            strSQL &= ", 'SYSTEM'"
+            strSQL = "SELECT 集計日, 無償承認月, 請求数, 未請求数, 不備待ち数, 物件待ち数, 平均無請, 平均修請, 前回差"
+            strSQL &= " FROM " & schema & ".t_smile_kanri "
+            strSQL &= "  where (集計日 ,無償承認月)in ("
+            strSQL &= " select max(t.集計日) ,t.無償承認月  from  " & schema & ".t_smile_kanri t"
+            strSQL &= " where t.未請求数  > 0 or t.不備待ち数 > 0 or 物件待ち数 >0"
+            strSQL &= " group by t.無償承認月"
             strSQL &= ")"
-            strSQL &= " ON CONFLICT (集計日, 無償承認月)  "
-            strSQL &= " DO UPDATE SET"
-            strSQL &= "  請求数 = " & v_請求数 & ""
-            strSQL &= ", 未請求数 =" & v_未請求数 & ""
-            strSQL &= ", 不備待ち数 =" & v_不備待ち数 & ""
-            strSQL &= ", 物件待ち数 =" & v_物件待ち数 & ""
-            strSQL &= ", 平均無請   =" & v_平均無請 & ""
-            strSQL &= ", 平均修請  = " & v_平均修請 & ""
-            strSQL &= ", 前回差   =" & v_前回差 & ""
-            strSQL &= ", 更新日 = now()"
-            strSQL &= ", 更新者 = 'SYSTEM')"
+            strSQL &= " and  無償承認月<> '" & dy.Substring(0, 7) & "'"
+            strSQL &= " order by 無償承認月 asc"
+
+            dt0 = cPs.SetTable(strSQL)
+
+            For Each dtrow0 In dt0.Rows
+
+                v_集計日 = Now.ToShortDateString
+                v_無償承認月 = dtrow0(1).ToString
+
+                strSQL = " select to_char(now(),'yyyy/MM/dd') "
+                strSQL &= " ,to_char(t.承認日,'yyyy/MM')	"
+                strSQL &= " , COALESCE(sum( case when COALESCE(m.待ちフラグ,'9')='9' then 1 else  0 end ),0)"
+                strSQL &= " , COALESCE(sum( case when COALESCE(m.待ちフラグ,'')='0'  then 1 else  0 end ),0)"
+                strSQL &= " , COALESCE(sum ( case when COALESCE(m.待ちフラグ,'') ='1'then 1 else  0 end ),0)"
+                strSQL &= " from  " & schema & ".v_yuryo_tenken_syuyaku v	"
+                strSQL &= " inner join      " & schema & ".t_smile_meisai t on t.受付番号   = v.点検受付番号  and t.請求日 is null   "
+                strSQL &= " 	and  to_char(t.承認日,'yyyy/MM') = '" & dtrow0(1).ToString & "'	"
+                strSQL &= " 	left outer join " & schema & ".t_smile_machi m  on m.点検受付番号 = v.点検受付番号 and m.待ちフラグ in ('0','1')	where v.請求日 =''	group by to_char(t.承認日,'yyyy/MM')"
+
+
+                dt = cPs.SetTable(strSQL)
+
+                If dt.Rows.Count = 0 Then
+
+
+                    v_未請求数 = 0
+                    v_不備待ち数 = 0
+                    v_物件待ち数 = 0
+
+
+                    v_平均無請 = dtrow0(6).ToString
+                    v_平均修請 = dtrow0(7).ToString
+                    v_前回差 = dtrow0(8).ToString
+                Else
+                    For Each dtrow In dt.Rows
+
+                        v_未請求数 = dtrow(2).ToString
+                        v_不備待ち数 = dtrow(3).ToString
+                        v_物件待ち数 = dtrow(4).ToString
+
+
+                    Next
+                End If
+
+                strSQL = "INSERT INTO " & schema & ".t_smile_kanri(集計日, 無償承認月, 請求数, 未請求数, 不備待ち数, 物件待ち数, 平均無請, 平均修請, 前回差, 更新日, 更新者)VALUES("
+                strSQL &= "'" & v_集計日 & "'"
+                strSQL &= ",'" & v_無償承認月 & "'"
+                strSQL &= ",'" & v_請求数 & "'"
+                strSQL &= ",'" & v_未請求数 & "'"
+                strSQL &= ",'" & v_不備待ち数 & "'"
+                strSQL &= ",'" & v_物件待ち数 & "'"
+                strSQL &= ",'" & v_平均無請 & "'"
+                strSQL &= ",'" & v_平均修請 & "'"
+                strSQL &= ",'" & v_前回差 & "'"
+                strSQL &= ", now()"
+                strSQL &= ", 'SYSTEM'"
+                strSQL &= ")"
+                strSQL &= " ON CONFLICT (集計日, 無償承認月)  "
+                strSQL &= " DO UPDATE SET"
+                strSQL &= "  請求数 = " & v_請求数 & ""
+                strSQL &= ", 未請求数 =" & v_未請求数 & ""
+                strSQL &= ", 不備待ち数 =" & v_不備待ち数 & ""
+                strSQL &= ", 物件待ち数 =" & v_物件待ち数 & ""
+                strSQL &= ", 平均無請   =" & v_平均無請 & ""
+                strSQL &= ", 平均修請  = " & v_平均修請 & ""
+                strSQL &= ", 前回差   =" & v_前回差 & ""
+                strSQL &= ", 更新日 = now()"
+                strSQL &= ", 更新者 = 'SYSTEM')"
 
 
 
-            cPs.EXEC(strSQL)
-        Next
+                cPs.EXEC(strSQL)
+            Next
+            LogWrite("ｽﾏｲﾙ過去", "OK")
+        Catch ex As Exception
+            LogWrite("ｽﾏｲﾙ過去", "ERROR")
+        End Try
 
     End Sub
 
@@ -343,6 +367,16 @@ Module Module2
     Private Sub LogOpen()
     End Sub
     Private Sub LogClose()
+    End Sub
+    Private Sub LogWrite(syori As String, ken As String)
+        Dim strSQL As String = String.Empty
+        strSQL = "INSERT INTO " & schema & ".t_smile_log(id, nm, mn, entry_day) VALUES('SYSTEM', '" & syori & "', '" & ken & "', now()) "
+        cPs.EXEC(strSQL)
+    End Sub
+    Private Sub LogDelete()
+        Dim strSQL As String = String.Empty
+        strSQL = "DELETE FROM " & schema & ".t_smile_log WHERE entry_day < CURRENT_DATE -   (select  cast(  naiyou  as  int ) from " & schema & "m_system  where kbn ='99' and seq ='0')"
+        cPs.EXEC(strSQL)
     End Sub
 
 

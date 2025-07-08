@@ -56,6 +56,7 @@
     End Sub
 
     Private Sub FormUriage002_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Text = "  売り上げ年" & Nentuki & "　品コード" & SinaCd
         Disp()
     End Sub
     Private Sub Disp()

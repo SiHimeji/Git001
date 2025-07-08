@@ -12,7 +12,8 @@ namespace Syuyaku
 {
     static public class ClassLog
     {
-        const string LogTableName = "tenken.t_log";
+        //const string LogTableName = "tenken.t_log";
+        const string LogTableName = "n2c.t_log";
 
         static public void LogWrite(string log)
         {
@@ -40,13 +41,13 @@ namespace Syuyaku
         /// </summary>
         static public void LogWriteTB(string tbl, int sousinsu)
         {
-            string strSqL = $@"INSERT INTO {LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', {tbl}', '{sousinsu.ToString()}件', now())";
-            ClassNpgsql.EXECSQL(strSqL);
+            string strSqL = $@"INSERT INTO {LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', '{tbl}', '{sousinsu.ToString()}件', now())";
+            ClassNpgsql.EXEC(strSqL);
         }
         static public void logwriteErrTB(string tbl)
         {
             string strSqL = $@"INSERT INTO {LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', '{tbl}', 'ERROR', now())";
-            ClassNpgsql.EXECSQL(strSqL);
+            ClassNpgsql.EXEC(strSqL);
         }
 
     }

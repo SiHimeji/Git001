@@ -150,6 +150,12 @@
         Me.CheckBox回収対象外.Visible = False
         Me.EXCEL未回収ToolStripMenuItem.Visible = False
 
+        If ChkNewOld() Then
+            Me.CheckBoxCIM.Checked = True
+        Else
+            Me.CheckBoxCIM.Checked = False
+        End If
+
     End Sub
 
     Private Sub 終了ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 終了ToolStripMenuItem.Click

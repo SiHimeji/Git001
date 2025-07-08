@@ -10,7 +10,7 @@ using Npgsql.NameTranslation;
 using static System.Net.Mime.MediaTypeNames;
 using System.Data;
 
-namespace Syuyaku
+namespace ConsoleApp1
 {
     static public class ClassIF
     {
@@ -75,6 +75,7 @@ namespace Syuyaku
             DataTable dt = new DataTable();
             string sql0 = "";
             string sql1 = "";
+            int cnt = 0;
             try
             {
 
@@ -143,6 +144,7 @@ namespace Syuyaku
                             System.Windows.Forms.Application.DoEvents();
 
                             ClassNpgsql._EXEC(sql0);
+                            cnt++;
                         }
                         else
                         {
@@ -156,12 +158,15 @@ namespace Syuyaku
                 }
                 ClassNpgsql.trans.Commit();
                 ClassNpgsql.DbClose();
+                ClassLog.LogWriteTB("出庫データ", cnt);
+
             }
             catch (Exception ex)
             {
                 ClassLog.LogWrite(ex.Message);
                 ClassNpgsql.trans.Rollback();
                 ClassNpgsql.DbClose();
+                ClassLog.logwriteErrTB("出庫データ");
             }
 
 

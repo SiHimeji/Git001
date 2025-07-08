@@ -42,6 +42,7 @@ Partial Class FormCheck
         Me.ToolStripStatusLabel件数 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.CheckBoxCIM = New System.Windows.Forms.CheckBox()
         Me.CheckBoxZero = New System.Windows.Forms.CheckBox()
         Me.CheckBox物件重複を外す = New System.Windows.Forms.CheckBox()
         Me.CheckBox回収対象外 = New System.Windows.Forms.CheckBox()
@@ -91,7 +92,6 @@ Partial Class FormCheck
         Me.ComboBox項目 = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.CheckBoxCIM = New System.Windows.Forms.CheckBox()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -256,6 +256,16 @@ Partial Class FormCheck
         Me.SplitContainer1.Size = New System.Drawing.Size(1145, 548)
         Me.SplitContainer1.SplitterDistance = 167
         Me.SplitContainer1.TabIndex = 2
+        '
+        'CheckBoxCIM
+        '
+        Me.CheckBoxCIM.AutoSize = True
+        Me.CheckBoxCIM.Location = New System.Drawing.Point(15, 146)
+        Me.CheckBoxCIM.Name = "CheckBoxCIM"
+        Me.CheckBoxCIM.Size = New System.Drawing.Size(114, 16)
+        Me.CheckBoxCIM.TabIndex = 18
+        Me.CheckBoxCIM.Text = "旧システムを含める"
+        Me.CheckBoxCIM.UseVisualStyleBackColor = True
         '
         'CheckBoxZero
         '
@@ -770,16 +780,6 @@ Partial Class FormCheck
         Me.DataGridView1.Size = New System.Drawing.Size(1145, 377)
         Me.DataGridView1.TabIndex = 0
         '
-        'CheckBoxCIM
-        '
-        Me.CheckBoxCIM.AutoSize = True
-        Me.CheckBoxCIM.Location = New System.Drawing.Point(15, 146)
-        Me.CheckBoxCIM.Name = "CheckBoxCIM"
-        Me.CheckBoxCIM.Size = New System.Drawing.Size(114, 16)
-        Me.CheckBoxCIM.TabIndex = 18
-        Me.CheckBoxCIM.Text = "旧システムを含める"
-        Me.CheckBoxCIM.UseVisualStyleBackColor = True
-        '
         'FormCheck
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -791,6 +791,7 @@ Partial Class FormCheck
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "FormCheck"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "チェック"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()

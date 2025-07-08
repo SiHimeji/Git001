@@ -9,12 +9,24 @@ using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 using static System.Windows.Forms.LinkLabel;
 using TenkenKekka;
+
+//#define n2c
+
 namespace Syuyaku
 {
     static public class ClassIF
     {
         //テーブル指定
-        const string TableName = "tenken.v_tenken_kekka";
+        const string TableName = "n2c.v_tenken_kekka";
+        //const string TableName = "tenken.v_tenken_kekka";
+
+        //取り込みCSV指定
+        //const string FileName = @"\\HIMEJI-BACKUP\landisk\NR\点検センター\70_N2C対応\ソース\N2OK001T.CSV";
+        const string FileName = @"D:\01_Work\04_NR\06_点検センター\70_N2C対応\ソース\N2OK001T.CSV";
+        //
+      
+
+
         //テーブルの列指定
         static string[] retumei =
         {
@@ -103,11 +115,6 @@ namespace Syuyaku
                     "特定製造事業者コード","特定製造事業者名",
                     "製造年月"
         };
-        //取り込みCSV指定
-        //const string FileName = @"\\HIMEJI-BACKUP\landisk\NR\点検センター\70_N2C対応\ソース\N2OK001T.CSV";
-        const string FileName = @"D:\01_Work\04_NR\06_点検センター\70_N2C対応\ソース\N2OK001T.CSV";
-        //
-        //ClassNpgsql cNpgsql =new ClassNpgsql();
         static string csvFileName = string.Empty;
 
         static public void csvINsert()
@@ -122,14 +129,14 @@ namespace Syuyaku
             {
                 ClassLog.LogDelete();
                 int ukeno = GetHairetu("受付ＮＯ");
-                //int cimno = GetHairetu("cim番号");
+
+                int cimno1 = GetHairetu("点検完了日");
 
                 ClassNpgsql.DbOpen(1);
 
                 var parser = new TextFieldParser(FileName, System.Text.Encoding.GetEncoding("UTF-8"));
                 using (parser)
                 {
-
 
                     //  区切りの指定
                     parser.TextFieldType = FieldType.Delimited;
@@ -139,7 +146,6 @@ namespace Syuyaku
                     // フィールドの空白トリム設定
                     parser.TrimWhiteSpace = false;
 
-
                     // ファイルの終端までループ
                     var lists = parser.ReadFields();
                     while (!parser.EndOfData)
@@ -147,14 +153,10 @@ namespace Syuyaku
 
                         var line = new List<string>();
                         lists = parser.ReadFields();
-                        /*
-                        if (lists[cimno] != "")
-                        {
-                            ukno = lists[cimno];
-                            lists[cimno] = lists[ukeno];
-                            lists[ukeno] = lists[cimno];
-                        }
-                        */
+                        /* */
+
+                        lists[cimno1] = HiHenkan(lists[cimno1]);
+
                         cnt = 0;
                         sql1 = $@"insert into {TableName} (";
                         sql2 = $@")values( ";
@@ -198,7 +200,7 @@ namespace Syuyaku
                 }
                 ClassNpgsql.trans.Commit();
                 ClassNpgsql.DbClose();
-                ClassLog.LogWriteTB("v_tenken_kekka", sousinsuu);
+                ClassLog.LogWriteTB("点検結果", sousinsuu);
 
             }
             catch (Exception ex)
@@ -206,7 +208,7 @@ namespace Syuyaku
                 ClassLog.LogWrite(ex.Message);
                 ClassNpgsql.trans.Rollback();
                 ClassNpgsql.DbClose();
-                ClassLog.logwriteErrTB("v_tenken_kekka");
+                ClassLog.logwriteErrTB("点検結果");
             }
         }
         //
@@ -218,6 +220,34 @@ namespace Syuyaku
             return num;
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buf"></param>
+        /// <returns></returns>
+        static private string HiHenkan(string buf)
+        {
+            DateTime dy;
+            try
+            {
+                switch (buf.Length)
+                {
+                    case 18:
+                        buf = buf.Substring(0, 10) + " " + buf.Substring(10, 8);
+                        dy = DateTime.Parse(buf);
+                        return dy.ToString("yyyy/MM/dd HH:mm:ss");
 
+                    case 10:
+                        buf = buf.Substring(0, 10);
+                        dy = DateTime.Parse(buf);
+                        return dy.ToString("yyyy/MM/dd");
+                }
+                return buf;
+            }
+            catch (Exception ex)
+            {
+                return buf;
+            }
+        }
     }
 }

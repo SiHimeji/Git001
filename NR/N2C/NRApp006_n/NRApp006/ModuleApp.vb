@@ -663,6 +663,29 @@ Module ModuleApp
 
     End Sub
 
+    '
+    '過去データを含めるか　
+    '　含める場合　TRUE
+    '
+    Public Function ChkNewOld() As Boolean
+
+        Dim ClassPostgeDB As New ClassPostgeDB
+        Dim strSQL As String
+        Dim dt As New DataTable
+
+        strSQL = "select ms.naiyou from " & schema & "m_system ms where ms.kbn ='3' and  ms.seq ='0'"
+
+        dt = ClassPostgeDB.SetTable(strSQL)
+        If dt.Rows.Count > 0 Then
+            If dt.Rows(0).Item(0).ToString() = "1" Then
+                Return True
+            Else
+                Return False
+            End If
+        Else
+            Return False
+        End If
+    End Function
 
 
 
