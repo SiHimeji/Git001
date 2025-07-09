@@ -124,7 +124,7 @@
             Me.TextBox法２０.Text = dt.Rows(0).Item("点検結果＿法２０")
             Me.TextBox法２１.Text = dt.Rows(0).Item("点検結果＿法２１")
             Me.TextBox法２２.Text = dt.Rows(0).Item("点検結果＿法２２")
-            Me.TextBox注意事項コメント.Text = dt.Rows(0).Item("注意事項コメント")
+            'Me.TextBox注意事項コメント.Text = dt.Rows(0).Item("注意事項コメント")
 
             Me.TextBox自１.Text = dt.Rows(0).Item("点検結果＿自１")
             Me.TextBox自２.Text = dt.Rows(0).Item("点検結果＿自２")

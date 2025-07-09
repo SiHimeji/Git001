@@ -132,13 +132,18 @@ namespace ClassIF
                         sql0 += ",del_flg";
                         sql0 += ",tyoufuku";
                         sql0 += ",seq";
+                        sql1 += ",'0'";
 
                         sql1 += ",'0'";
                         sql1 += ",to_char(now(),'YYYY/MM/DD')";
                         sql1 += ",null";
-                        sql1 += ",nll";
                         sql1 += ",null";
-                        sql1 += $@",(select max(COALESCE(seq,0)) + 1 from {TableName} where  uketukeno ='{lists[ukeno]}')";
+                        sql1 += ",null";
+                        sql1 += $@",(select COALESCE(max(seq) + 1,0 )  from {TableName} where  uketukeno ='{lists[ukeno]}')";
+                        sql1 += ",newflg";
+
+
+
                         sql0 = sql0 + sql1;
 
                         sql1 = $@"select count(*) from {TableName} where  uketukeno ='{lists[ukeno]}' and nextb ='{lists[nextb]}';";

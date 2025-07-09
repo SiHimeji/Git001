@@ -74,6 +74,7 @@ namespace ClassIF
 
          public void csvINsert出庫(string FileName)
         {
+
             DataTable dt = new DataTable();
             string sql0 = "";
             string sql1 = "";
@@ -88,6 +89,7 @@ namespace ClassIF
                 cDB.DbOpen(1);
 
                 var parser = new TextFieldParser(FileName, System.Text.Encoding.GetEncoding("UTF-8"));
+                //var parser = new TextFieldParser(FileName, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 using (parser)
                 {
 
@@ -109,7 +111,7 @@ namespace ClassIF
                         lists = parser.ReadFields();
 
                         sql0 = $@"insert into {TableName}(";
-                        sql1 = "values("; 
+                        sql1 = ")values("; 
                         
                         for (int i = 0; i < retumei.Length; i++)
                         {
@@ -119,22 +121,24 @@ namespace ClassIF
                             }
                         }
 
-                        sql0 += ",out_flg";
+                        sql0 += " out_flg";
                         sql0 += ",entry_date";
                         sql0 += ",entry";
                         sql0 += ",del_flg";
                         sql0 += ",tyoufuku";
                         sql0 += ",seq";
+                        sql0 += ",newflg";
 
-
-                        sql1 += ",'0'";
+                        sql1 += " '0'";
                         sql1 += ",to_char(now(),'YYYY/MM/DD')";
                         sql1 += ",null";
-                        sql1 += ",nll";
                         sql1 += ",null";
-                        sql1 += $@",(select max(COALESCE(seq,0)) + 1 from {TableName} where  uketukeno ='{lists[ukeno]}')";
-                        
-                                                
+                        sql1 += ",null";
+                        sql1 += $@",(select COALESCE(max(seq) + 1,0) from {TableName} where  uketukeno ='{lists[ukeno]}')";
+                        sql1 += ",'1'";
+                        sql1 += ")";
+
+
                         sql0 = sql0 + sql1;
 
                         sql1 = $@"select count(*) from {TableName} where  uketukeno ='{lists[ukeno]}' and nextb ='{lists[nextb]}';";
@@ -143,8 +147,8 @@ namespace ClassIF
                         
                         if (dt.Rows[0][0].ToString() == "0")
                         {
-                            Console.WriteLine(lists[ukeno]);
-                            //ClassLog.LogWrite(sql0);
+                            //Console.WriteLine(lists[ukeno]);
+                            cLog.LogWrite(sql0);
                             //System.Windows.Forms.Application.DoEvents();
 
                             cDB._EXEC(sql0);

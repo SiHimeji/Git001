@@ -24,20 +24,20 @@ Partial Class FormSyuko
     Private Sub InitializeComponent()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.終了ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.取り込みToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.出庫ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.訂正ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox出庫 = New System.Windows.Forms.TextBox()
+        Me.Button出庫取り込み = New System.Windows.Forms.Button()
         Me.Button検索出庫 = New System.Windows.Forms.Button()
+        Me.TextBox出庫 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Button訂正取り込み = New System.Windows.Forms.Button()
         Me.Button訂正 = New System.Windows.Forms.Button()
         Me.TextBox訂正 = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Button出庫取り込み = New System.Windows.Forms.Button()
-        Me.Button訂正取り込み = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,6 +61,25 @@ Partial Class FormSyuko
         Me.終了ToolStripMenuItem.Size = New System.Drawing.Size(43, 20)
         Me.終了ToolStripMenuItem.Text = "終了"
         '
+        '取り込みToolStripMenuItem
+        '
+        Me.取り込みToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.出庫ToolStripMenuItem, Me.訂正ToolStripMenuItem})
+        Me.取り込みToolStripMenuItem.Name = "取り込みToolStripMenuItem"
+        Me.取り込みToolStripMenuItem.Size = New System.Drawing.Size(62, 20)
+        Me.取り込みToolStripMenuItem.Text = "取り込み"
+        '
+        '出庫ToolStripMenuItem
+        '
+        Me.出庫ToolStripMenuItem.Name = "出庫ToolStripMenuItem"
+        Me.出庫ToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
+        Me.出庫ToolStripMenuItem.Text = "出庫"
+        '
+        '訂正ToolStripMenuItem
+        '
+        Me.訂正ToolStripMenuItem.Name = "訂正ToolStripMenuItem"
+        Me.訂正ToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
+        Me.訂正ToolStripMenuItem.Text = "訂正"
+        '
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
@@ -75,25 +94,6 @@ Partial Class FormSyuko
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(119, 17)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
-        '
-        '取り込みToolStripMenuItem
-        '
-        Me.取り込みToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.出庫ToolStripMenuItem, Me.訂正ToolStripMenuItem})
-        Me.取り込みToolStripMenuItem.Name = "取り込みToolStripMenuItem"
-        Me.取り込みToolStripMenuItem.Size = New System.Drawing.Size(62, 20)
-        Me.取り込みToolStripMenuItem.Text = "取り込み"
-        '
-        '出庫ToolStripMenuItem
-        '
-        Me.出庫ToolStripMenuItem.Name = "出庫ToolStripMenuItem"
-        Me.出庫ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.出庫ToolStripMenuItem.Text = "出庫"
-        '
-        '訂正ToolStripMenuItem
-        '
-        Me.訂正ToolStripMenuItem.Name = "訂正ToolStripMenuItem"
-        Me.訂正ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.訂正ToolStripMenuItem.Text = "訂正"
         '
         'SplitContainer1
         '
@@ -119,21 +119,14 @@ Partial Class FormSyuko
         Me.SplitContainer1.SplitterDistance = 58
         Me.SplitContainer1.TabIndex = 2
         '
-        'Label1
+        'Button出庫取り込み
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(57, 12)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "出庫データ"
-        '
-        'TextBox出庫
-        '
-        Me.TextBox出庫.Location = New System.Drawing.Point(14, 26)
-        Me.TextBox出庫.Name = "TextBox出庫"
-        Me.TextBox出庫.Size = New System.Drawing.Size(343, 19)
-        Me.TextBox出庫.TabIndex = 1
+        Me.Button出庫取り込み.Location = New System.Drawing.Point(445, 24)
+        Me.Button出庫取り込み.Name = "Button出庫取り込み"
+        Me.Button出庫取り込み.Size = New System.Drawing.Size(75, 23)
+        Me.Button出庫取り込み.TabIndex = 3
+        Me.Button出庫取り込み.Text = "取り込み"
+        Me.Button出庫取り込み.UseVisualStyleBackColor = True
         '
         'Button検索出庫
         '
@@ -143,6 +136,31 @@ Partial Class FormSyuko
         Me.Button検索出庫.TabIndex = 2
         Me.Button検索出庫.Text = "検索"
         Me.Button検索出庫.UseVisualStyleBackColor = True
+        '
+        'TextBox出庫
+        '
+        Me.TextBox出庫.Location = New System.Drawing.Point(14, 26)
+        Me.TextBox出庫.Name = "TextBox出庫"
+        Me.TextBox出庫.Size = New System.Drawing.Size(343, 19)
+        Me.TextBox出庫.TabIndex = 1
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(57, 12)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "出庫データ"
+        '
+        'Button訂正取り込み
+        '
+        Me.Button訂正取り込み.Location = New System.Drawing.Point(445, 20)
+        Me.Button訂正取り込み.Name = "Button訂正取り込み"
+        Me.Button訂正取り込み.Size = New System.Drawing.Size(75, 23)
+        Me.Button訂正取り込み.TabIndex = 6
+        Me.Button訂正取り込み.Text = "取り込み"
+        Me.Button訂正取り込み.UseVisualStyleBackColor = True
         '
         'Button訂正
         '
@@ -168,24 +186,6 @@ Partial Class FormSyuko
         Me.Label2.Size = New System.Drawing.Size(57, 12)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "訂正データ"
-        '
-        'Button出庫取り込み
-        '
-        Me.Button出庫取り込み.Location = New System.Drawing.Point(445, 24)
-        Me.Button出庫取り込み.Name = "Button出庫取り込み"
-        Me.Button出庫取り込み.Size = New System.Drawing.Size(75, 23)
-        Me.Button出庫取り込み.TabIndex = 3
-        Me.Button出庫取り込み.Text = "取り込み"
-        Me.Button出庫取り込み.UseVisualStyleBackColor = True
-        '
-        'Button訂正取り込み
-        '
-        Me.Button訂正取り込み.Location = New System.Drawing.Point(445, 20)
-        Me.Button訂正取り込み.Name = "Button訂正取り込み"
-        Me.Button訂正取り込み.Size = New System.Drawing.Size(75, 23)
-        Me.Button訂正取り込み.TabIndex = 6
-        Me.Button訂正取り込み.Text = "取り込み"
-        Me.Button訂正取り込み.UseVisualStyleBackColor = True
         '
         'FormSyuko
         '
