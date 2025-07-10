@@ -909,7 +909,12 @@ Module ModuleApp
     '　　Oraclの施工年月日　>=　2019年10月1日　10％
     '--------------------------------------------
     Public Function GetZeiRitu(No As String)
-        Return ""
+        Dim strSQL As String
+        strSQL = "select  from "
+
+
+        GetZeiRitu = 8
+
     End Function
 
 #End Region

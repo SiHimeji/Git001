@@ -1028,7 +1028,7 @@
         If CheckBoxCIM.Checked Then
 
         Else
-            strSQL &= " and t.newflg  ='1' "
+            strSQL &= " and t.newflg  > 0"
         End If
 
         dt = ClassPostgeDB.SetTable(strSQL)
@@ -1277,7 +1277,7 @@
         If CheckBoxCIM.Checked Then
 
         Else
-            strSQL &= " and t.newflg  ='1'"
+            strSQL &= " and t.newflg  > 0"
 
         End If
 

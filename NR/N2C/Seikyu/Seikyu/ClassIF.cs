@@ -17,8 +17,10 @@ namespace Syuyaku
         const string TableName = "tenken.v_yuryo_tenken_syuyaku";
 
         //取り込みCSV指定
-        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\ソース\\N2OK003T.csv";
+        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\Data\\N2OK003T.csv";
         //const string FileName = "C:\\work\\06_点検センター\\70_N2C対応\\ソース\\N2OK003T.csv";
+        static int[] NitiJi = new int[20];
+        static int[] Suuji = new int[20];
 
         //テーブルの列指定
         static string[] retumei = {
@@ -58,12 +60,35 @@ namespace Syuyaku
             //string ukno = "";
             //string sql1 = "";
             int sousinsuu = 0;
+            int x;
             try
             {
+                for (x = 0; x < 20; x++)
+                {
+                    NitiJi[x] = -1;
+                    Suuji[x] = -1;
+                }
 
                 ClassLog.LogDelete();
                 int ukeno = GetHairetu("点検受付番号");
-                //int cimno = GetHairetu("cim番号");
+                x = 0;
+                NitiJi[x++] = GetHairetu("帳票発行日");
+                NitiJi[x++] = GetHairetu("点検受付日");
+                NitiJi[x++] = GetHairetu("点検完了日");
+                NitiJi[x++] = GetHairetu("請求書印刷日");
+                NitiJi[x++] = GetHairetu("請求書再印刷日");
+                NitiJi[x++] = GetHairetu("回収予定日");
+                NitiJi[x++] = GetHairetu("回収完了日");
+                NitiJi[x++] = GetHairetu("請求日");
+
+                x = 0;
+                Suuji[x++] = GetHairetu("技術料");
+                Suuji[x++] = GetHairetu("出張料");
+                Suuji[x++] = GetHairetu("諸経費");
+                Suuji[x++] = GetHairetu("サポート料");
+                Suuji[x++] = GetHairetu("その他料金");
+                Suuji[x++] = GetHairetu("値引き");
+                Suuji[x++] = GetHairetu("消費税額");
 
                 ClassNpgsql.DbOpen(1);
 
@@ -88,6 +113,23 @@ namespace Syuyaku
                         var line = new List<string>();
                         lists = parser.ReadFields();
 
+
+                        for (x = 0; NitiJi.Length > x; x++)
+                        {
+                            if (NitiJi[x] != -1)
+                            {
+                                lists[NitiJi[x]] = HiHenkan(lists[NitiJi[x]], x, retumei[NitiJi[x]]);
+                            }
+                        }
+
+                        for (x = 0; Suuji.Length > x; x++)
+                        {
+                            if (Suuji[x] != -1)
+                            {
+                                lists[Suuji[x]] = SuujiCheck(lists[Suuji[x]]);
+                            }
+                        }
+
                         sql0 = $@"insert into {TableName}(";
                         sql1 = "values("; 
                         
@@ -99,7 +141,7 @@ namespace Syuyaku
                             }
                         }
                         sql0 += $@"newflg)";
-                        sql1 += $@"'1')";                        
+                        sql1 += $@"'100')";                        
                         sql0 = sql0 + sql1+ $@" on conflict(点検受付番号)";
 
                         sql0 += $@" do update set";
@@ -110,7 +152,7 @@ namespace Syuyaku
                                 sql0 += $@" {retumei[i]} = EXCLUDED.{retumei[i]},";
                             }
                         }
-                        sql0 += $@" newflg = '1';";
+                        sql0 += $@" newflg = v_yuryo_tenken_syuyaku.newflg + 100;";
 
                         ClassLog.LogWrite(sql0);
                         Console.WriteLine(lists[ukeno]);
@@ -144,5 +186,48 @@ namespace Syuyaku
             return num;
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buf"></param>
+        /// <returns></returns>
+        static private string HiHenkan(string buf, int x, string re)
+        {
+            string ret;
+            try
+            {
+                switch (buf.Length)
+                {
+
+                    case 18:
+                        buf = buf.Substring(0, 10) + " " + buf.Substring(10, 8);
+                        ret = buf.Replace("-", "/");
+                        break;
+                    default:
+                        ret = buf.Replace("-", "/");
+                        break;
+
+                }
+                //Console.WriteLine(x.ToString() +" : "+re +" : "+ buf +" -> " + ret);
+
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+        static private string SuujiCheck(string buf)
+        {
+
+            bool isInteger = int.TryParse(buf, out int result);
+            if (isInteger)
+            {
+                return buf;
+            }
+            return "0";
+        }
+
     }
 }

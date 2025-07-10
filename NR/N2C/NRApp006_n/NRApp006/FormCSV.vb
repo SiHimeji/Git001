@@ -117,7 +117,7 @@
 
 
         Else
-            strSQL &= " and t.newflg  ='1'"
+            strSQL &= " and t.newflg  >0 "
         End If
 
 

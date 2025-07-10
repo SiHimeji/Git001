@@ -21,11 +21,9 @@ namespace Syuyaku
         const string TableName = "tenken.v_tenken_kekka";
 
         //取り込みCSV指定
-        //const string FileName = @"\\HIMEJI-BACKUP\landisk\NR\点検センター\70_N2C対応\ソース\N2OK001T.CSV";
-        const string FileName = @"D:\01_Work\04_NR\06_点検センター\70_N2C対応\ソース\N2OK001T.CSV";
+        const string FileName = @"D:\01_Work\04_NR\06_点検センター\70_N2C対応\Data\N2OK001T.CSV";
         //
       
-
 
         //テーブルの列指定
         static string[] retumei =
@@ -194,7 +192,7 @@ namespace Syuyaku
                             cnt++;
                         }
                         sql1 += ",newflg";
-                        sql2 += ",'2'";
+                        sql2 += ", v_tenken_kekka.newflg + 1";
 
                         ClassLog.LogWrite(""  + sql1 );
                         ClassLog.LogWrite(" " + sql2 );

@@ -132,7 +132,7 @@ namespace ClassIF
                         sql0 += ",del_flg";
                         sql0 += ",tyoufuku";
                         sql0 += ",seq";
-                        sql1 += ",'0'";
+                        sql1 += ",newflg";
 
                         sql1 += ",'0'";
                         sql1 += ",to_char(now(),'YYYY/MM/DD')";
@@ -140,7 +140,7 @@ namespace ClassIF
                         sql1 += ",null";
                         sql1 += ",null";
                         sql1 += $@",(select COALESCE(max(seq) + 1,0 )  from {TableName} where  uketukeno ='{lists[ukeno]}')";
-                        sql1 += ",newflg";
+                        sql1 += ",'1'";
 
 
 

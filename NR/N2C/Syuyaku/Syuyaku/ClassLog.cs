@@ -29,6 +29,12 @@ namespace TenkenKekka
         /// </summary>
         static public void LogDelete()
         {
+
+            if (!Directory.Exists(Directory.GetCurrentDirectory() + "\\log"))
+            {
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\log");
+            }
+
             DateTime today = DateTime.Today;
             System.Reflection.Assembly executionAsm = System.Reflection.Assembly.GetExecutingAssembly();
             string path = System.IO.Path.GetDirectoryName(new Uri(executionAsm.CodeBase).LocalPath) + "\\log\\log_" + today.DayOfWeek.ToString() + ".log";

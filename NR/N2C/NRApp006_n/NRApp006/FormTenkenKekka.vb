@@ -463,7 +463,7 @@
                         End Select
 
                     Case "ビルトイン式食器洗機"
-                        strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & ", "
+                        strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & " "
                         strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ",'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
 
                     Case "ハイブリッド機器"

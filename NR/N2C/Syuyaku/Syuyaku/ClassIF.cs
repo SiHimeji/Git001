@@ -20,7 +20,7 @@ namespace Syuyaku
         //const string TableName = "n2c.v_yuryo_tenken_syuyaku";
 
         //取り込みCSV指定
-        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\ソース\\N2OK002T.csv";
+        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\Data\\N2OK002T.csv";
         //const string FileName = "C:\\work\\06_点検センター\\70_N2C対応\\ソース\\N2OK002T.csv";
         //
 
@@ -83,8 +83,8 @@ namespace Syuyaku
 ,"製造年月"
 ,"所有者有無"
 ,"故障表示1"
-,"依頼区分"
-,"依頼区分内容"
+,"回収予定日"
+,"回収完了日"
 ,"tc店略称"
 ,"店略称"
 ,"キャンセル"
@@ -301,9 +301,11 @@ namespace Syuyaku
         static public void csvINsert()
         {
             int x;
-            foreach (int  i in NitiJi) NitiJi[i] = -1;
-            foreach (int  i in Suuji) Suuji[i] = -1;
-
+            for (x = 0; x < 20; x++)
+            {
+                NitiJi[x] = -1;
+                Suuji[x] = -1;
+            }
             ////
             
             string sql0 = "";
@@ -316,6 +318,12 @@ namespace Syuyaku
                 int ukeno = GetHairetu("点検受付番号");
 
                 x = 0;
+                NitiJi[x++] = GetHairetu("製造年月");
+                NitiJi[x++] = GetHairetu("更新日");
+                NitiJi[x++] = GetHairetu("修理完了日");
+                NitiJi[x++] = GetHairetu("無償承認日");
+                NitiJi[x++] = GetHairetu("点検通知年月");
+
                 NitiJi[x++]= GetHairetu("点検開始年月");
                 NitiJi[x++] = GetHairetu("点検終了年月");
                 NitiJi[x++] = GetHairetu("点検受付日");
@@ -324,13 +332,12 @@ namespace Syuyaku
                 NitiJi[x++] = GetHairetu("表示解除方法通知日");
                 NitiJi[x++] = GetHairetu("集計基準日");
                 NitiJi[x++] = GetHairetu("点検完了受付日");
-                NitiJi[x++] = GetHairetu("更新日");
-                NitiJi[x++] = GetHairetu("修理完了日");
-                NitiJi[x++] = GetHairetu("無償承認日");
-                //NitiJi[x++] = GetHairetu("請求書印刷日");
                 NitiJi[x++] = GetHairetu("訪問予定日１");
                 NitiJi[x++] = GetHairetu("開始日");
+                NitiJi[x++] = GetHairetu("回収予定日");
+                NitiJi[x++] = GetHairetu("回収完了日");
 
+                
                 x = 0;
                 Suuji[x++] = GetHairetu("技術料");
                 Suuji[x++] = GetHairetu("出張料");
@@ -371,7 +378,7 @@ namespace Syuyaku
                         {
                             if (NitiJi[x] != -1)
                             {
-                                lists[NitiJi[x]] = HiHenkan(lists[NitiJi[x]]);
+                                lists[NitiJi[x]] = HiHenkan(lists[NitiJi[x]], x, retumei[NitiJi[x]]);
                             }
                         }
 
@@ -394,12 +401,12 @@ namespace Syuyaku
                                 if (cnt == 0)
                                 {
                                     sql1 += retumei[cnt];
-                                    sql2 += "'" + value.Trim().Replace("　", "").Replace(" ", "") + "'";
+                                    sql2 += "'" + value.Trim() + "'"; //.Replace("　", "").Replace(" ", "")
                                 }
                                 else
                                 {
                                     sql1 += "," + retumei[cnt];
-                                    sql2 += ",'" + value.Trim().Replace("　", "").Replace(" ", "") + "'";
+                                    sql2 += ",'" + value.Trim()+ "'"; //.Replace("　", "").Replace(" ", "") 
                                 }
                             }
                             cnt++;
@@ -427,10 +434,10 @@ namespace Syuyaku
                                         sql0 += "," + retumei[cnt] + "= EXCLUDED." + retumei[cnt] + "";
                                     }
                                 }
-                                cnt++;
                             }
+                            cnt++;
                         }
-                    sql0 += ", newflg = '1';";
+                        sql0 += ", newflg = v_yuryo_tenken_syuyaku.newflg + 1 ;";
                     ClassLog.LogWrite(sql0);
                     Console.WriteLine(lists[ukeno].ToString());
                     System.Windows.Forms.Application.DoEvents();
@@ -443,7 +450,7 @@ namespace Syuyaku
 
                 ClassNpgsql.trans.Commit();
                 ClassNpgsql.DbClose();
-                ClassLog.LogWriteTB("集約データ", sousinsu);
+                //ClassLog.LogWriteTB("集約データ", sousinsu);
             }
             catch (Exception ex)
             {
@@ -471,28 +478,29 @@ namespace Syuyaku
         /// </summary>
         /// <param name="buf"></param>
         /// <returns></returns>
-        static private string HiHenkan(string buf)
+        static private string HiHenkan(string buf,int x,string re)
         {
-            DateTime dy;
-            buf = buf.Replace(" ", "");
+            string ret;
             try
             {
                 switch (buf.Length)
                 {
+
                     case 18:
                         buf = buf.Substring(0, 10) + " " + buf.Substring(10, 8);
-                        dy = DateTime.Parse(buf);
-                        return dy.ToString("yyyy/MM/dd HH:mm:ss");
+                        ret = buf.Replace("-", "/");
+                        break;
+                    default:
+                        ret = buf.Replace("-", "/");
+                        break;
 
-                    case 10:
-                        buf = buf.Substring(0, 10);
-                        dy = DateTime.Parse(buf);
-                        return dy.ToString("yyyy/MM/dd");
                 }
-                return buf;
+                //Console.WriteLine(x.ToString() +" : "+re +" : "+ buf +" -> " + ret);
+
+                return ret;
             }
             catch (Exception ex) {
-                return buf;
+                return "";
             }
         }
 

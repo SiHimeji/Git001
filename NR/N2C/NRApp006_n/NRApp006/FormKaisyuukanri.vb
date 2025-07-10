@@ -1013,8 +1013,8 @@
                         Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
                     End If
                 End If
-                '--- 2024/07/10 k.s end ---
-            End If
+                    '--- 2024/07/10 k.s end ---
+                End If
 
             '行カラー設定
             SetColor(row, strSeikyuNo, dtColor)
