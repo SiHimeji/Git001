@@ -553,6 +553,17 @@ Module ModuleApp
 #End Region
 
 #Region "関数"
+    Public Function GetHeaderColNo(head As String, dgv As DataGridView) As Integer
+        Dim ret As Integer = 0
+
+        For Each column As DataGridViewColumn In dgv.Columns
+            If column.HeaderText = head Then
+                Return ret
+            End If
+            ret = ret + 1
+        Next
+        Return -1
+    End Function
 
     Public Function DataTableSwapXY(ByVal src As DataTable, ByVal newColName As String) As DataTable
 
@@ -908,13 +919,21 @@ Module ModuleApp
     '　　Oraclの施工年月日　<　 2019年10月1日　8％
     '　　Oraclの施工年月日　>=　2019年10月1日　10％
     '--------------------------------------------
-    Public Function GetZeiRitu(No As String)
-        Dim strSQL As String
-        strSQL = "select  from "
-
+    Public Function GetZeiRitu(kaisibi As String)
+        Dim dy As Date
 
         GetZeiRitu = 8
-
+        If kaisibi = "" Then
+            Return GetZeiRitu
+        End If
+        dy = Date.Parse(kaisibi)
+        If dy < "2014/04/01" Then
+            GetZeiRitu = 5
+        ElseIf dy < "2019/10/01" Then
+            GetZeiRitu = 8
+        Else
+            GetZeiRitu = 10
+        End If
     End Function
 
 #End Region

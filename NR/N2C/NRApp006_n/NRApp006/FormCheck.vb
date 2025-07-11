@@ -282,27 +282,11 @@
         Dim ro
         ro = e.RowIndex
         If ro >= 0 And e.Button = MouseButtons.Left Then
-            Select Case Me.ComboBox項目.Text
-                Case "出張料重複チェック"
-                    FormInput.TextBox点検受付番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("点検受付番号")).Value.ToString
-                    FormInput.TextBoxDM番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ｄｍ番号")).Value.ToString
-                Case "料金チェック"
-                    FormInput.TextBox点検受付番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray料金チェック("点検受付番号")).Value.ToString
-                    FormInput.TextBoxDM番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray料金チェック("ｄｍ番号")).Value.ToString
-                Case "安心プランチェック"
-                    FormInput.TextBox点検受付番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray安心プラン("点検受付番号")).Value.ToString
-                    FormInput.TextBoxDM番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray安心プラン("ｄｍ番号")).Value.ToString
-                Case "未回収チェック"
-                    FormInput.TextBox点検受付番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray未回収("点検受付番号")).Value.ToString
-                    FormInput.TextBoxDM番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray未回収("ｄｍ番号")).Value.ToString
-                Case "キャンペーン2024"
-                    FormInput.TextBox点検受付番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray未回収("点検受付番号")).Value.ToString
-                    FormInput.TextBoxDM番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray未回収("ｄｍ番号")).Value.ToString
-                Case "キャンペーン2025"
-                    FormInput.TextBox点検受付番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray未回収("点検受付番号")).Value.ToString
-                    FormInput.TextBoxDM番号.Text = Me.DataGridView1.Rows(ro).Cells(Getarray未回収("ｄｍ番号")).Value.ToString
 
-            End Select
+
+            FormInput.TextBox点検受付番号.Text = Me.DataGridView1.Rows(ro).Cells(GetHeaderColNo("点検受付番号", Me.DataGridView1)).Value.ToString
+            FormInput.TextBoxDM番号.Text = Me.DataGridView1.Rows(ro).Cells(GetHeaderColNo("ｄｍ番号", Me.DataGridView1)).Value.ToString
+
 
             FormInput.sls_typ = ""
             FormInput.cst_cd = ""
@@ -1729,8 +1713,12 @@
         strSQL &= ", left(t.回収完了日,10) 回収完了日 "
         strSQL &= ",t.技術料 "
         strSQL &= ",t.出張料 "
+        strSQL &= ",t.値引き "
         strSQL &= ",t.その他料金 "
         strSQL &= ",t.点検料金 "
+        strSQL &= ", cast (COALESCE(NULLIF(TRIM(t.消費税額), ''), '0') as integer) 消費税額"
+        strSQL &= ",t.点検料金 - cast (COALESCE(NULLIF(TRIM(t.値引き), ''), '0') as integer)  金額税抜き"
+        strSQL &= ",t.点検料金 - cast (COALESCE(NULLIF(TRIM(t.値引き), ''), '0') as integer) + cast (COALESCE(NULLIF(TRIM(t.消費税額), ''), '0') as integer) 金額税込み"
 
         strSQL &= ",t.無償部品代 "
         strSQL &= ",t.無償出張料 "
@@ -1822,15 +1810,22 @@
 
         ro = settextColumn(Me.DataGridView1, ro, "回収予定日", "回収予定日", 80, False)
         ro = settextColumn(Me.DataGridView1, ro, "回収完了日", "回収完了日", 80, False)
+
+
         ro = settextColumn(Me.DataGridView1, ro, "技術料", "技術料", 80, False)
         ro = settextColumn(Me.DataGridView1, ro, "出張料", "出張料", 80, False)
         ro = settextColumn(Me.DataGridView1, ro, "その他料金", "その他料金", 80, False)
-
+        ro = settextColumn(Me.DataGridView1, ro, "値引き", "値引き", 80, False)
         ro = settextColumn(Me.DataGridView1, ro, "点検料金", "点検料金", 80, False)
+        ro = settextColumn(Me.DataGridView1, ro, "消費税額", "消費税額", 80, False)
+        ro = settextColumn(Me.DataGridView1, ro, "金額税込み", "請求金額", 80, False)
+        ro = settextColumn(Me.DataGridView1, ro, "回収金額", "回収金額", 80, False)
+
         ro = settextColumn(Me.DataGridView1, ro, "無償部品代", "無償部品代", 80, False)
         ro = settextColumn(Me.DataGridView1, ro, "無償出張料", "無償出張料", 80, False)
         ro = settextColumn(Me.DataGridView1, ro, "無償技術料", "無償技術料", 80, False)
         ro = settextColumn(Me.DataGridView1, ro, "無償その他", "無償その他", 80, False)
+
 
         ro = settextColumn(Me.DataGridView1, ro, "無償出張料差額", "無償出張料差額", 80, False)
         ro = settextColumn(Me.DataGridView1, ro, "無償合計", "無償合計", 80, False)
@@ -2659,6 +2654,10 @@
         strSQL &= ",t.回収区分"
         strSQL &= ",t.回収予定日"
         strSQL &= ",t.回収完了日"
+
+        strSQL &= ", t.点検料金 - cast (COALESCE(NULLIF(TRIM(t.値引き), ''), '0')as integer)  金額税抜き"
+        strSQL &= ", t.点検料金 - cast (COALESCE(NULLIF(TRIM(t.値引き), ''), '0')as integer) + cast (COALESCE(NULLIF(TRIM(t.消費税額), ''), '0')as integer)    金額税込み"
+
         strSQL &= ",t.tc店略称"
         strSQL &= ",t.店略称"
 

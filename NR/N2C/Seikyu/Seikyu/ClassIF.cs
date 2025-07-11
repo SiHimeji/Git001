@@ -187,7 +187,7 @@ namespace Syuyaku
 
         }
         /// <summary>
-        /// 
+        /// 日付
         /// </summary>
         /// <param name="buf"></param>
         /// <returns></returns>
@@ -217,7 +217,11 @@ namespace Syuyaku
                 return "";
             }
         }
-
+        /// <summary>
+        /// 数字
+        /// </summary>
+        /// <param name="buf"></param>
+        /// <returns></returns>
         static private string SuujiCheck(string buf)
         {
 

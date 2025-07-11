@@ -104,6 +104,7 @@ Partial Class FormKaisyuukanri
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Label31 = New System.Windows.Forms.Label()
+        Me.ButtonTEST = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -211,6 +212,7 @@ Partial Class FormKaisyuukanri
         '
         'SplitContainer1.Panel1
         '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.ButtonTEST)
         Me.SplitContainer1.Panel1.Controls.Add(Me.Label30)
         Me.SplitContainer1.Panel1.Controls.Add(Me.CheckBox債権放棄)
         Me.SplitContainer1.Panel1.Controls.Add(Me.Label29)
@@ -953,6 +955,15 @@ Partial Class FormKaisyuukanri
         Me.Label31.TabIndex = 389
         Me.Label31.Text = "←実行するまで取込みデータは更新されません"
         '
+        'ButtonTEST
+        '
+        Me.ButtonTEST.Location = New System.Drawing.Point(992, 18)
+        Me.ButtonTEST.Name = "ButtonTEST"
+        Me.ButtonTEST.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonTEST.TabIndex = 389
+        Me.ButtonTEST.Text = "TEST"
+        Me.ButtonTEST.UseVisualStyleBackColor = True
+        '
         'FormKaisyuukanri
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 16.0!)
@@ -1067,4 +1078,5 @@ Partial Class FormKaisyuukanri
     Friend WithEvents Label31 As Label
     Friend WithEvents Button検索 As Button
     Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
+    Friend WithEvents ButtonTEST As Button
 End Class

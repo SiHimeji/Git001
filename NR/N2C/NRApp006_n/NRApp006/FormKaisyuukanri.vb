@@ -41,6 +41,12 @@
     '---------------------------
     Private Sub FormKaisyuukanri_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+#If DEBUG Then
+        Me.ButtonTEST.Visible = True
+#Else
+        Me.ButtonTEST.Visible = false
+#End If
+
         '初期設定
         crear()
 
@@ -418,110 +424,6 @@
         Dim dtLDM As DateTime = New DateTime(en.Year, en.Month, 1).AddMonths(1).AddDays(-1)
         strLDM = dtLDM.ToString("yyyy/MM/dd")
         '----2024/09/04 start ---
-        'strSQL = "select"
-        'strSQL &= " null            as ""売上年"" "
-        'strSQL &= ",null            as ""売上月"" "
-        'strSQL &= ",tmp.uketukeno   as ""点検受付番号"" "
-        'strSQL &= ",tmp.tyoufuku   as ""重複"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.nextb        else null end) as ""売上年月日"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.cst_cd       else null end) as ""得意先コード"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.scst_nm      else null end) as ""得意先名"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.itm_cd       else null end) as ""品コード"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.cst_po_no    else null end) as ""発注ＮＯ"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.intr_rmrks   else null end) as ""請求書番号"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.slip_rmrks   else null end) as ""備考_漢字"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.ord_psn_nm   else null end) as ""発注担当者"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.qty          else null end) as ""数"" "
-        'strSQL &= ",CAST(max(case tmp.seq when 1  then tmp.upri    else null end) as INT) as ""回収金額"" "
-        'strSQL &= ",max(case tmp.seq when 1  then tmp.entry_date   else null end) as ""更新日"" "
-        'strSQL &= ",s.保証規定区分 "
-        'strSQL &= ",s.回収区分 "
-        'strSQL &= ",sum(cast(s.請求合計金額 as numeric)) as ""請求合計金額"" "
-        'strSQL &= ",s.ｄｍ番号 "
-        'strSQL &= ",s.承認番号 "
-        'strSQL &= ",s.点検受付番号 "
-        'strSQL &= ",s.代表受付番号 "
-        'strSQL &= ",s.請求日 "
-        'strSQL &= ",s.請求先宛名 "
-        'strSQL &= ",s.請求先住所 "
-        'strSQL &= ",s.請求先電話 "
-        'strSQL &= ",s.都道府県名 "
-        'strSQL &= ",s.市区町村名 "
-        'strSQL &= ",s.町域 "
-        'strSQL &= ",s.番地 "
-        'strSQL &= ",s.建物 "
-        'strSQL &= ",s.部屋 "
-        'strSQL &= ",tk.入金日 "
-        'strSQL &= ",tk.入金予定日 "
-        'strSQL &= ",tk.入金確認内容 "
-        'strSQL &= ",tk.請求書再発行日 "
-        'strSQL &= ",tk.振込期日 "
-        'strSQL &= ",tk.未入金架電日１回目 "
-        'strSQL &= ",tk.未入金架電日１回目結果 "
-        'strSQL &= ",tk.未入金架電日２回目 "
-        'strSQL &= ",tk.未入金架電日２回目結果 "
-        'strSQL &= ",tk.督促状発行日 "
-        'strSQL &= ",tk.振込期日督促状発行 "
-        'strSQL &= ",tk.未入金架電１回目 "
-        'strSQL &= ",tk.未入金架電１回目結果 "
-        'strSQL &= ",tk.未入金架電２回目 "
-        'strSQL &= ",tk.未入金架電２回目結果 "
-        'strSQL &= ",tk.受付拒否設定日 "
-        'strSQL &= ",tk.債権放棄通知書発行日 "
-        'strSQL &= ",tk.決裁書発行日 "
-        'strSQL &= ",tk.ss請求 "
-        'strSQL &= ",tk.未回収架電確認日 "
-        'strSQL &= ",tk.確認者 "
-        'strSQL &= ",tk.備考 "
-        'strSQL &= ",tk.色 "
-        'strSQL &= ",tk.入金予定日担当者 "
-        'strSQL &= ",tk.残明細削除フラグ "
-        'strSQL &= ",tk.特別消費税フラグ "                           '2024/07/10 k.s
-        'strSQL &= "from "
-        'strSQL &= "( "
-        'strSQL &= "    select "
-        'strSQL &= "         uketukeno "
-        'strSQL &= "        ,nextb "
-        'strSQL &= "        ,cst_cd "
-        'strSQL &= "        ,scst_nm "
-        'strSQL &= "        ,itm_cd "
-        'strSQL &= "        ,cst_po_no "
-        'strSQL &= "        ,intr_rmrks "
-        'strSQL &= "        ,slip_rmrks "
-        'strSQL &= "        ,ord_psn_nm "
-        'strSQL &= "        ,qty "
-        'strSQL &= "        ,upri "
-        'strSQL &= "        ,out_flg "
-        'strSQL &= "        ,entry_date "
-        'strSQL &= "        ,tyoufuku "                                              '重複
-        'strSQL &= "        ,row_number() over (partition by uketukeno order by entry_date desc) as seq "
-        'strSQL &= "    from  " & schema & "t_002 "
-        'strSQL &= "    where out_flg ='1' "
-        'strSQL &= ") as tmp "
-        'strSQL &= "inner join " & schema & "v_yuryo_tenken_syuyaku as s  on s.点検受付番号 = tmp.uketukeno "
-        'strSQL &= "left outer join " & schema & "t_kaisyu          as tk on tk.uketukeno = tmp.uketukeno "
-        'strSQL &= "where tmp.out_flg ='1' and "                                     '出荷済
-        'strSQL &= "      tmp.seq ='1'     and "                                     '複数データの1件名
-        'strSQL &= "      s.依頼区分 Not in ('15','17','16','19','20','21') and "    'TS・PT契約を除く
-        ''受付番号が入力されている時は受付番号のみで検索する
-        'If Me.TextBox点検受付番号.Text.Trim = "" Then
-        '    strSQL &= " ( to_date(tmp.nextb, 'YYYY/MM/DD')  between '" & strFDM & "' and '" & strLDM & "' ) "
-        '    strSQL &= JyouKen2()
-        '    strSQL &= JyouKen3()
-        '    strSQL &= JyouKen4()
-        'Else
-        '    strSQL &= JyouKen1()
-        'End If
-        'strSQL &= "group by "
-        'strSQL &= " tmp.uketukeno ,tmp.tyoufuku  "
-        'strSQL &= ",s.保証規定区分, s.回収区分   , cast(s.請求合計金額 as numeric), s.ｄｍ番号, s.承認番号, s.点検受付番号, s.代表受付番号,s.請求日 "
-        'strSQL &= ",s.請求先宛名  , s.請求先住所 , s.請求先電話   , s.都道府県名     , s.市区町村名, s.町域, s.番地, s.建物, s.部屋 "
-        'strSQL &= ",tk.入金日     , tk.入金予定日, tk.入金確認内容, tk.請求書再発行日, tk.振込期日 "
-        'strSQL &= ",tk.未入金架電日１回目, tk.未入金架電日１回目結果 , tk.未入金架電日２回目, tk.未入金架電日２回目結果, tk.督促状発行日  , tk.振込期日督促状発行 "
-        'strSQL &= ",tk.未入金架電１回目  , tk.未入金架電１回目結果   , tk.未入金架電２回目  , tk.未入金架電２回目結果  , tk.受付拒否設定日, tk.債権放棄通知書発行日 "
-        'strSQL &= ",tk.決裁書発行日, tk.ss請求, tk.未回収架電確認日, tk.確認者, tk.備考, tk.色 , tk.入金予定日担当者 , tk.残明細削除フラグ"
-        'strSQL &= ",tk.特別消費税フラグ"            '2024/07/10 k.s
-        'strSQL &= " order by ""売上年月日"" asc"    '--- 2024/06/26 ---
         strSQL = "select"
         strSQL &= " null              as ""売上年"" "
         strSQL &= ",null              as ""売上月"" "
@@ -582,11 +484,12 @@
         strSQL &= ",tk.残明細削除フラグ "
         strSQL &= ",tk.特別消費税フラグ "
         strSQL &= ",tmp.seq  as ""SEQ"" "    '2025/01/06 k.s
-        strSQL &= "from " & schema & "t_002 as tmp "
-        strSQL &= "inner join " & schema & "v_yuryo_tenken_syuyaku as s  on s.点検受付番号 = tmp.uketukeno "
+        strSQL &= " , s.開始日"
+        strSQL &= " from " & schema & "t_002 as tmp "
+        strSQL &= " inner join " & schema & "v_yuryo_tenken_syuyaku as s  on s.点検受付番号 = tmp.uketukeno "
         'strSQL &= "left outer join " & schema & "t_kaisyu          as tk on tk.uketukeno = tmp.uketukeno "                         '2025/01/06 k.s
-        strSQL &= "left outer join " & schema & "t_kaisyu          as tk on tk.uketukeno = tmp.uketukeno and tk.seq = tmp.seq "     '2025/01/06 k.s
-        strSQL &= "where tmp.out_flg ='1' and "                                     '出荷済
+        strSQL &= " left outer join " & schema & "t_kaisyu          as tk on tk.uketukeno = tmp.uketukeno and tk.seq = tmp.seq "     '2025/01/06 k.s
+        strSQL &= " where tmp.out_flg ='1' and "                                     '出荷済
         strSQL &= "      s.依頼区分 Not in ('15','17','16','19','20','21') and "    'TS・PT契約を除く
         strSQL &= "      ( tmp.entry = '' or tmp.entry is null ) and " 　　　　　　 '削除済は対象外（"DELETE"以外) 2025/03/11 k.s
         '受付番号が入力されている時は受付番号のみで検索する
@@ -632,11 +535,11 @@
                 f.UserID = UserID
                 f.UserName = UserName
                 f.Kengen = Kengen
-                f.NID = Me.DataGridView1.Rows(ro).Cells(3).Value.ToString       '点検受付番号
-                f.UDAY = Me.DataGridView1.Rows(ro).Cells(7).Value               '売上年月
-                f.SKIN = Me.DataGridView1.Rows(ro).Cells(18).Value              '請求金額
-
-                f.SEQ = Me.DataGridView1.Rows(ro).Cells(58).Value               'SEQ 2025/01/06　k.s
+                'f.NID = Me.DataGridView1.Rows(ro).Cells(3).Value.ToString       '点検受付番号
+                f.NID = Me.DataGridView1.Rows(ro).Cells(GetHeaderColNo("点検受付番号", Me.DataGridView1)).Value.ToString       '点検受付番号
+                f.UDAY = Me.DataGridView1.Rows(ro).Cells(GetHeaderColNo("売上年月日", Me.DataGridView1)).Value               '売上年月日
+                f.SKIN = Me.DataGridView1.Rows(ro).Cells(GetHeaderColNo("請求合計金額", Me.DataGridView1)).Value              '請求合計金額
+                f.SEQ = Me.DataGridView1.Rows(ro).Cells(GetHeaderColNo("SEQ", Me.DataGridView1)).Value               'SEQ 2025/01/06　k.s
 
                 f.ShowDialog(Me)
                 f.Dispose()
@@ -996,28 +899,28 @@
             If Me.DataGridView1.Rows(row).Cells(4).Value.ToString = "安心プラン" And intKingaku <> "0" Then
                 '--- 2021/07/10k.s start ---
                 '「安心プランS2」を承認番号で検索し、施工年月日<2018年10月1日時　8％
-                'If GetZeiRitu(Me.DataGridView1.Rows(row).Cells(23).Value.ToString.Trim) = 8 Then
-                '    Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.08)
-                'Else
-                '    Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
-                'End If
+                If GetZeiRitu(Me.DataGridView1.Rows(row).Cells(GetHeaderColNo("開始日", Me.DataGridView1)).Value.ToString.Trim) = 8 Then
+                    Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.08)
+                Else
+                    Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
+                End If
 
                 If Me.DataGridView1.Rows(row).Cells(57).Value.ToString.Trim = "1" Then
-                    '特別消費税フラグが「1」の時、消費税率を10％とする
-                    Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
-                Else
-                    '「安心プランS2」を承認番号で検索し、施工年月日<2018年10月1日時　8％
-                    If GetZeiRitu(Me.DataGridView1.Rows(row).Cells(23).Value.ToString.Trim) = 8 Then
-                        Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.08)
-                    Else
+                        '特別消費税フラグが「1」の時、消費税率を10％とする
                         Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
+                    Else
+                        '「安心プランS2」を承認番号で検索し、施工年月日<2018年10月1日時　8％
+                        If GetZeiRitu(Me.DataGridView1.Rows(row).Cells(23).Value.ToString.Trim) = 8 Then
+                            Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.08)
+                        Else
+                            Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
+                        End If
                     End If
-                End If
                     '--- 2024/07/10 k.s end ---
                 End If
 
-            '行カラー設定
-            SetColor(row, strSeikyuNo, dtColor)
+                '行カラー設定
+                SetColor(row, strSeikyuNo, dtColor)
 
             intKingakuSum += intKingaku                                     '回収金額集計
             intSeikyuSum += Me.DataGridView1.Rows(row).Cells(18).Value      '請求金額集計
@@ -1280,6 +1183,7 @@
         ro = settextColumn(Me.DataGridView1, ro, "入金確認内容", "入金確認内容", 120, True)        '21
         ro = settextColumn(Me.DataGridView1, ro, "ｄｍ番号", "ｄｍ番号", 120, True)                '22
         ro = settextColumn(Me.DataGridView1, ro, "承認番号", "承認番号", 120, True)                '23
+
         ro = settextColumn(Me.DataGridView1, ro, "代表受付番号", "代表受付番号", 120, True)        '24
 
         ro = settextColumn(Me.DataGridView1, ro, "請求日", "請求日", 130, True)                    '25 
@@ -1324,6 +1228,7 @@
         ro = settextColumn(Me.DataGridView1, ro, "残明細削除フラグ", "残明細削除フラグ", 120, True)               '56
 
         ro = settextColumn(Me.DataGridView1, ro, "特別消費税フラグ", "特別消費税フラグ", 120, True)               '57
+        ro = settextColumn(Me.DataGridView1, ro, "開始日", "開始日", 1, True)        '24
 
         ro = settextColumn(Me.DataGridView1, ro, "SEQ", "SEQ", 50, True)                                          '58  2025/01/06 k.s
 
@@ -1362,11 +1267,10 @@
 
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
 
-    End Sub
-
-    Private Sub SplitContainer1_Panel1_Paint(sender As Object, e As PaintEventArgs) Handles SplitContainer1.Panel1.Paint
+    Private Sub ButtonTEST_Click(sender As Object, e As EventArgs) Handles ButtonTEST.Click
+        Dim a = GetZeiRitu("2014/01/02 12:00:00")
+        MessageBox.Show(a)
 
     End Sub
 End Class
