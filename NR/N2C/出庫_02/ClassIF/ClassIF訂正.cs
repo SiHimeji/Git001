@@ -19,7 +19,7 @@ namespace ClassIF
 
         //テーブル指定
         //const string TableName = "n2c.v_yuryo_tenken_syuyaku";
-        const string TableName = "tenken.t_002";
+        const string TableName = "t_002";
         //テーブルの列指定
          string[] retumei = {
                 "sls_typ",
@@ -115,7 +115,7 @@ namespace ClassIF
                         var line = new List<string>();
                         lists = parser.ReadFields();
 
-                        sql0 = $@"insert into {TableName}(";
+                        sql0 = $@"insert into {cDB.scaima}{TableName}(";
                         sql1 = "values("; 
                         
                         for (int i = 0; i < retumei.Length; i++)
@@ -139,14 +139,14 @@ namespace ClassIF
                         sql1 += ",null";
                         sql1 += ",null";
                         sql1 += ",null";
-                        sql1 += $@",(select COALESCE(max(seq) + 1,0 )  from {TableName} where  uketukeno ='{lists[ukeno]}')";
+                        sql1 += $@",(select COALESCE(max(seq) + 1,0 )  from {cDB.scaima}{TableName} where  uketukeno ='{lists[ukeno]}')";
                         sql1 += ",'1'";
 
 
 
                         sql0 = sql0 + sql1;
 
-                        sql1 = $@"select count(*) from {TableName} where  uketukeno ='{lists[ukeno]}' and nextb ='{lists[nextb]}';";
+                        sql1 = $@"select count(*) from {cDB.scaima}{TableName} where  uketukeno ='{lists[ukeno]}' and nextb ='{lists[nextb]}';";
 
 
                         dt = cDB._SetDataTable(sql1);

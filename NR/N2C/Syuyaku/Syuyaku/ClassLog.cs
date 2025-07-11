@@ -12,8 +12,8 @@ namespace TenkenKekka
 {
     static public class ClassLog
     {
-        const string LogTableName = "n2c.t_log";
-        //const string LogTableName = "tenken.t_log";
+        const string LogTableName = "t_log";
+        //const string LogTableName = "t_log";
 
         static public void LogWrite(string log)
         {

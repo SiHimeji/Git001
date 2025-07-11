@@ -17,8 +17,7 @@ namespace Syuyaku
     static public class ClassIF
     {
         //テーブル指定
-        //const string TableName = "n2c.v_tenken_kekka";
-        const string TableName = "tenken.v_tenken_kekka";
+        const string TableName = "v_tenken_kekka";
 
         //取り込みCSV指定
         const string FileName = @"D:\01_Work\04_NR\06_点検センター\70_N2C対応\Data\N2OK001T.CSV";
@@ -166,7 +165,7 @@ namespace Syuyaku
                         lists[cimno1] = HiHenkan(lists[cimno1]);
 
                         cnt = 0;
-                        sql1 = $@"insert into {TableName} (";
+                        sql1 = $@"insert into {ClassNpgsql.scima}{TableName} (";
                         sql2 = $@")values( ";
                         sql3 = $@")ON CONFLICT(受付ＮＯ) DO UPDATE SET ";
                         foreach (string value in lists)
@@ -176,14 +175,14 @@ namespace Syuyaku
                                 if (cnt == 0)
                                 {
                                     sql1 += retumei[cnt];
-                                    sql2 += "'" + value.Trim().Replace("　", "").Replace(" ", "") + "'";
+                                    sql2 += "'" + value.Trim() + "'";
                                     sql3 += retumei[cnt] + " = EXCLUDED." + retumei[cnt];
                                 }
                                 else
-                                {
+                                {       
                                     sql1 += "," + retumei[cnt];
-                                    sql2 += ",'" + value.Trim().Replace("　", "").Replace(" ", "") + "'";
-                                    if (cnt != ukeno)
+                                    sql2 += ",'" + value.Trim() + "'";
+                                    if (cnt != ukeno )
                                     {
                                         sql3 += "," + retumei[cnt] + " = EXCLUDED." + retumei[cnt];
                                     }
@@ -192,7 +191,8 @@ namespace Syuyaku
                             cnt++;
                         }
                         sql1 += ",newflg";
-                        sql2 += ", v_tenken_kekka.newflg + 1";
+                        sql2 += ",1";
+                        sql3 += ",newflg = v_tenken_kekka.newflg + 1 ;";
 
                         ClassLog.LogWrite(""  + sql1 );
                         ClassLog.LogWrite(" " + sql2 );

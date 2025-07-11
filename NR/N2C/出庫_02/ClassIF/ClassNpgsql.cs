@@ -14,8 +14,8 @@ namespace ClassIF
     public   class ClassNpgsql
     {
         ///Postgres
-        ///Npgsql.4.1.4
-        ///     Npgsql.5.0.5
+        ///   Npgsql  8.0.7
+        ///
         //SI
         //private string conn_str = "Server=192.168.1.217;Port=5432;User ID=postgres;Database=postgres;Password=123456;Enlist=true";
         //旧
@@ -23,7 +23,10 @@ namespace ClassIF
         //AWS
         //private static string conn_str = "Server="+"partsc.noritz.co.jp"+";Port=5432;User ID=nr;Database=postgres;Password=nr123;Enlist=true";
 
-        public  NpgsqlConnection cn = new NpgsqlConnection();
+        public string scaima = "tenken.";
+        //public string scaima = "n2c.";
+
+        public NpgsqlConnection cn = new NpgsqlConnection();
         public  NpgsqlCommand cm = new NpgsqlCommand();
         public  NpgsqlDataReader rs;
         public  NpgsqlTransaction trans;

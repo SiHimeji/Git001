@@ -23,6 +23,9 @@ namespace Syuyaku
         //AWS
         //private static string conn_str = "Server="+"partsc.noritz.co.jp"+";Port=5432;User ID=nr;Database=postgres;Password=nr123;Enlist=true";
 
+        public static string scima = "tenken.";
+        /// public static string scima = "n2c.";
+
         public static NpgsqlConnection cn = new NpgsqlConnection();
         public static NpgsqlCommand cm = new NpgsqlCommand();
         public static NpgsqlDataReader rs;
@@ -129,7 +132,9 @@ namespace Syuyaku
             }
             catch
             {
-                NpgsqlCommand.Dispose();
+                //NpgsqlCommand.Dispose();
+                throw new Exception();
+
             }
         }
         /// /

@@ -12,8 +12,8 @@ namespace ClassIF
     {
         ClassNpgsql cDB = new ClassNpgsql();
 
-        const string LogTableName = "tenken.t_log";
-        //const string LogTableName = "n2c.t_log";
+        const string LogTableName = "t_log";
+        //const string LogTableName = "t_log";
 
          public void LogWrite(string log)
         {
@@ -39,12 +39,12 @@ namespace ClassIF
         }
          public void LogWriteTB(string tbl, int sousinsu)
         {
-            string strSqL = $@"INSERT INTO {LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', '{tbl}', '{sousinsu.ToString()}件', now())";
+            string strSqL = $@"INSERT INTO {cDB.scaima}{LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', '{tbl}', '{sousinsu.ToString()}件', now())";
             cDB.EXEC(strSqL);
         }
          public void logwriteErrTB(string tbl)
         {
-            string strSqL = $@"INSERT INTO {LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', '{tbl}', 'ERROR', now())";
+            string strSqL = $@"INSERT INTO {cDB.scaima}{LogTableName}(id, nm, mn, entry_day) VALUES('SYSTEM', '{tbl}', 'ERROR', now())";
             cDB.EXEC(strSqL);
         }
 
