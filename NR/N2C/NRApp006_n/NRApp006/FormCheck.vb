@@ -40,83 +40,101 @@
         End Set
     End Property
 
-    Dim array料金チェック() As String = {
-       "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
-        "ｄｍ番号", "ステータス名",
-        "回収区分", "点検受付日", "点検完了日", "フロント承認日", "回収完了日", "技術料", "出張料", "その他料金", "サポート料", "値引き", "点検料金", "消費税額", "請求合計金額",
-        "無償部品代", "無償出張料", "無償技術料", "無償その他内容", "無償その他", "無償出張料差額", "無償診断料", "無償合計",
-         "点検状態区分名称", "修理状況", "保証規定区分", "請求先会社", "請求先名", "請求先電話", "回収金額", "価格指示理由", "更新日", "製品名", "備考"}
+    'Dim array料金チェック() As String = {
+    '   "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
+    '    "ｄｍ番号", "ステータス名",
+    '    "回収区分", "点検受付日", "点検完了日", "フロント承認日", "回収完了日", "技術料", "出張料", "その他料金", "サポート料", "値引き", "点検料金", "消費税額", "請求合計金額",
+    '    "無償部品代", "無償出張料", "無償技術料", "無償その他内容", "無償その他", "無償出張料差額", "無償診断料", "無償合計",
+    '     "点検状態区分名称", "修理状況", "保証規定区分", "請求先会社", "請求先名", "請求先電話", "回収金額", "価格指示理由", "更新日", "製品名", "備考"}
 
-    Dim array安心プラン() As String = {
-        "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
-        "ｄｍ番号", "ステータス名",
-        "回収区分", "点検受付日", "点検完了日", "フロント承認日",
-        "回収完了日", "技術料", "出張料", "その他料金", "点検料金",
-        "無償部品代", "無償出張料", "無償技術料", "無償その他", "無償出張料差額", "無償合計",
-        "点検状態区分名称", "保証規定区分", "承認番号", "請求先電話", "更新日"}
+    'Dim array安心プラン() As String = {
+    '    "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
+    '    "ｄｍ番号", "ステータス名",
+    '    "回収区分", "点検受付日", "点検完了日", "フロント承認日",
+    '    "回収完了日", "技術料", "出張料", "その他料金", "点検料金",
+    '    "無償部品代", "無償出張料", "無償技術料", "無償その他", "無償出張料差額", "無償合計",
+    '    "点検状態区分名称", "保証規定区分", "承認番号", "請求先電話", "更新日"}
 
-    Dim array出張料重複() As String = {
-        "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
-        "ｄｍ番号", "ステータス名",
-        "点検受付日", "点検完了日",
-        "都道府県名", "市区町村名", "町域", "番地", "建物", "部屋",
-        "回収区分", "技術料", "出張料", "その他料金", "点検料金",
-        "無償出張料", "無償技術料", "無償その他", "修理状況",
-        "担当shopコード", "店略称", "担当サービスマン", "サービスマン名",
-        "価格指示理由", "更新日"}
+    'Dim array出張料重複() As String = {
+    '    "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
+    '    "ｄｍ番号", "ステータス名",
+    '    "点検受付日", "点検完了日",
+    '    "都道府県名", "市区町村名", "町域", "番地", "建物", "部屋",
+    '    "回収区分", "技術料", "出張料", "その他料金", "点検料金",
+    '    "無償出張料", "無償技術料", "無償その他", "修理状況",
+    '    "担当shopコード", "店略称", "担当サービスマン", "サービスマン名",
+    '    "価格指示理由", "更新日"}
 
-    Dim array未回収() As String = {
-        "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
-        "ｄｍ番号", "ステータス名",
-        "回収区分", "点検受付日", "点検完了日", "フロント承認日", "回収予定日", "回収完了日",
-        "技術料", "出張料", "その他料金", "点検料金",
-        "無償部品代", "無償出張料", "無償技術料", "無償その他", "無償出張料差額", "無償合計",
-        "点検状態区分名称", "修理状況", "保証規定区分", "請求先会社", "請求先名", "請求先電話", "回収金額", "更新日"}
+    'Dim array未回収() As String = {
+    '    "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
+    '    "ｄｍ番号", "ステータス名",
+    '    "回収区分", "点検受付日", "点検完了日", "フロント承認日", "回収予定日", "回収完了日",
+    '    "技術料", "出張料", "その他料金", "点検料金",
+    '    "無償部品代", "無償出張料", "無償技術料", "無償その他", "無償出張料差額", "無償合計",
+    '    "点検状態区分名称", "修理状況", "保証規定区分", "請求先会社", "請求先名", "請求先電話", "回収金額", "更新日"}
 
-    Dim arrary2024() As String = {
-        "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
-        "ｄｍ番号", "ステータス名", "回収区分", "受付区分", "依頼区分内容", "点検受付日", "点検完了日", "フロント承認日", "回収完了日",
-        "技術料", "出張料", "その他料金", "値引き", "点検料金", "無償部品代", "無償出張料", "無償技術料", "無償その他",
-        "無償出張料差額", "無償合計", "点検状態区分名称", "保証規定区分", "承認番号", "請求先電話", "更新日",
-        "マイページ連携仮id", "マイページ連携用フラグ", "マイページid"}
+    'Dim arrary2024() As String = {
+    '    "check", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
+    '    "ｄｍ番号", "ステータス名", "回収区分", "受付区分", "依頼区分内容", "点検受付日", "点検完了日", "フロント承認日", "回収完了日",
+    '    "技術料", "出張料", "その他料金", "値引き", "点検料金", "無償部品代", "無償出張料", "無償技術料", "無償その他",
+    '    "無償出張料差額", "無償合計", "点検状態区分名称", "保証規定区分", "承認番号", "請求先電話", "更新日",
+    '    "マイページ連携仮id", "マイページ連携用フラグ", "マイページid"}
 
-    Dim arrary2025() As String = {
-        "ﾁｪｯｸ", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
-        "ｄｍ番号",
-        "ステータス名", "回収区分", "受付区分", "依頼区分内容", "点検受付日", "点検完了日", "フロント承認日", "回収完了日",
-        "技術料", "出張料", "その他料金", "値引き", "点検料金", "無償部品代", "無償出張料", "無償技術料", "無償その他",
-        "無償出張料差額", "無償合計", "備考", "点検状態区分名称", "保証規定区分", "承認番号", "請求先電話", "更新日"
-       }
+    'Dim arrary2025() As String = {
+    '    "ﾁｪｯｸ", "ステータス", "訂正依頼内容", "メモ", "出庫", "完了", "訂正更新日", "チェック", "確認完了日", "点検受付番号",
+    '    "ｄｍ番号",
+    '    "ステータス名", "回収区分", "受付区分", "依頼区分内容", "点検受付日", "点検完了日", "フロント承認日", "回収完了日",
+    '    "技術料", "出張料", "その他料金", "値引き", "点検料金", "無償部品代", "無償出張料", "無償技術料", "無償その他",
+    '    "無償出張料差額", "無償合計", "備考", "点検状態区分名称", "保証規定区分", "承認番号", "請求先電話", "更新日"
+    '   }
+
+
+    'Private Function GetHeaderColNo(head As String, dgv As DataGridView) As Integer
+    '    Dim ret As Integer = 0
+
+    '    For Each column As DataGridViewColumn In dgv.Columns
+    '        If column.HeaderText = head Then
+    '            Return ret
+    '        End If
+    '        ret = ret + 1
+    '    Next
+    '    Return -1
+    'End Function
 
 
     Public Function Getarray料金チェック(koumoku As String) As Integer
 
-        Return Array.IndexOf(array料金チェック, koumoku)
-
+        'Return Array.IndexOf(array料金チェック, koumoku)
+        Return GetHeaderColNo(koumoku, Me.DataGridView1)
     End Function
 
     Public Function Getarray安心プラン(koumoku As String) As Integer
 
-        Return Array.IndexOf(array安心プラン, koumoku)
+        'Return Array.IndexOf(array安心プラン, koumoku)
+        Return GetHeaderColNo(koumoku, Me.DataGridView1)
 
     End Function
 
     Public Function Getarray出張料重複(koumoku As String) As Integer
 
-        Return Array.IndexOf(array出張料重複, koumoku)
+        'Return Array.IndexOf(array出張料重複, koumoku)
+        Return GetHeaderColNo(koumoku, Me.DataGridView1)
 
     End Function
 
     Public Function Getarray未回収(koumoku As String) As Integer
-        Return Array.IndexOf(array未回収, koumoku)
+        'Return Array.IndexOf(array未回収, koumoku)
+        Return GetHeaderColNo(koumoku, Me.DataGridView1)
     End Function
 
     Public Function Getarray2024(koumoku As String) As Integer
-        Return Array.IndexOf(arrary2024, koumoku)
+        'Return Array.IndexOf(arrary2024, koumoku)
+        Return GetHeaderColNo(koumoku, Me.DataGridView1)
     End Function
 
     Public Function Getarray2025(koumoku As String) As Integer
-        Return Array.IndexOf(arrary2025, koumoku)
+        'Return Array.IndexOf(arrary2025, koumoku)
+        Return GetHeaderColNo(koumoku, Me.DataGridView1)
     End Function
 
 
@@ -358,7 +376,7 @@
         cl = e.ColumnIndex
 
         If cl = 0 Then
-            Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = Not Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value
+            Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = Not Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value
 
         End If
 
@@ -590,7 +608,7 @@
 
         If dt.Rows.Count > 0 Then
             For ro = 0 To Me.DataGridView1.Rows.Count - 1
-                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
+                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = False
             Next
             Check2024()
         End If
@@ -850,9 +868,9 @@
         Me.ToolStripStatusLabel件数.Text = Me.DataGridView1.Rows.Count & "件"
 
         If dt.Rows.Count > 0 Then
-            For ro = 0 To Me.DataGridView1.Rows.Count - 1
-                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
-            Next
+            'For ro = 0 To Me.DataGridView1.Rows.Count - 1
+            '    Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = False
+            'Next
             Check2025()
         End If
 
@@ -1069,10 +1087,9 @@
         Me.ToolStripStatusLabel件数.Text = Me.DataGridView1.Rows.Count & "件"
 
         If dt.Rows.Count > 0 Then
-            For ro = 0 To Me.DataGridView1.Rows.Count - 1
-                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
-            Next
-
+            'For ro = 0 To Me.DataGridView1.Rows.Count - 1
+            'Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("Column1")).Value = False
+            'Next
             安心プランチェック1()
         End If
 
@@ -1338,7 +1355,7 @@
         Me.DataGridView1.AllowUserToAddRows = False
         If Me.DataGridView1.Rows.Count > 0 Then
             For ro = 0 To Me.DataGridView1.Rows.Count - 1
-                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
+                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = False
             Next
 
             料金チェック1()
@@ -1845,7 +1862,7 @@
 
         If Me.DataGridView1.Rows.Count > 0 Then
             For ro = 0 To Me.DataGridView1.Rows.Count - 1
-                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
+                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = False
             Next
 
             未回収チェック１()
@@ -2054,7 +2071,7 @@
         If Me.DataGridView1.Rows.Count > 0 Then
 
             For ro = 0 To Me.DataGridView1.Rows.Count - 1
-                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
+                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = False
             Next
 
             出張料重複チェック1()
@@ -2722,7 +2739,7 @@
     Private Sub ALLToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ALLToolStripMenuItem.Click
         Dim ro As Integer
         For ro = 0 To Me.DataGridView1.Rows.Count - 1
-            Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = True
+            Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = True
         Next
 
     End Sub
@@ -2730,7 +2747,7 @@
     Private Sub 全OFFToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 全OFFToolStripMenuItem.Click
         Dim ro As Integer
         For ro = 0 To Me.DataGridView1.Rows.Count - 1
-            Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
+            Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = False
         Next
 
     End Sub
@@ -2738,7 +2755,7 @@
     Private Sub 反転ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 反転ToolStripMenuItem.Click
         Dim ro As Integer
         For ro = 0 To Me.DataGridView1.Rows.Count - 1
-            Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = Not CBool(Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value)
+            Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = Not CBool(Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value)
         Next
     End Sub
     Private Sub チェックToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles チェックToolStripMenuItem1.Click
@@ -2747,12 +2764,12 @@
         For ro = 0 To Me.DataGridView1.Rows.Count - 1
             If Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("完了")).Value = "" Then
                 If Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("出庫")).Value = "" Then
-                    Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = True
+                    Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = True
                 Else
-                    Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
+                    Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = False
                 End If
             Else
-                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
+                Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = False
             End If
         Next
 
@@ -2780,7 +2797,7 @@
             For ro = 0 To Me.DataGridView1.Rows.Count - 1
                 Me.ToolStripProgressBar1.PerformStep()
 
-                ret = Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value.ToString
+                ret = Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value.ToString
 
                 If ret = "" Then
                     ret = "0"
@@ -2801,8 +2818,8 @@
                     ClassPostgeDB.EXEC_tr(strSQL)
 
                         Ken = Ken + 1
-                        Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("check")).Value = False
-                    End If
+                    Me.DataGridView1.Rows(ro).Cells(Getarray出張料重複("ﾁｪｯｸ")).Value = False
+                End If
 
             Next
 
