@@ -532,12 +532,34 @@
 
         strSQL &= " and  t.依頼区分内容 not in ('ＴＳ契約/ＳＰ付点検２回目','ＴＳ契約/ＳＰ付点検３回目','ＰＴ契約/ＳＰ付点検２回目','ＰＴ契約/ＳＰ付点検３回目') "
 
+
         If Me.CheckBoxZero.Checked Then
 
+            'strSQL &= " and ("
+            ' strSQL &= "   (  (t.伝達事項 like '%２０２５年ＣＰ%'))"
+
+            If CheckBoxCIM.Checked Then
+                'strSQL &= " or  (  (t.マイページ連携仮id like '%２０２５年ＣＰ%'))"
+            Else
+                strSQL &= " and newflg ='1'"
+
+            End If
+            'strSQL &= ")"
         Else
-            strSQL &= " and t.値引き <> '0'"
+
+            strSQL &= " and  ( t.値引き <> '0' )"
+            'strSQL &= " and ("
+            'strSQL &= "   ( t.値引き <> '0' or (t.伝達事項 like '%２０２５年ＣＰ%'))"
+
+            If CheckBoxCIM.Checked Then
+                'strSQL &= " or  ( t.値引き <> '0' or (t.マイページ連携仮id like '%２０２５年ＣＰ%'))"
+            Else
+                strSQL &= " and newflg ='1'"
+            End If
+            'strSQL &= ")"
 
         End If
+
 
         dt = ClassPostgeDB.SetTable(strSQL)
 
@@ -793,9 +815,29 @@
 
         If Me.CheckBoxZero.Checked Then
 
+            strSQL &= " and ("
+            strSQL &= "   (  (t.伝達事項 like '%２０２５年ＣＰ%'))"
+
+            If CheckBoxCIM.Checked Then
+                strSQL &= " or  (  (t.マイページ連携仮id like '%２０２５年ＣＰ%'))"
+
+            End If
+
+            strSQL &= ")"
+
         Else
-            strSQL &= " and ( t.値引き <> '0' or (t.マイページ連携仮id like '%２０２５年ＣＰ%'))"
+
+            strSQL &= " and  ( t.値引き <> '0' )"
+            strSQL &= " and ("
+            strSQL &= "   ( t.値引き <> '0' or (t.伝達事項 like '%２０２５年ＣＰ%'))"
+
+            If CheckBoxCIM.Checked Then
+                strSQL &= " or  ( t.値引き <> '0' or (t.マイページ連携仮id like '%２０２５年ＣＰ%'))"
+            End If
+
+            strSQL &= ")"
         End If
+
 
 
         dt = ClassPostgeDB.SetTable(strSQL)
