@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
-using Npgsql.NameTranslation;
+///using
 
 namespace Syuyaku
 {
@@ -14,11 +14,12 @@ namespace Syuyaku
     {
         //テーブル指定
         //const string TableName = "n2c.v_yuryo_tenken_syuyaku";
-        const string TableName = "tenken.v_yuryo_tenken_syuyaku";
+        const string TableName = "v_yuryo_tenken_syuyaku";
 
         //取り込みCSV指定
-        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\Data\\N2OK003T.csv";
+        //const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\Data\\N2OK003T.csv";
         //const string FileName = "C:\\work\\06_点検センター\\70_N2C対応\\ソース\\N2OK003T.csv";
+        public static string FileName = $@"D:\work\Densou\N2OK003T.csv";
         static int[] NitiJi = new int[20];
         static int[] Suuji = new int[20];
 
@@ -70,6 +71,15 @@ namespace Syuyaku
                 }
 
                 ClassLog.LogDelete();
+
+                if (!File.Exists(FileName))
+                {
+                    ClassLog.LogWrite("ファイルが存在しません");
+                    return;
+                }
+
+
+
                 int ukeno = GetHairetu("点検受付番号");
                 x = 0;
                 NitiJi[x++] = GetHairetu("帳票発行日");
@@ -91,6 +101,17 @@ namespace Syuyaku
                 Suuji[x++] = GetHairetu("消費税額");
 
                 ClassNpgsql.DbOpen(1);
+
+                ClassLog.LogWrite(FileName);
+
+                if (!File.Exists(FileName))
+                {
+                    ClassLog.LogWrite("ファイルが存在しません");
+                    return;
+                }
+
+
+
 
                 var parser = new TextFieldParser(FileName, System.Text.Encoding.GetEncoding("UTF-8"));
                 using (parser)
@@ -130,7 +151,7 @@ namespace Syuyaku
                             }
                         }
 
-                        sql0 = $@"insert into {TableName}(";
+                        sql0 = $@"insert into {ClassNpgsql.scima}{TableName}(";
                         sql1 = "values("; 
                         
                         for (int i = 0; i < retumei.Length; i++)
@@ -214,6 +235,7 @@ namespace Syuyaku
             }
             catch (Exception ex)
             {
+                ClassLog.LogWrite(ex.Message); 
                 return "";
             }
         }

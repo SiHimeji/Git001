@@ -14,12 +14,14 @@ namespace TenkenKekka
     {
         const string LogTableName = "t_log";
         //const string LogTableName = "t_log";
+        const string LOgFile = "\\log\\log集約データ_";
 
         static public void LogWrite(string log)
         {
+
             DateTime today = DateTime.Today;
             System.Reflection.Assembly executionAsm = System.Reflection.Assembly.GetExecutingAssembly();
-            string path = System.IO.Path.GetDirectoryName(new Uri(executionAsm.CodeBase).LocalPath) + "\\log\\log_" + today.DayOfWeek.ToString() + ".log";
+            string path = System.IO.Path.GetDirectoryName(new Uri(executionAsm.CodeBase).LocalPath) + LOgFile + today.DayOfWeek.ToString() + ".log";
             StreamWriter sw = new StreamWriter(path, true, Encoding.GetEncoding("shift_jis"));
             sw.WriteLine(log);
             sw.Close();
@@ -37,7 +39,7 @@ namespace TenkenKekka
 
             DateTime today = DateTime.Today;
             System.Reflection.Assembly executionAsm = System.Reflection.Assembly.GetExecutingAssembly();
-            string path = System.IO.Path.GetDirectoryName(new Uri(executionAsm.CodeBase).LocalPath) + "\\log\\log_" + today.DayOfWeek.ToString() + ".log";
+            string path = System.IO.Path.GetDirectoryName(new Uri(executionAsm.CodeBase).LocalPath) + LOgFile + today.DayOfWeek.ToString() + ".log";
             System.IO.File.Delete(path);
 
 

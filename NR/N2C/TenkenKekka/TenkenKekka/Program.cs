@@ -13,6 +13,10 @@ namespace TenkenKekka
     {
         static void Main(string[] args)
         {
+            if (args.Length > 0)
+            {
+                ClassIF.FileName = args[0]; 
+            }
             ClassIF.csvINsert();
         }
     }

@@ -110,9 +110,7 @@ Public Class ChkVerUp
     End Sub
     'ダウンロード＆解凍
     Private Function DownloadEXE_HTTP() As Boolean
-        'tmp = appdir & "\sitemp"
-        tmp = windir & "\sitemp"
-
+        tmp = appdir & "\sitemp"
         Try
             For Each pathFrom As String In IO.Directory.EnumerateFiles(tmp, "*", SearchOption.AllDirectories)
                 IO.File.Delete(pathFrom)

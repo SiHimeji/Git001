@@ -11,8 +11,13 @@ namespace Seikyu
     {
         static void Main(string[] args)
         {
-
-            ClassIF.csvINsert();
+            if (args.Length > 0)
+            {
+                {
+                    ClassIF.FileName = args[0];
+                }
+                ClassIF.csvINsert();
+            }
         }
     }
 }

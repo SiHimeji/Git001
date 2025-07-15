@@ -36,12 +36,12 @@ Module ModuleApp
     Public Ver As String = "" & Now_Ver
     ' Public Const dns As String = "partsc-test.noritz.co.jp"
     Public Const dns As String = "partsc.noritz.co.jp"
-    Public Const schema As String = "tenken."
-    'Public Const schema As String = "n2c."
+    'Public Const schema As String = "tenken."
+    Public Const schema As String = "n2c."
 
     'Public Const CnString = "Server=localhost;Port=5432;User ID=postgres;Database=postgres;Password=12345;Enlist=true"
     '-----SI ALMA LINUX 
-    Public Const CnString = "Server=192.168.1.166;Port=5432;User ID=postgres;Database=postgres;Password=123456;Enlist=true;ConnectionLifeTime=3000"
+    'Public Const CnString = "Server=192.168.1.166;Port=5432;User ID=postgres;Database=postgres;Password=123456;Enlist=true;ConnectionLifeTime=3000"
     ' SI - win10 
     'Public Const CnString = "Server=192.168.1.217;Port=5432;User ID=postgres;Database=postgres;Password=123456;Enlist=true;ConnectionLifeTime=3000"
     '------
@@ -49,7 +49,7 @@ Module ModuleApp
     'Public Const CnString = "Server=192.168.99.51;Port=5432;User ID=postgres;Database=postgres;Password=12345;Enlist=true"
     '------
     'AWS 
-    'Public Const CnString = "Server=" & dns & ";Port=5432;User ID=nr;Database=postgres;Password=nr123;Enlist=true"
+    Public Const CnString = "Server=" & dns & ";Port=5432;User ID=nr;Database=postgres;Password=nr123;Enlist=true"
     '------
     Public Const autoverup As String = "1"  ' 自動バージョンアップ　OFF
 #Else

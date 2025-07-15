@@ -20,9 +20,10 @@ namespace Syuyaku
         const string TableName = "v_tenken_kekka";
 
         //取り込みCSV指定
-        const string FileName = @"D:\01_Work\04_NR\06_点検センター\70_N2C対応\Data\N2OK001T.CSV";
+        //const string FileName = @"D:\01_Work\04_NR\06_点検センター\70_N2C対応\Data\N2OK001T.CSV";
+        //const string FileName = @"C:\work\06_点検センター\70_N2C対応\Data\N2OK001T.CSV";
+        public static string FileName = @"D:\work\Densou\N2OK001T.CSV";
         //
-      
 
         //テーブルの列指定
         static string[] retumei =
@@ -122,7 +123,7 @@ namespace Syuyaku
                     "特定製造事業者コード","特定製造事業者名",
                     "製造年月"
         };
-        static string csvFileName = string.Empty;
+        //static string csvFileName = string.Empty;
 
         static public void csvINsert()
         {
@@ -132,9 +133,19 @@ namespace Syuyaku
             //string ukno = "";
             int cnt;
             int sousinsuu = 0;
+
+
+            Console.WriteLine(FileName); 
+            System.Windows.Forms.Application.DoEvents();
+
             try
             {
-                ClassLog.LogDelete();
+                if (!File.Exists(FileName))
+                {
+                    ClassLog.LogWrite("ファイルが存在しません");
+                    return;
+                }
+                  ClassLog.LogDelete();
                 int ukeno = GetHairetu("受付ＮＯ");
 
                 int cimno1 = GetHairetu("点検完了日");
@@ -254,6 +265,7 @@ namespace Syuyaku
             }
             catch (Exception ex)
             {
+
                 return buf;
             }
         }

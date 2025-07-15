@@ -17,11 +17,11 @@ namespace Syuyaku
     {
         //テーブル指定
         const string TableName = "v_yuryo_tenken_syuyaku";
-        //const string TableName = "n2c.v_yuryo_tenken_syuyaku";
 
         //取り込みCSV指定
-        const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\Data\\N2OK002T.csv";
+        //const string FileName = "D:\\01_Work\\04_NR\\06_点検センター\\70_N2C対応\\Data\\N2OK002T.csv";
         //const string FileName = "C:\\work\\06_点検センター\\70_N2C対応\\ソース\\N2OK002T.csv";
+        public static string FileName =  $@"D:\work\Densou\N2OK002T.csv";
         //
 
 
@@ -169,6 +169,16 @@ namespace Syuyaku
 
         static public void csvINsert()
         {
+
+            ClassLog.LogDelete();
+
+            if (!File.Exists(FileName))
+            {
+                ClassLog.LogWrite("ファイルが存在しません");
+                return;
+            }
+
+
             int x;
             for (x = 0; x < 20; x++)
             {
@@ -377,6 +387,8 @@ namespace Syuyaku
                 return ret;
             }
             catch (Exception ex) {
+                ClassLog.LogWrite(ex.Message);
+
                 return "";
             }
         }

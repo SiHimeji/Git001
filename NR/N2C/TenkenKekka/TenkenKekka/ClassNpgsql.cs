@@ -19,12 +19,12 @@ namespace Syuyaku
         //SI
         //private static string conn_str = "Server=192.168.1.217;Port=5432;User ID=postgres;Database=postgres;Password=123456;Enlist=true";
         //旧
-        private static string conn_str = "Server=192.168.1.166;Port=5432;User ID=postgres;Database=postgres;Password=123456;Enlist=true";
+        //private static string conn_str = "Server=192.168.1.166;Port=5432;User ID=postgres;Database=postgres;Password=123456;Enlist=true";
         //AWS
-        //private static string conn_str = "Server="+"partsc.noritz.co.jp"+";Port=5432;User ID=nr;Database=postgres;Password=nr123;Enlist=true";
+        private static string conn_str = "Server="+"partsc.noritz.co.jp"+";Port=5432;User ID=nr;Database=postgres;Password=nr123;Enlist=true";
 
-        public static string scima = "tenken.";
-        /// public static string scima = "n2c.";
+        //public static string scima = "tenken.";
+        public static string scima = "n2c.";
 
         public static NpgsqlConnection cn = new NpgsqlConnection();
         public static NpgsqlCommand cm = new NpgsqlCommand();
