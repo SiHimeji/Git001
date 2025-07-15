@@ -9,6 +9,9 @@ set new_filename=% folder%%cur_datetime%_%file_name%
 
 d:
 cd D:\work\Densou
+
+D:\work\Densou\APP\Seikyu.EXE D:\work\Densou\N2OK003.CSV
+
 ren %file_name% %new_filename%
 
 rem pause
