@@ -678,11 +678,8 @@
         strSQL &= ",請求書再印刷日"
         strSQL &= ",帳票発行者姓"
         strSQL &= ",帳票発行者名"
-        strSQL &= ", メーカー保証諸経費"
-        strSQL &= ", メーカー負担諸経費"
-        strSQL &= ", 開始日"
-        strSQL &= ", 伝達事項"
-        strSQL &= ", 付帯金額 "
+
+
 
         Return strSQL
     End Function

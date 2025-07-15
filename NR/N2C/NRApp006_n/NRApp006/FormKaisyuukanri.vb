@@ -909,11 +909,11 @@
                         '特別消費税フラグが「1」の時、消費税率を10％とする
                         Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
                     Else
-                        '「安心プランS2」を承認番号で検索し、施工年月日<2018年10月1日時　8％
-                        If GetZeiRitu(Me.DataGridView1.Rows(row).Cells(23).Value.ToString.Trim) = 8 Then
-                            Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.08)
-                        Else
-                            Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
+                    '「安心プランS2」を承認番号で検索し、施工年月日<2018年10月1日時　8％
+                    If GetZeiRitu(Me.DataGridView1.Rows(row).Cells(GetHeaderColNo("開始日", Me.DataGridView1)).Value.ToString.Trim) = 8 Then
+                        Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.08)
+                    Else
+                        Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
                         End If
                     End If
                     '--- 2024/07/10 k.s end ---
@@ -1090,7 +1090,7 @@
                     Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
                 Else
                     '「安心プランS2」を承認番号で検索し、施工年月日<2018年10月1日時　8％
-                    If GetZeiRitu(Me.DataGridView1.Rows(row).Cells(23).Value.ToString.Trim) = 8 Then
+                    If GetZeiRitu(Me.DataGridView1.Rows(row).Cells(GetHeaderColNo("開始日", Me.DataGridView1)).Value.ToString.Trim) = 8 Then
                         Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.08)
                     Else
                         Me.DataGridView1.Rows(row).Cells(18).Value = Math.Truncate(intKingaku * 1.1)
