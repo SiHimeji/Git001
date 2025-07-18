@@ -276,6 +276,12 @@
     <Compile Include="FormPass.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormRirekiSyusei.Designer.vb">
+      <DependentUpon>FormRirekiSyusei.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormRirekiSyusei.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormSeikyu.designer.vb">
       <DependentUpon>FormSeikyu.vb</DependentUpon>
     </Compile>
@@ -482,6 +488,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPass.resx">
       <DependentUpon>FormPass.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRirekiSyusei.resx">
+      <DependentUpon>FormRirekiSyusei.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSeikyu.resx">
       <DependentUpon>FormSeikyu.vb</DependentUpon>

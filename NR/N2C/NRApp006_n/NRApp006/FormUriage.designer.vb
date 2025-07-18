@@ -25,6 +25,7 @@ Partial Class FormUriage
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormUriage))
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.終了ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripComboBox年 = New System.Windows.Forms.ToolStripComboBox()
         Me.検索ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.出力ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EXCELToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -35,13 +36,15 @@ Partial Class FormUriage
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.ToolStripComboBox年 = New System.Windows.Forms.ToolStripComboBox()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -59,6 +62,12 @@ Partial Class FormUriage
         Me.終了ToolStripMenuItem.Size = New System.Drawing.Size(43, 23)
         Me.終了ToolStripMenuItem.Text = "終了"
         '
+        'ToolStripComboBox年
+        '
+        Me.ToolStripComboBox年.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ToolStripComboBox年.Name = "ToolStripComboBox年"
+        Me.ToolStripComboBox年.Size = New System.Drawing.Size(121, 23)
+        '
         '検索ToolStripMenuItem
         '
         Me.検索ToolStripMenuItem.Name = "検索ToolStripMenuItem"
@@ -75,7 +84,7 @@ Partial Class FormUriage
         'EXCELToolStripMenuItem
         '
         Me.EXCELToolStripMenuItem.Name = "EXCELToolStripMenuItem"
-        Me.EXCELToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EXCELToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
         Me.EXCELToolStripMenuItem.Text = "EXCEL"
         '
         'ToolStripComboBox1
@@ -118,11 +127,15 @@ Partial Class FormUriage
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.DataGridView1)
+        '
         'SplitContainer1.Panel2
         '
-        Me.SplitContainer1.Panel2.Controls.Add(Me.DataGridView1)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.DataGridView2)
         Me.SplitContainer1.Size = New System.Drawing.Size(1030, 490)
-        Me.SplitContainer1.SplitterDistance = 25
+        Me.SplitContainer1.SplitterDistance = 328
         Me.SplitContainer1.TabIndex = 2
         '
         'DataGridView1
@@ -132,14 +145,18 @@ Partial Class FormUriage
         Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowTemplate.Height = 21
-        Me.DataGridView1.Size = New System.Drawing.Size(1030, 461)
+        Me.DataGridView1.Size = New System.Drawing.Size(1030, 328)
         Me.DataGridView1.TabIndex = 0
         '
-        'ToolStripComboBox年
+        'DataGridView2
         '
-        Me.ToolStripComboBox年.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ToolStripComboBox年.Name = "ToolStripComboBox年"
-        Me.ToolStripComboBox年.Size = New System.Drawing.Size(121, 23)
+        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView2.Location = New System.Drawing.Point(0, 0)
+        Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.RowTemplate.Height = 21
+        Me.DataGridView2.Size = New System.Drawing.Size(1030, 158)
+        Me.DataGridView2.TabIndex = 0
         '
         'FormUriage
         '
@@ -157,10 +174,12 @@ Partial Class FormUriage
         Me.MenuStrip1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -173,10 +192,11 @@ Partial Class FormUriage
     Friend WithEvents 出力ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EXCELToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SplitContainer1 As SplitContainer
-    Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
     Friend WithEvents ToolStripProgressBar1 As ToolStripProgressBar
     Friend WithEvents 検索ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripComboBox1 As ToolStripComboBox
     Friend WithEvents ToolStripComboBox年 As ToolStripComboBox
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents DataGridView2 As DataGridView
 End Class

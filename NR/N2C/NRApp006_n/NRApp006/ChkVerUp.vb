@@ -6,8 +6,9 @@ Imports System.Reflection
 Imports System.Text
 Public Class ChkVerUp
     Dim appdir As String = System.Windows.Forms.Application.StartupPath
-    Dim windir As String = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Windows)
-    Dim tmpdir As String = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Templates)
+    'Dim windir As String = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Windows)
+    'Dim tmpdir As String = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Templates)
+    Dim ctemp As String = "c:\si"
     Dim url As String
     Private Const vbs As String = "tvb.vbs"
     Dim fileName As String
@@ -108,9 +109,18 @@ Public Class ChkVerUp
         End Using
 
     End Sub
+
+
     'ダウンロード＆解凍
     Private Function DownloadEXE_HTTP() As Boolean
-        tmp = appdir & "\sitemp"
+
+        If System.IO.File.Exists(ctemp) Then
+        Else
+            System.IO.Directory.CreateDirectory(ctemp)
+        End If
+
+        tmp = ctemp & "\sitemp"
+
         Try
             For Each pathFrom As String In IO.Directory.EnumerateFiles(tmp, "*", SearchOption.AllDirectories)
                 IO.File.Delete(pathFrom)

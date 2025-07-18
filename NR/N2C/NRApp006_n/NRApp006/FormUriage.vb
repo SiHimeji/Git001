@@ -60,9 +60,10 @@
         Dim x As Integer
 
         Me.ToolStripComboBox年.Items.Clear()
-        For x = 0 To 5
-            Me.ToolStripComboBox年.Items.Add(dy.ToString("yyyy"))
-            dy = dy.AddYears(-1)
+        For x = 0 To 24
+            Me.ToolStripComboBox年.Items.Add(dy.ToString("yyyy/MM"))
+            dy = dy.AddMonths(-1)
+
         Next
         Me.ToolStripComboBox年.SelectedIndex = 0
     End Sub
@@ -74,14 +75,13 @@
     Private Sub 検索ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 検索ToolStripMenuItem.Click
         Dim strSQL As String = String.Empty
         Dim dt0 As DataTable
+        Dim dt1 As DataTable
 
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
         Me.DataGridView1.DataSource = Nothing
         System.Windows.Forms.Application.DoEvents()
 
         Dim tuki As String = Me.ToolStripComboBox年.Text
-
-
 
         'If ComboBoxメーカー.Text = "得意先別" Then
 
@@ -231,8 +231,8 @@
             strSQL &= ",sum( CAST(COALESCE(t.upri ,'0')AS INTEGER) ) 金額"
             strSQL &= ",count(*) 件数"
             strSQL &= " FROM " & schema & "t_002 t"
-            strSQL &= " where t.nextb  between '" & ToolStripComboBox年.Text & "/01/01'and '" & ToolStripComboBox年.Text & "/12/31'"
-            'strSQL &= " and   t.nextb  is not null "
+            strSQL &= " where t.nextb  between '" & ToolStripComboBox年.Text & "/01'and '" & GetuMatu(ToolStripComboBox年.Text) & "'"
+            strSQL &= " and   t.sls_typ='1'  "
             strSQL &= " group by LEFT(t.nextb,7) , t.cst_cd "
             strSQL &= " order by LEFT(t.nextb,7) , t.cst_cd "
         End If
@@ -244,6 +244,33 @@
 
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.ReadOnly = True
+        '---赤
+        strSQL = ""
+        strSQL &= "select"
+        strSQL &= " LEFT(t.nextb,7) 年月"
+        strSQL &= ",t.cst_cd 品コード"
+        strSQL &= ",CASE t.cst_cd WHEN '901000'  THEN '別途請求' "
+        strSQL &= "               WHEN '010574'  THEN '直収' "
+        strSQL &= "               WHEN '902000'  THEN '安心Ｐ点検付' "
+        strSQL &= "               WHEN '903000'  THEN 'ＨＮ直収' "
+        strSQL &= "               WHEN '904000'  THEN 'ＨＮ別途' "
+        strSQL &= "               END 点検売上"
+        strSQL &= ",sum( CAST(COALESCE(t.upri ,'0')AS INTEGER) ) 金額"
+        strSQL &= ",count(*) 件数"
+        strSQL &= " FROM " & schema & "t_002 t"
+        strSQL &= " where t.nextb  between '" & ToolStripComboBox年.Text & "/01'and '" & GetuMatu(ToolStripComboBox年.Text) & "'"
+        strSQL &= " and   t.sls_typ='3'  "
+        strSQL &= " group by LEFT(t.nextb,7) , t.cst_cd "
+        strSQL &= " order by LEFT(t.nextb,7) , t.cst_cd "
+
+        dt1 = ClassPostgeDB.SetTable(strSQL)
+
+        Me.DataGridView2.DataSource = dt1
+
+        Me.DataGridView2.AllowUserToAddRows = False
+        Me.DataGridView2.ReadOnly = True
+
+
         Me.Cursor = System.Windows.Forms.Cursors.Default
 
     End Sub
@@ -253,6 +280,12 @@
         Return "(v.技術料  + v.出張料 + v.その他料金 +cast(( case when v.サポート料 is null then '0' when v.サポート料 = '' then '0' else v.サポート料 end ) as  numeric) -cast(( case when v.値引き is null then '0'  when v.値引き = '' then '0' else v.値引き end )  as  numeric)) "
 
     End Function
+    Private Function GetuMatu(dy As String)
+        Dim tu As Date = Date.Parse(dy & "/01")
+        tu = tu.AddMonths(1).AddDays(-1)
+        Return tu
+    End Function
+
 
 
     'Private Sub CmbSetメーカー()
@@ -310,7 +343,7 @@
 
             'FormUriageSub.Maker = Me.ComboBoxメーカー.Text
             'FormUriageSub.ShowDialog()
-
+            FormUriage002.AkaKuro = "1"
             FormUriage002.UserID = UserID
             FormUriage002.Kengen = Kengen
             FormUriage002.UserName = UserName
@@ -327,8 +360,20 @@
         Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
 
-    Private Sub CSVToolStripMenuItem_Click(sender As Object, e As EventArgs)
+
+    Private Sub DataGridView2_CellMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DataGridView2.CellMouseDoubleClick
+        Dim ro
+        ro = e.RowIndex
+        If ro >= 0 And e.Button = MouseButtons.Left Then
+
+            FormUriage002.AkaKuro = "3"
+            FormUriage002.UserID = UserID
+            FormUriage002.Kengen = Kengen
+            FormUriage002.UserName = UserName
+            FormUriage002.Nentuki = Me.DataGridView2.Rows(ro).Cells(0).Value.ToString
+            FormUriage002.SinaCd = Me.DataGridView2.Rows(ro).Cells(1).Value.ToString
+            FormUriage002.ShowDialog()
+        End If
 
     End Sub
-
 End Class

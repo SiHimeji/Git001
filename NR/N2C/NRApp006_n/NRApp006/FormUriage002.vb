@@ -6,7 +6,16 @@
 
     Dim _nentuki As String = String.Empty
     Dim _SinaCd As String = String.Empty
+    Dim _AkaKuro As String = String.Empty
 
+    Public Property AkaKuro As String
+        Get
+            AkaKuro = _AkaKuro
+        End Get
+        Set(value As String)
+            _AkaKuro = value
+        End Set
+    End Property
 
     Public Property SinaCd As String
         Get
@@ -77,6 +86,12 @@
         strSQL &= " from tenken.t_002 t"
         strSQL &= "  where LEFT(t.nextb,7) = '" & Nentuki & "'"
         strSQL &= "  and  t.cst_cd  ='" & SinaCd & "'"
+        If AkaKuro = "1" Then
+            strSQL &= "  and  t.sls_typ  = '1'"
+        End If
+        If AkaKuro = "3" Then
+            strSQL &= "  and  t.sls_typ  = '3'"
+        End If
 
         dt = ClassPostgeDB.SetTable(strSQL)
 

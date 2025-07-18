@@ -348,9 +348,6 @@
             FormKaisyuMenu.UserName = UserName
             FormKaisyuMenu.Show()
         End If
-
-
-
     End Sub
 
     Private Sub Button承認_Click(sender As Object, e As EventArgs) Handles Button承認.Click
@@ -362,6 +359,14 @@
             FormSyouNin.Show()
             FormSyouNin.Activate()
         End If
+    End Sub
 
+    Private Sub ButtonRIreki_Click(sender As Object, e As EventArgs) Handles ButtonRIreki.Click
+
+        FormRirekiSyusei.UserID = UserID
+        FormRirekiSyusei.Kengen = Kengen
+        FormRirekiSyusei.UserName = UserName
+        FormRirekiSyusei.Show()
+        FormRirekiSyusei.Activate()
     End Sub
 End Class

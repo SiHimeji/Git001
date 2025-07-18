@@ -50,6 +50,7 @@ Partial Class FormMain
         Me.Button点検チェック = New System.Windows.Forms.Button()
         Me.Button回収管理 = New System.Windows.Forms.Button()
         Me.Button承認 = New System.Windows.Forms.Button()
+        Me.ButtonRIreki = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -59,7 +60,7 @@ Partial Class FormMain
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.終了ToolStripMenuItem, Me.管理ToolStripMenuItem, Me.ToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(214, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(213, 24)
         Me.MenuStrip1.TabIndex = 6
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -151,9 +152,9 @@ Partial Class FormMain
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripProgressBar1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 402)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 466)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(214, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(213, 22)
         Me.StatusStrip1.TabIndex = 5
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -243,19 +244,29 @@ Partial Class FormMain
         '
         'Button承認
         '
-        Me.Button承認.Location = New System.Drawing.Point(22, 369)
+        Me.Button承認.Location = New System.Drawing.Point(12, 372)
         Me.Button承認.Name = "Button承認"
-        Me.Button承認.Size = New System.Drawing.Size(180, 23)
+        Me.Button承認.Size = New System.Drawing.Size(191, 35)
         Me.Button承認.TabIndex = 10
-        Me.Button承認.Text = "承認"
+        Me.Button承認.Text = "承認出力"
         Me.Button承認.UseVisualStyleBackColor = True
+        '
+        'ButtonRIreki
+        '
+        Me.ButtonRIreki.Location = New System.Drawing.Point(13, 413)
+        Me.ButtonRIreki.Name = "ButtonRIreki"
+        Me.ButtonRIreki.Size = New System.Drawing.Size(188, 35)
+        Me.ButtonRIreki.TabIndex = 11
+        Me.ButtonRIreki.Text = "履歴訂正"
+        Me.ButtonRIreki.UseVisualStyleBackColor = True
         '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(214, 424)
+        Me.ClientSize = New System.Drawing.Size(213, 488)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ButtonRIreki)
         Me.Controls.Add(Me.Button承認)
         Me.Controls.Add(Me.Button回収管理)
         Me.Controls.Add(Me.Button点検チェック)
@@ -308,4 +319,5 @@ Partial Class FormMain
     Friend WithEvents ToolStripProgressBar1 As ToolStripProgressBar
     Friend WithEvents Button回収管理 As Button
     Friend WithEvents Button承認 As Button
+    Friend WithEvents ButtonRIreki As Button
 End Class
