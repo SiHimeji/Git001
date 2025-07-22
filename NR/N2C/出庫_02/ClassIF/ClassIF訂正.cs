@@ -18,7 +18,6 @@ namespace ClassIF
         ClassNpgsql cDB = new ClassNpgsql();
 
         //テーブル指定
-        //const string TableName = "n2c.v_yuryo_tenken_syuyaku";
         const string TableName = "t_002";
         //テーブルの列指定
          string[] retumei = {
@@ -80,7 +79,7 @@ namespace ClassIF
             return Array.IndexOf(retumei, mei);
         }
 
-         public void csvINsert訂正(string FileName)
+         public void csvINsert訂正(DataTable dat)
         {
             DataTable dt = new DataTable();
             string sql0 = "";
@@ -89,31 +88,13 @@ namespace ClassIF
             {
 
                 cLog.LogDelete();
-                int ukeno = GetHairetu("uketukeno");
-                int nextb = GetHairetu("nextb");
+                int ukeno = GetHairetu("uketukeno",dat);
+                int nextb = GetHairetu("nextb",dat);
 
                 cDB.DbOpen(1);
-
-                var parser = new TextFieldParser(FileName, System.Text.Encoding.GetEncoding("UTF-8"));
-                using (parser)
+                foreach (DataRow dr in dat.Rows) 
                 {
 
-                    //  区切りの指定
-                    parser.TextFieldType = FieldType.Delimited;
-                    parser.SetDelimiters(",");
-                    // フィールドが引用符で囲まれているか
-                    parser.HasFieldsEnclosedInQuotes = true;
-                    // フィールドの空白トリム設定
-                    parser.TrimWhiteSpace = false;
-
-
-                    // ファイルの終端までループ
-                    var lists = parser.ReadFields();
-                    while (!parser.EndOfData)
-                    {
-
-                        var line = new List<string>();
-                        lists = parser.ReadFields();
 
                         sql0 = $@"insert into {cDB.scaima}{TableName}(";
                         sql1 = "values("; 
@@ -122,7 +103,7 @@ namespace ClassIF
                         {
                             if (retumei[i] != "") {
                                 sql0 += $@"{retumei[i]},";
-                                sql1 += $@"'{lists[i]}',";
+                                sql1 += $@"'{dr[GetHairetu(retumei[i], dat)]}',";
                             }
                         }
 
@@ -139,14 +120,14 @@ namespace ClassIF
                         sql1 += ",null";
                         sql1 += ",null";
                         sql1 += ",null";
-                        sql1 += $@",(select COALESCE(max(seq) + 1,0 )  from {cDB.scaima}{TableName} where  uketukeno ='{lists[ukeno]}')";
+                        sql1 += $@",(select COALESCE(max(seq) + 1,0 )  from {cDB.scaima}{TableName} where  uketukeno ='{dr[ukeno]}')";
                         sql1 += ",'1'";
 
 
 
                         sql0 = sql0 + sql1;
 
-                        sql1 = $@"select count(*) from {cDB.scaima}{TableName} where  uketukeno ='{lists[ukeno]}' and nextb ='{lists[nextb]}';";
+                        sql1 = $@"select count(*) from {cDB.scaima}{TableName} where  uketukeno ='{dr[ukeno]}' and nextb ='{dr[nextb]}';";
 
 
                         dt = cDB._SetDataTable(sql1);
@@ -168,7 +149,6 @@ namespace ClassIF
                         //
 
                     }
-                }
                 cDB.trans.Commit();
                 cDB.DbClose();
                 cLog.LogWriteTB("出庫訂正", 0);
@@ -181,12 +161,16 @@ namespace ClassIF
                 cLog.logwriteErrTB("出庫訂正");
             }
         }
-         private int GetHairetu(string nm)
-        {
-            List<string> lists = new List<string>();
-            lists.AddRange(retumei);
-            int num = lists.IndexOf(nm);
-            return num;
+         private int GetHairetu(string nm,DataTable dt)
+         {
+            for (int x = 0; x < dt.Columns.Count - 1; x++)
+            {
+                if (dt.Columns[x].ColumnName == nm)
+                {
+                    return x;
+                }
+            }
+            return -1;
 
         }
     }

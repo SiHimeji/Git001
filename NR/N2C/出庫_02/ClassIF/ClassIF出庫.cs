@@ -72,102 +72,81 @@ namespace ClassIF
             return Array.IndexOf(retumei, mei);
         }
 
-         public void csvINsert出庫(string FileName)
+         public void csvINsert出庫(DataTable dat)
         {
 
             DataTable dt = new DataTable();
             string sql0 = "";
             string sql1 = "";
             int cnt = 0;
+
             try
             {
 
                 cLog.LogDelete();
-                int ukeno = GetHairetu("uketukeno");
-                int nextb = GetHairetu("nextb");
+                int ukeno = GetHairetu("uketukeno", dat);
+                int nextb = GetHairetu("nextb", dat);
 
                 cDB.DbOpen(1);
 
-                var parser = new TextFieldParser(FileName, System.Text.Encoding.GetEncoding("UTF-8"));
-                //var parser = new TextFieldParser(FileName, System.Text.Encoding.GetEncoding("Shift_JIS"));
-                using (parser)
+                foreach (DataRow dr in dat.Rows)
                 {
+                    sql0 = $@"insert into {TableName}(";
+                    sql1 = ")values(";
 
-                    //  区切りの指定
-                    parser.TextFieldType = FieldType.Delimited;
-                    parser.SetDelimiters(",");
-                    // フィールドが引用符で囲まれているか
-                    parser.HasFieldsEnclosedInQuotes = true;
-                    // フィールドの空白トリム設定
-                    parser.TrimWhiteSpace = false;
-
-
-                    // ファイルの終端までループ
-                    var lists = parser.ReadFields();
-                    while (!parser.EndOfData)
+                    for (int i = 0; i < retumei.Length; i++)
                     {
-
-                        var line = new List<string>();
-                        lists = parser.ReadFields();
-
-                        sql0 = $@"insert into {TableName}(";
-                        sql1 = ")values("; 
-                        
-                        for (int i = 0; i < retumei.Length; i++)
+                        if (retumei[i] != "")
                         {
-                            if (retumei[i] != "") {
-                                sql0 += $@"{retumei[i]},";
-                                sql1 += $@"'{lists[i]}',";
-                            }
+                            sql0 += $@"{retumei[i]},";
+                            sql1 += $@"'{dr[GetHairetu(retumei[i], dat)]}',";
                         }
-
-                        sql0 += " out_flg";
-                        sql0 += ",entry_date";
-                        sql0 += ",entry";
-                        sql0 += ",del_flg";
-                        sql0 += ",tyoufuku";
-                        sql0 += ",seq";
-                        sql0 += ",newflg";
-
-                        sql1 += " '0'";
-                        sql1 += ",to_char(now(),'YYYY/MM/DD')";
-                        sql1 += ",null";
-                        sql1 += ",null";
-                        sql1 += ",null";
-                        sql1 += $@",(select COALESCE(max(seq) + 1,0) from {cDB.scaima}{TableName} where  uketukeno ='{lists[ukeno]}')";
-                        sql1 += ",'1'";
-                        sql1 += ")";
-
-
-                        sql0 = sql0 + sql1;
-
-                        sql1 = $@"select count(*) from {cDB.scaima}{TableName} where  uketukeno ='{lists[ukeno]}' and nextb ='{lists[nextb]}';";
-
-                        dt = cDB._SetDataTable(sql1);
-                        
-                        if (dt.Rows[0][0].ToString() == "0")
-                        {
-                            //Console.WriteLine(lists[ukeno]);
-                            cLog.LogWrite(sql0);
-                            //System.Windows.Forms.Application.DoEvents();
-
-                            cDB._EXEC(sql0);
-                            cnt++;
-                        }
-                        else
-                        {
-                            cLog.LogWrite("PASS : " + sql0);
-                            //Console.WriteLine("PASS : "+lists[ukeno]);
-                            //System.Windows.Forms.Application.DoEvents();
-                        }
-                        //
-
                     }
+
+                    sql0 += " out_flg";
+                    sql0 += ",entry_date";
+                    sql0 += ",entry";
+                    sql0 += ",del_flg";
+                    sql0 += ",tyoufuku";
+                    sql0 += ",seq";
+                    sql0 += ",newflg";
+
+                    sql1 += " '0'";
+                    sql1 += ",to_char(now(),'YYYY/MM/DD')";
+                    sql1 += ",null";
+                    sql1 += ",null";
+                    sql1 += ",null";
+                    sql1 += $@",(select COALESCE(max(seq) + 1,0) from {cDB.scaima}{TableName} where  uketukeno ='{dr[ukeno]}')";
+                    sql1 += ",'1'";
+                    sql1 += ")";
+
+
+                    sql0 = sql0 + sql1;
+                    sql1 = $@"select count(*) from {cDB.scaima}{TableName} where  uketukeno ='{dr[ukeno]}' and nextb ='{dr[nextb]}';";
+
+                    dt = cDB._SetDataTable(sql1);
+
+                    if (dt.Rows[0][0].ToString() == "0")
+                    {
+                        //Console.WriteLine(lists[ukeno]);
+                        cLog.LogWrite(sql0);
+                        //System.Windows.Forms.Application.DoEvents();
+
+                        cDB._EXEC(sql0);
+                        cnt++;
+                    }
+                    else
+                    {
+                        cLog.LogWrite("PASS : " + sql0);
+                        //Console.WriteLine("PASS : "+lists[ukeno]);
+                        //System.Windows.Forms.Application.DoEvents();
+                    }
+                    //
+
                 }
                 cDB.trans.Commit();
                 cDB.DbClose();
                 cLog.LogWriteTB("出庫データ", cnt);
-
             }
             catch (Exception ex)
             {
@@ -176,16 +155,17 @@ namespace ClassIF
                 cDB.DbClose();
                 cLog.logwriteErrTB("出庫データ");
             }
-
-
         }
-         private int GetHairetu(string nm)
+         private int GetHairetu(string nm,DataTable dt)
         {
-            List<string> lists = new List<string>();
-            lists.AddRange(retumei);
-            int num = lists.IndexOf(nm);
-            return num;
-
+            for(int x=0; x< dt.Columns.Count-1;x++)
+            {
+                if (dt.Columns[x].ColumnName == nm)
+                {
+                    return x;
+                }
+            }
+            return -1;
         }
     }
 }

@@ -13,14 +13,6 @@ Public Class FormSyuko
     Private Sub 終了ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 終了ToolStripMenuItem.Click
         Me.Close()
     End Sub
-
-    Private Sub 出庫ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 出庫ToolStripMenuItem.Click
-
-        Dim cLib As New ClassIF.ClassIF出庫()
-        cLib.csvINsert出庫("D:\01_Work\04_NR\06_点検センター\70_N2C対応\ソース\NEXTB002.csv")
-
-    End Sub
-
     Private Sub Button検索出庫_Click(sender As Object, e As EventArgs) Handles Button検索出庫.Click
         Dim ret As String = SelectFile()
         If ret.Length > 0 Then
@@ -28,21 +20,26 @@ Public Class FormSyuko
         End If
 
     End Sub
-    Private Sub Button出庫取り込み_Click(sender As Object, e As EventArgs) Handles Button出庫取り込み.Click
+    Private Sub 出庫ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 出庫ToolStripMenuItem.Click
+
         Dim cLib As New ClassIF.ClassIF出庫()
-        If Me.TextBox出庫.Text.Length > 0 Then
+        Dim dt As DataTable
+        Me.ToolStripStatusLabel1.Text = ""
+        '拡張子の取得
+        If System.IO.Path.GetExtension(Me.TextBox出庫.Text).ToLower = ".csv" Then
+            dt = ClassDataRead.ReadCsv(Me.TextBox出庫.Text)
+            Me.DataGridView1.DataSource = dt
+            System.Windows.Forms.Application.DoEvents()
+            cLib.csvINsert出庫(dt)
 
-            Me.ToolStripStatusLabel1.Text = ""
-            If File.Exists(Me.TextBox出庫.Text) Then
-                cLib.csvINsert出庫(Me.TextBox出庫.Text)
-            Else
-                Me.ToolStripStatusLabel1.Text = "ファイルは存在しません。"
-            End If
-
+        ElseIf System.IO.Path.GetExtension(Me.TextBox出庫.Text).ToLower = ".xlsx" Then
+            dt = ClassDataRead.ReadExcel(Me.TextBox出庫.Text, 2)
+            System.Windows.Forms.Application.DoEvents()
+            Me.DataGridView1.DataSource = dt
+            cLib.csvINsert出庫(dt)
         End If
+
     End Sub
-
-
     Private Sub Button訂正_Click(sender As Object, e As EventArgs) Handles Button訂正.Click
         Dim ret As String = SelectFile()
         If ret.Length > 0 Then
@@ -50,17 +47,25 @@ Public Class FormSyuko
         End If
     End Sub
 
+
     Private Sub Button訂正取り込み_Click(sender As Object, e As EventArgs) Handles Button訂正取り込み.Click
         Dim cLib As New ClassIF.ClassIF訂正()
+        Dim dt As DataTable
         If Me.TextBox訂正.Text.Length > 0 Then
-
             Me.ToolStripStatusLabel1.Text = ""
-            If File.Exists(Me.TextBox訂正.Text) Then
-                cLib.csvINsert訂正(Me.TextBox訂正.Text)
-            Else
-                Me.ToolStripStatusLabel1.Text = "ファイルは存在しません。"
-            End If
 
+            If System.IO.Path.GetExtension(Me.TextBox訂正.Text).ToLower = ".csv" Then
+                dt = ClassDataRead.ReadCsv(Me.TextBox訂正.Text)
+                Me.DataGridView1.DataSource = dt
+                System.Windows.Forms.Application.DoEvents()
+                cLib.csvINsert訂正(dt)
+
+            ElseIf System.IO.Path.GetExtension(Me.TextBox訂正.Text).ToLower = ".xlsx" Then
+                dt = ClassDataRead.ReadExcel(Me.TextBox訂正.Text, 2)
+                Me.DataGridView1.DataSource = dt
+                System.Windows.Forms.Application.DoEvents()
+                cLib.csvINsert訂正(dt)
+            End If
         End If
     End Sub
     Private Function SelectFile()
@@ -69,7 +74,7 @@ Public Class FormSyuko
 
         ' ダイアログの設定
         openFileDialog.Title = "ファイルを選択してください"
-        openFileDialog.Filter = "テキストファイル (*.csv)|*.csv|すべてのファイル (*.*)|*.*"
+        openFileDialog.Filter = "EXCEL (*.xlsx)|*.xlsx|テキストファイル (*.csv)|*.csv|すべてのファイル (*.*)|*.*"
         'openFileDialog.InitialDirectory = "C:\"
         ' ダイアログを表示し、結果を確認
         If openFileDialog.ShowDialog() = DialogResult.OK Then
@@ -80,7 +85,34 @@ Public Class FormSyuko
         Return ""
     End Function
 
+    Private Sub Button検索オーダー_Click(sender As Object, e As EventArgs) Handles Button検索オーダー.Click
+        Dim ret As String = SelectFile()
+        If ret.Length > 0 Then
+            Me.TextBoxオーダー.Text = ret
+        End If
 
+    End Sub
 
+    Private Sub Buttonオーダー取り込み_Click(sender As Object, e As EventArgs) Handles Buttonオーダー取り込み.Click
+
+        Dim cLib As New ClassIF.ClassIFオーダー()
+        Dim dt As DataTable
+        If Me.TextBoxオーダー.Text.Length > 0 Then
+            Me.ToolStripStatusLabel1.Text = ""
+
+            If System.IO.Path.GetExtension(Me.TextBoxオーダー.Text).ToLower = ".csv" Then
+                dt = ClassDataRead.ReadCsv(Me.TextBoxオーダー.Text)
+                Me.DataGridView1.DataSource = dt
+                System.Windows.Forms.Application.DoEvents()
+                cLib.csvINsertオーダー(dt)
+
+            ElseIf System.IO.Path.GetExtension(Me.TextBoxオーダー.Text).ToLower = ".xlsx" Then
+                dt = ClassDataRead.ReadExcel(Me.TextBoxオーダー.Text, 3)
+                Me.DataGridView1.DataSource = dt
+                System.Windows.Forms.Application.DoEvents()
+                cLib.csvINsertオーダー(dt)
+            End If
+        End If
+    End Sub
 
 End Class
