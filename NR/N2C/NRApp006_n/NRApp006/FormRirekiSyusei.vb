@@ -30,10 +30,20 @@
         End Set
     End Property
     Private Sub FormRirekiSyusei_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        disp()
     End Sub
 
     Private Sub 終了ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 終了ToolStripMenuItem.Click
         Me.Close()
     End Sub
+    Private Sub disp()
+        Dim strSQL As String = String.Empty
+
+
+
+
+
+
+    End Sub
+
 End Class

@@ -28,6 +28,13 @@
         ro = settextColumn(Me.DataGridView1, ro, "entry_day", "時間", 120, True)
 
         Me.DataGridView1.AllowUserToAddRows = False
+
+        For ro = 1 To Me.DataGridView1.Rows.Count - 1
+            If Me.DataGridView1.Rows(ro).Cells(2).Value.ToUpper = "ERROR" Then
+                Me.DataGridView1.Rows(ro).DefaultCellStyle.BackColor = Color.Red
+
+            End If
+        Next
         Me.Cursor = System.Windows.Forms.Cursors.Default
 
     End Sub

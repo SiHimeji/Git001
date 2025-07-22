@@ -11,7 +11,7 @@ set new_filename=% folder%%cur_datetime%_%file_name%
 d:
 cd D:\work\Densou
 
-D:\work\Densou\APP\TenkenKekka.exe D:\work\Densou\N2OK001T.CSV
+D:\work\Densou\APP\TenkenKekkaT.exe D:\work\Densou\N2OK001T.CSV
 
 ren %file_name% %new_filename%
 

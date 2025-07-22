@@ -11,7 +11,7 @@ d:
 cd D:\work\Densou
 
 
-D:\work\Densou\APP\Seikyu.EXE D:\work\Densou\N2OK003T.CSV
+D:\work\Densou\APP\SeikyuT.EXE D:\work\Densou\N2OK003T.CSV
 
 ren %file_name% %new_filename%
 
