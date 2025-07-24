@@ -16,7 +16,7 @@ namespace ConsoleApp1
     {
         //テーブル指定
         //const string TableName = "n2c.v_yuryo_tenken_syuyaku";
-        const string TableName = "tenken.t_002";
+        const string TableName = "t_002";
         //テーブルの列指定
         static string[] retumei = {
                 "sls_typ",
@@ -112,7 +112,7 @@ namespace ConsoleApp1
                         var line = new List<string>();
                         lists = parser.ReadFields();
 
-                        sql0 = $@"insert into {TableName}(";
+                        sql0 = $@"insert into {ClassNpgsql.scima}{TableName}(";
                         sql1 = "values("; 
                         
                         for (int i = 0; i < retumei.Length; i++)
@@ -135,10 +135,10 @@ namespace ConsoleApp1
                         sql1 += ",null";
                         sql1 += ",nll";
                         sql1 += ",null";
-                        sql1 += $@",(select max(COALESCE(seq,0)) + 1 from {TableName} where  uketukeno ='{lists[ukeno]}')";
+                        sql1 += $@",(select max(COALESCE(seq,0)) + 1 from {ClassNpgsql.scima}{TableName} where  uketukeno ='{lists[ukeno]}')";
                         sql0 = sql0 + sql1;
 
-                        sql1 = $@"select count(*) from {TableName} where  uketukeno ='{lists[ukeno]}' and nextb ='{lists[nextb]}';";
+                        sql1 = $@"select count(*) from {ClassNpgsql.scima}{TableName} where  uketukeno ='{lists[ukeno]}' and nextb ='{lists[nextb]}';";
 
 
                         dt = ClassNpgsql._SetDataTable(sql1);

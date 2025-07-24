@@ -21,7 +21,7 @@ namespace ClassIF
         const string TableName = "t_002";
         //テーブルの列指定
          string[] retumei = {
-            "sls_typ",
+            //"sls_typ",
             "xpns_cd",
             "ship_wh_cd",
             "route_cd",
@@ -103,7 +103,8 @@ namespace ClassIF
                         }
                     }
 
-                    sql0 += " out_flg";
+                    sql0 += " sls_typ";
+                    sql0 += ",out_flg";
                     sql0 += ",entry_date";
                     sql0 += ",entry";
                     sql0 += ",del_flg";
@@ -111,7 +112,8 @@ namespace ClassIF
                     sql0 += ",seq";
                     sql0 += ",newflg";
 
-                    sql1 += " '0'";
+                    sql1 += " '1'";
+                    sql1 += ",'0'";
                     sql1 += ",to_char(now(),'YYYY/MM/DD')";
                     sql1 += ",null";
                     sql1 += ",null";

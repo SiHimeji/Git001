@@ -21,7 +21,6 @@ namespace ClassIF
                 "cst_po_no_d"
         };
 
-
         public void csvINsertオーダー(DataTable dat)
         {
             int ukeyuke = GetHairetu("cst_po_no_d", dat);

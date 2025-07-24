@@ -23,6 +23,7 @@ namespace ConsoleApp1
         //AWS
         //private static string conn_str = "Server="+"partsc.noritz.co.jp"+";Port=5432;User ID=nr;Database=postgres;Password=nr123;Enlist=true";
 
+        public static string scima = "tenken.";
         public static NpgsqlConnection cn = new NpgsqlConnection();
         public static NpgsqlCommand cm = new NpgsqlCommand();
         public static NpgsqlDataReader rs;

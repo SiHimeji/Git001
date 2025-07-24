@@ -2,8 +2,6 @@
 Imports ClassIF
 Imports System.IO
 
-
-
 Public Class FormSyuko
     Private Sub FormSyuko_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.ToolStripStatusLabel1.Text = ""
@@ -13,6 +11,9 @@ Public Class FormSyuko
     Private Sub 終了ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 終了ToolStripMenuItem.Click
         Me.Close()
     End Sub
+
+#Region "出庫"
+
     Private Sub Button検索出庫_Click(sender As Object, e As EventArgs) Handles Button検索出庫.Click
         Dim ret As String = SelectFile()
         If ret.Length > 0 Then
@@ -46,7 +47,9 @@ Public Class FormSyuko
             Me.TextBox訂正.Text = ret
         End If
     End Sub
+#End Region
 
+#Region "訂正取り込み"
 
     Private Sub Button訂正取り込み_Click(sender As Object, e As EventArgs) Handles Button訂正取り込み.Click
         Dim cLib As New ClassIF.ClassIF訂正()
@@ -85,6 +88,10 @@ Public Class FormSyuko
         Return ""
     End Function
 
+#End Region
+
+#Region "オーダー"
+
     Private Sub Button検索オーダー_Click(sender As Object, e As EventArgs) Handles Button検索オーダー.Click
         Dim ret As String = SelectFile()
         If ret.Length > 0 Then
@@ -114,5 +121,6 @@ Public Class FormSyuko
             End If
         End If
     End Sub
+#End Region
 
 End Class
