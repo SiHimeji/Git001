@@ -1264,5 +1264,15 @@ Public Class Form002
 
     End Function
 
+    Private Sub CheckBoxCIM_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxCIM.CheckedChanged
+        If CheckBoxCIM.Checked Then
+            CheckBox出庫.Visible = True
+            Label5.Visible = True
+        Else
+            CheckBox出庫.Visible = False
+            Label5.Visible = False
+        End If
+    End Sub
+
     ' ///////
 End Class

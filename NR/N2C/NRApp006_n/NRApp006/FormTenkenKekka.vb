@@ -421,6 +421,7 @@
 
             strSQL = "select 'false' as ﾁｪｯｸ, v_tenken_kekka.""受付ＮＯ"" ,v_tenken_kekka.製品名 ,v_tenken_kekka.機器分類名  ,v_tenken_kekka.点検製品区分詳細名 "
 
+
             If Me.ListBox点検項目名.SelectedIndex = -1 Then
                 flg = False
             Else
@@ -480,8 +481,6 @@
                             Case Else
                                 strSQL &= ",v_tenken_kekka.点検項目名＿" & ListBox点検項目名.SelectedItem.ToString & ",v_tenken_kekka.点検結果＿" & ListBox点検項目名.SelectedItem.ToString & " "
                                 strSQL &= ",COALESCE(v_tenken_kekka.点検説明＿" & ListBox点検項目名.SelectedItem.ToString & ",'') ||  COALESCE(v_tenken_kekka.注意事項コメント,'') as 注意事項コメント "
-
-
                         End Select
                 End Select
 
@@ -489,8 +488,10 @@
 
             'strSQL &= "v_tenken_kekka.注意事項コメント  ,t_tenken_fubi.不備内容 ,t_tenken_fubi.再訪問指示内容 ,to_char(t_tenken_fubi.再訪問指示日,'yyyy/mm/dd') 再訪問指示日"
             strSQL &= " ,t_tenken_fubi.不備内容 ,t_tenken_fubi.再訪問指示内容 ,to_char(t_tenken_fubi.再訪問指示日,'yyyy/mm/dd') 再訪問指示日"
-
             strSQL &= ", COALESCE(t_tenken_fubi.反映フラグ,' ')  反映フラグ"
+
+
+            strSQL &= " ,t.点検製品区分詳細 , t.点検製品区分詳細名"
 
             strSQL &= " FROM " & schema & "v_tenken_kekka"
             strSQL &= " Left OUTER join  " & schema & "t_tenken_fubi on v_tenken_kekka.""受付ＮＯ""  = t_tenken_fubi.点検受付番号  "
@@ -571,6 +572,8 @@
             '2025/06/23
             strSQL &= " And 機器分類名  like'%" & Me.ListBox機器分類名.SelectedItem.ToString & "'"
 
+
+
             If Me.ListBox点検製品区分詳細名.SelectedIndex <> -1 Then
                 strSQL &= " And 点検製品区分詳細名 = '" & Me.ListBox点検製品区分詳細名.SelectedItem.ToString & "'"
             End If
@@ -589,7 +592,7 @@
                     zenmoji = Replace(StrConv(Me.ComboBox注意事項コメント.Text, VbStrConv.Wide), "＊", "%")
                     hanmoji = Replace(StrConv(Me.ComboBox注意事項コメント.Text, VbStrConv.Narrow), "*", "%")
                     strSQL &= " And  ( v_tenken_kekka.注意事項コメント NOT LIKE '%" & zenmoji & "%'"
-                    strSQL &= " And     v_tenken_kekka.注意事項コメント NOT LIKE '%" & hanmoji & "%' )"
+                    strSQL &= " And    v_tenken_kekka.注意事項コメント NOT LIKE '%" & hanmoji & "%' )"
 
                 End If
             End If

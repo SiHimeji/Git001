@@ -105,6 +105,7 @@ Partial Class Form002
         Me.DataGridViewTextBoxColumn32 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn33 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
+        Me.CheckBoxCIM = New System.Windows.Forms.CheckBox()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -254,19 +255,19 @@ Partial Class Form002
         '
         Me.選択赤作成ToolStripMenuItem.ForeColor = System.Drawing.Color.Red
         Me.選択赤作成ToolStripMenuItem.Name = "選択赤作成ToolStripMenuItem"
-        Me.選択赤作成ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.選択赤作成ToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.選択赤作成ToolStripMenuItem.Text = "選択赤伝票作成"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(158, 22)
         Me.ToolStripMenuItem2.Text = "　"
         '
         '選択黒伝票作成ToolStripMenuItem
         '
         Me.選択黒伝票作成ToolStripMenuItem.Name = "選択黒伝票作成ToolStripMenuItem"
-        Me.選択黒伝票作成ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.選択黒伝票作成ToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.選択黒伝票作成ToolStripMenuItem.Text = "選択黒伝票作成"
         '
         'StatusStrip1
@@ -305,6 +306,7 @@ Partial Class Form002
         '
         'SplitContainer1.Panel1
         '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.CheckBoxCIM)
         Me.SplitContainer1.Panel1.Controls.Add(Me.Label5)
         Me.SplitContainer1.Panel1.Controls.Add(Me.CheckBox出庫)
         Me.SplitContainer1.Panel1.Controls.Add(Me.Label4)
@@ -327,6 +329,7 @@ Partial Class Form002
         Me.Label5.Size = New System.Drawing.Size(128, 32)
         Me.Label5.TabIndex = 12
         Me.Label5.Text = "チェックを入れて出力すると" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "出庫済みになります"
+        Me.Label5.Visible = False
         '
         'CheckBox出庫
         '
@@ -338,6 +341,7 @@ Partial Class Form002
         Me.CheckBox出庫.TabIndex = 11
         Me.CheckBox出庫.Text = "出庫"
         Me.CheckBox出庫.UseVisualStyleBackColor = True
+        Me.CheckBox出庫.Visible = False
         '
         'Label4
         '
@@ -671,6 +675,16 @@ Partial Class Form002
         Me.DataGridViewTextBoxColumn33.Name = "DataGridViewTextBoxColumn33"
         Me.DataGridViewTextBoxColumn33.Width = 80
         '
+        'CheckBoxCIM
+        '
+        Me.CheckBoxCIM.AutoSize = True
+        Me.CheckBoxCIM.Location = New System.Drawing.Point(922, 15)
+        Me.CheckBoxCIM.Name = "CheckBoxCIM"
+        Me.CheckBoxCIM.Size = New System.Drawing.Size(80, 16)
+        Me.CheckBoxCIM.TabIndex = 13
+        Me.CheckBoxCIM.Text = "旧CIM処理"
+        Me.CheckBoxCIM.UseVisualStyleBackColor = True
+        '
         'Form002
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -782,4 +796,5 @@ Partial Class Form002
     Friend WithEvents 選択黒伝票作成ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 選択削除を戻すToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 選択削除を戻すToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents CheckBoxCIM As CheckBox
 End Class

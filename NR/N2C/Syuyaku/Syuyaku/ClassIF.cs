@@ -10,7 +10,6 @@ using Microsoft.VisualBasic.FileIO;
 using static System.Windows.Forms.LinkLabel;
 using System.Security.AccessControl;
 using TenkenKekka;
-using Npgsql;
 namespace Syuyaku
 {
     static public class ClassIF
@@ -23,8 +22,6 @@ namespace Syuyaku
         //const string FileName = "C:\\work\\06_点検センター\\70_N2C対応\\ソース\\N2OK002T.csv";
         public static string FileName =  $@"D:\work\Densou\N2OK002T.csv";
         //
-
-
         //テーブルの列指定
         static string[] retumei = {
  "所有者登録意思区分"
@@ -162,7 +159,6 @@ namespace Syuyaku
 ,"受付者Id"
 ,"伝達事項"
                 };
-
 
         static int[] NitiJi = new int[20];
         static int[] Suuji = new int[20];

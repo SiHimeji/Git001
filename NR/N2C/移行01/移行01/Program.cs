@@ -65,6 +65,7 @@ namespace 移行01
                         }
                         if (sql.Length > 0)
                         {
+                            System.Console.WriteLine(dr["受付番号"].ToString());
                             log.LogWarning("update tenken.v_yuryo_tenken_syuyaku set" + sql + $@" where 点検受付番号='{dr["受付番号"].ToString()}'");
                             if(!ClassNpgsql._EXEC("update tenken.v_yuryo_tenken_syuyaku set" + sql +$@" where 点検受付番号='{dr["受付番号"].ToString()}'"))
                             {

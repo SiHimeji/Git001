@@ -14,8 +14,8 @@ namespace Syuyaku
     public static  class ClassNpgsql
     {
         ///Postgres
-        ///Npgsql.4.1.4
-        ///     Npgsql.5.0.5
+        ///
+        ///Npgsql.8.0.7
         //SI
         //private string conn_str = "Server=192.168.1.217;Port=5432;User ID=postgres;Database=postgres;Password=123456;Enlist=true";
         //旧
