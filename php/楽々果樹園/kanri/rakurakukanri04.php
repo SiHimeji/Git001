@@ -57,12 +57,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 				//if($text == $tuki){
         		//$csv .= '' . $row['tm'] . '' . $row['uid'] . ''. $row['work'] . '';
 				fputs($fp, ' ');
-				$wk = $row['tm'];
+				$wk = $row['tm'].'00';
 				$wk =str_replace(' ', '', $wk);
 				$wk =str_replace('-', '', $wk);
 				$wk =str_replace(':', '', $wk);
+				$wk= substr($wk,2,14);
 				fputs($fp, $wk);
-				$wk = $row['uid'] .'     '.'';
+				$wk = $row['uid'] .'     ';
 				$wk= substr($wk,0,5);
 				fputs($fp, $wk);
 				$wk = $row['work'];
