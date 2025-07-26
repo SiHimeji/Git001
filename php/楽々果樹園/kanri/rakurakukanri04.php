@@ -7,10 +7,10 @@ $user = $db_id ;
 $pass = $db_pass ;
 $charset = 'utf8mb4';
 
-$msg="";
 $tuki="";
 $csv="";
 $sql="";
+$count=0;
 $i=0;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	if (!empty($_POST["tuki"]) && !empty($_POST["tuki"])) {
@@ -31,28 +31,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 		    throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 
-$sql="SELECT * FROM v_all where DATE_FORMAT(tm, '%Y-%m') ='" .$tuki."' order by user,tm";
+		$sql="SELECT * FROM v_all where DATE_FORMAT(tm, '%Y-%m') ='" .$tuki."' order by user,tm";
 
 		// SQLクエリ
-		//$stmt = $pdo->query('"'.$sql.'"');
-		$stmt = $pdo->query('SELECT * FROM v_all');
+		//$stmt = $pdo->query('SELECT * FROM v_all');
+		$stmt = $pdo->query($sql);
 		
 		$data = $stmt->fetchAll();
+		$count = count($data);
+		if($count>0){
 
-		// CSVファイル出力
-		$filename = '勤怠_' . date('YmdHis') . '.csv';
-		header('Content-Type: application/octet-stream');
-		header('Content-Disposition: attachment; filename="' . $filename . '"');
-		header('Content-Transfer-Encoding: binary');
-		$fp = fopen('php://output', 'w');
-		// ヘッダー行
-		$header = array_keys($data[0]);
-		mb_convert_variables('SJIS', 'UTF-8', $header);
-//		fputcsv($fp, $header);
-		$i++;
-		foreach ($data as $row) {
-			$text=substr($row['tm'], 0, 7);
-			if($text == $tuki){
+			// CSVファイル出力
+			$filename = '勤怠_' . date('YmdHis') . '.csv';
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="' . $filename . '"');
+			header('Content-Transfer-Encoding: binary');
+			$fp = fopen('php://output', 'w');
+			// ヘッダー行
+			$header = array_keys($data[0]);
+			mb_convert_variables('SJIS', 'UTF-8', $header);
+//			fputcsv($fp, $header);
+			$i++;
+			foreach ($data as $row) {
+				//$text=substr($row['tm'], 0, 7);
+				//if($text == $tuki){
         		//$csv .= '' . $row['tm'] . '' . $row['uid'] . ''. $row['work'] . '';
 				fputs($fp, ' ');
 				$wk = $row['tm'];
@@ -73,16 +75,12 @@ $sql="SELECT * FROM v_all where DATE_FORMAT(tm, '%Y-%m') ='" .$tuki."' order by 
 
 				fputs($fp, '' . PHP_EOL);
 				$i++;
-			}
-    	}
-		// データ行
-//		foreach ($data as $row) {
-//		    //mb_convert_variables('SJIS', 'UTF-8', $row);
-		    //fputcsv($fp, $row);
-//			echo  $row;
-//		}
-		$csv="out";
-		fclose($fp);
+			//}
+    		}
+			// データ行
+			$csv="out";
+			fclose($fp);
+		}
 	}
 }
 if(strlen($csv)>0){
@@ -112,8 +110,7 @@ if(strlen($csv)>0){
 	<input type="month" name="tuki" id="tuki"><br><br>
 	<input name="Button1" style="width: 184px" type="submit" value="CSVダウンロード" />
 </form>
-<?PHP if(strlen($msg)>0){echo $msg;} ?>
-<?PHP if(strlen($tuki)>0){echo $tuki;} ?>
+<?PHP if(strlen($tuki)>0){echo $tuki; echo "データなし";} ?>
 </body>
 </html>
 <?PHP
